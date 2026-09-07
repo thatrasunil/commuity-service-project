@@ -1472,6 +1472,41 @@ body {
 .rc-avoid-label { font-size: 0.8rem; font-weight: 800; color: #92400e; margin-bottom: 0.5rem; }
 .rc-avoid-chip { display: inline-block; background: #fff; border: 1.5px solid #fbbf24; color: #92400e; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; margin: 3px; }
 
+/* ── Modern Feature Card Polishing ── */
+.weather-big-box {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.weather-big-box:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.forecast-card {
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.forecast-card:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #164e37, #2d6a4f);
+}
+
+.soil-inputs-grid .input-farmer:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+}
+
+.rc-best-card {
+  box-shadow: var(--shadow-md);
+  border: 1.5px solid rgba(82, 183, 136, 0.3);
+}
+
+#aiChatStream::-webkit-scrollbar {
+  width: 6px;
+}
+#aiChatStream::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 99px;
+}
+
 /* ─── COMING SOON OVERLAY ────────────────── */
 .coming-soon-overlay {
   display: none;

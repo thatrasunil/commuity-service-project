@@ -114,6 +114,19 @@ function showScreen(id, pushHistory = true) {
     if (pushHistory && SCREEN_ROUTES[id] && window.history.pushState) {
       window.history.pushState({ screen: id }, '', SCREEN_ROUTES[id]);
     }
+
+    // Auto-fetch/render on screen open
+    if (id === 'screen-weather') {
+      const wTemp = document.getElementById('wTempBig');
+      if (wTemp && (wTemp.textContent === '—' || !wTemp.textContent.trim())) {
+        fetchWeatherForScreen();
+      }
+    } else if (id === 'screen-recommend') {
+      const rcResult = document.getElementById('rcResult');
+      if (rcResult && rcResult.style.display === 'none') {
+        getCropRecommendation();
+      }
+    }
   }
 }
 
@@ -692,6 +705,141 @@ const PEST_DATABASE = {
       ],
       prevention: [
         'Solar heat treatment of seeds or carboxin treatment before sowing.'
+      ]
+    }
+  },
+  Maize: {
+    bollworm: {
+      name: 'Fall Armyworm (Spodoptera frugiperda)',
+      nameTe: 'మొక్కజొన్న కత్తెర పురుగు',
+      severity: 'high',
+      confidence: 96,
+      treatments: [
+        'Apply Chlorantraniliprole 18.5% SC @ 0.4ml/L into whorls of plants.',
+        'Alternatively apply Emamectin Benzoate 5% SG @ 0.4g/L.'
+      ],
+      prevention: [
+        'Apply dry sand or wood ash into whorls to suffocate larvae.',
+        'Install 5 pheromone traps per acre at 15 days after germination.'
+      ]
+    },
+    stem_borer: {
+      name: 'Maize Stem Borer (Chilo partellus)',
+      nameTe: 'మొక్కజొన్న కాండం తొలుచు పురుగు',
+      severity: 'high',
+      confidence: 92,
+      treatments: [
+        'Whorl application of Carbofuran 3G @ 3 kg/acre at 20-30 days stage.',
+        'Spray Deltamethrin 2.8% EC @ 1ml per liter.'
+      ],
+      prevention: [
+        'Destroy stubbles after harvest to eliminate overwintering pupae.'
+      ]
+    },
+    default: {
+      name: 'Maize Turcicum Leaf Blight',
+      nameTe: 'మొక్కజొన్న ఆకు ఎండు తెగులు',
+      severity: 'medium',
+      confidence: 89,
+      treatments: [
+        'Spray Mancozeb 75% WP @ 2.5g per liter or Azoxystrobin @ 1ml/L.'
+      ],
+      prevention: [
+        'Crop rotation with legumes and balanced potassium application.'
+      ]
+    }
+  },
+  Tomato: {
+    blast: {
+      name: 'Tomato Early Blight (Alternaria solani)',
+      nameTe: 'టమాట ముందస్తు మచ్చ తెగులు',
+      severity: 'high',
+      confidence: 95,
+      treatments: [
+        'Spray Mancozeb 75% WP @ 2.5g/L or Chlorothalonil 75% WP @ 2g/L.',
+        'If severe, alternate with Difenoconazole 25% EC @ 1ml/L.'
+      ],
+      prevention: [
+        'Remove lower infected leaves touching moist soil.',
+        'Provide drip irrigation to keep foliage dry.'
+      ]
+    },
+    aphids: {
+      name: 'Tomato Whiteflies & Leaf Curl Virus Vector',
+      nameTe: 'టమాట ఆకుముడత మరియు తెల్లదోమ',
+      severity: 'high',
+      confidence: 93,
+      treatments: [
+        'Spray Diafenthiuron 50% WP @ 1g/L or Dinotefuran 20% SG @ 0.4g/L.',
+        'Spray 5% Neem oil to deter egg-laying.'
+      ],
+      prevention: [
+        'Install yellow sticky traps @ 20 per acre.',
+        'Erect 2 rows of barrier maize around the tomato plot.'
+      ]
+    },
+    bollworm: {
+      name: 'Tomato Fruit Borer (Helicoverpa armigera)',
+      nameTe: 'టమాట కాయ తొలిచే పురుగు',
+      severity: 'high',
+      confidence: 94,
+      treatments: [
+        'Spray Indoxacarb 14.5% SC @ 1ml/L or Flubendiamide 39.35% SC @ 0.3ml/L.'
+      ],
+      prevention: [
+        'Plant African Marigold as a trap crop (1 row for every 16 tomato rows).'
+      ]
+    },
+    default: {
+      name: 'Tomato Bacterial Wilt',
+      nameTe: 'టమాట బాక్టీరియా ఎండు తెగులు',
+      severity: 'high',
+      confidence: 88,
+      treatments: [
+        'Drench soil with Streptocycline 1g per 10 liters water + Copper Oxychloride 30g.'
+      ],
+      prevention: [
+        'Plant on raised beds with mulch; avoid flood irrigation.'
+      ]
+    }
+  },
+  Groundnut: {
+    rust: {
+      name: 'Groundnut Rust & Tikka Leaf Spot',
+      nameTe: 'వేరుశనగ తిక్క ఆకు మచ్చ మరియు తుప్పు తెగులు',
+      severity: 'high',
+      confidence: 96,
+      treatments: [
+        'Spray Hexaconazole 5% EC @ 2ml/L or Tebuconazole @ 1ml/L.',
+        'Repeat spray after 15 days if monsoon moisture persists.'
+      ],
+      prevention: [
+        'Seed treatment with Trichoderma viride 4g/kg seed.',
+        'Avoid continuous groundnut mono-cropping.'
+      ]
+    },
+    aphids: {
+      name: 'Groundnut Aphids (Aphis craccivora)',
+      nameTe: 'వేరుశనగ పేనుబంక',
+      severity: 'medium',
+      confidence: 91,
+      treatments: [
+        'Spray Dimethoate 30% EC @ 2ml/L or Imidacloprid 17.8% SL @ 0.3ml/L.'
+      ],
+      prevention: [
+        'Conserve natural coccinellid predator ladybird beetles.'
+      ]
+    },
+    default: {
+      name: 'Groundnut Collar Rot (Aspergillus niger)',
+      nameTe: 'వేరుశనగ మొదలు కుళ్లు తెగులు',
+      severity: 'high',
+      confidence: 90,
+      treatments: [
+        'Drench with Carbendazim 12% + Mancozeb 63% WP (Saaf) @ 2g/L.'
+      ],
+      prevention: [
+        'Ensure good drainage and sow certified fungicide-treated seeds.'
       ]
     }
   }
@@ -1294,6 +1442,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (repRisk) {
       repRisk.textContent = data.yield_category || 'Optimal Yield';
       repRisk.style.color = data.risk_badge === 'success' ? '#15803d' : (data.risk_badge === 'danger' ? '#dc2626' : '#d97706');
+    }
+
+    // Dynamic first row in farmReportTableBody
+    const tbody = document.getElementById('farmReportTableBody');
+    if (tbody && tbody.firstElementChild) {
+      const todayRow = tbody.firstElementChild;
+      const statusBadge = data.risk_badge === 'success'
+        ? '<span class="risk-badge badge-success" style="font-size:0.65rem;">Optimal Soil</span>'
+        : (data.risk_badge === 'danger'
+          ? '<span class="risk-badge badge-danger" style="font-size:0.65rem;">Needs Intervention</span>'
+          : '<span class="risk-badge badge-warning" style="font-size:0.65rem;">Balanced Care</span>');
+      todayRow.innerHTML = `
+        <td style="padding:0.6rem;">Today</td>
+        <td style="padding:0.6rem; font-weight:700;">${data.input_parameters.Crop}</td>
+        <td style="padding:0.6rem; color:#16a34a; font-weight:700;">${data.predicted_yield.toFixed(2)} T/Ha</td>
+        <td style="padding:0.6rem;">₹${econ.current_revenue_inr.toLocaleString('en-IN')}</td>
+        <td style="padding:0.6rem;">${statusBadge}</td>
+      `;
     }
 
     // Alternative Crops
