@@ -143,7 +143,7 @@ def home():
     ])
     irrigations = metrics_data.get('irrigation_types', ['Drip', 'Sprinkler', 'Flood', 'Rainfed'])
     algorithms = list(models_bundle.keys()) if models_bundle else ['Random Forest']
-    return render_template('index.html', crops=crops, irrigations=irrigations, algorithms=algorithms, presets=DEMO_PRESETS, regions=REGIONAL_PRESETS, districts=INDIAN_AGRI_DISTRICTS)
+    return render_template('index.html', crops=crops, irrigations=irrigations, algorithms=algorithms, presets=DEMO_PRESETS, regions=REGIONAL_PRESETS, districts=INDIAN_AGRI_DISTRICTS, initial_screen='screen-home')
 
 @app.route('/predict', methods=['POST'])
 def predict():

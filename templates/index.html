@@ -121,7 +121,7 @@
 <!-- ═══════════════════════════════════════════════
      SCREEN 4 — HOME GRID
 ═══════════════════════════════════════════════ -->
-<div id="screen-home" class="screen home-bg">
+<div id="screen-home" class="screen {% if initial_screen == 'screen-home' %}active{% endif %} home-bg">
   <!-- Top bar -->
   <div class="home-topbar">
     <div class="home-brand">
@@ -152,77 +152,61 @@
   <!-- Feature Cards Grid -->
   <div class="home-grid">
 
-    <div class="home-card home-card-green" onclick="showScreen('screen-predict')">
-      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/predict-yield');" title="Open in new page">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-      </button>
+    <a href="/predict-yield" class="home-card home-card-green">
       <div class="home-card-icon"><i class="fa-solid fa-wheat-awn"></i></div>
       <div class="home-card-label" data-i18n="predict_yield">Predict Crop Yield</div>
       <div class="home-card-sub te-sub" data-i18n-te="predict_yield_te">పంట దిగుబడి అంచనా</div>
-    </div>
+      <span class="home-card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+    </a>
 
-    <div class="home-card home-card-teal" onclick="showScreen('screen-recommend')">
-      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/recommend');" title="Open in new page">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-      </button>
+    <a href="/recommend" class="home-card home-card-teal">
       <div class="home-card-icon"><i class="fa-solid fa-seedling"></i></div>
       <div class="home-card-label" data-i18n="crop_recommend">Crop Recommendation</div>
       <div class="home-card-sub te-sub" data-i18n-te="crop_recommend_te">పంట సిఫారసు</div>
-    </div>
+      <span class="home-card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+    </a>
 
-    <div class="home-card home-card-blue" onclick="showScreen('screen-weather')">
-      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/weather');" title="Open in new page">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-      </button>
+    <a href="/weather" class="home-card home-card-blue">
       <div class="home-card-icon"><i class="fa-solid fa-cloud-sun-rain"></i></div>
       <div class="home-card-label" data-i18n="weather">Weather</div>
       <div class="home-card-sub te-sub" data-i18n-te="weather_te">వాతావరణం</div>
-    </div>
+      <span class="home-card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+    </a>
 
-    <div class="home-card home-card-orange" onclick="showScreen('screen-soil')">
-      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/soil-health');" title="Open in new page">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-      </button>
+    <a href="/soil-health" class="home-card home-card-orange">
       <div class="home-card-icon"><i class="fa-solid fa-flask-vial"></i></div>
       <div class="home-card-label" data-i18n="soil_health">Soil Health</div>
       <div class="home-card-sub te-sub" data-i18n-te="soil_health_te">నేల ఆరోగ్యం</div>
-    </div>
+      <span class="home-card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+    </a>
 
-    <div class="home-card home-card-red" onclick="showScreen('screen-pest')">
-      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/pest-detection');" title="Open in new page">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-      </button>
+    <a href="/pest-detection" class="home-card home-card-red">
       <div class="home-card-icon"><i class="fa-solid fa-bug"></i></div>
       <div class="home-card-label" data-i18n="pest_detect">Pest Detection</div>
       <div class="home-card-sub te-sub" data-i18n-te="pest_detect_te">తెగులు గుర్తింపు</div>
-    </div>
+      <span class="home-card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+    </a>
 
-    <div class="home-card home-card-purple" onclick="showScreen('screen-reports')">
-      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/farm-reports');" title="Open in new page">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-      </button>
+    <a href="/farm-reports" class="home-card home-card-purple">
       <div class="home-card-icon"><i class="fa-solid fa-chart-line"></i></div>
       <div class="home-card-label" data-i18n="farm_reports">Farm Reports</div>
       <div class="home-card-sub te-sub" data-i18n-te="farm_reports_te">వ్యవసాయ నివేదికలు</div>
-    </div>
+      <span class="home-card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+    </a>
 
-    <div class="home-card home-card-indigo" onclick="showScreen('screen-talk')">
-      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/talk-with-ai');" title="Open in new page">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-      </button>
+    <a href="/talk-with-ai" class="home-card home-card-indigo">
       <div class="home-card-icon"><i class="fa-solid fa-microphone"></i></div>
       <div class="home-card-label" data-i18n="ai_talk">Talk with AI</div>
       <div class="home-card-sub te-sub" data-i18n-te="ai_talk_te">AI తో మాట్లాడండి</div>
-    </div>
+      <span class="home-card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+    </a>
 
-    <div class="home-card home-card-gray" onclick="showScreen('screen-profile')">
-      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/profile');" title="Open in new page">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-      </button>
+    <a href="/profile" class="home-card home-card-gray">
       <div class="home-card-icon"><i class="fa-solid fa-user"></i></div>
       <div class="home-card-label" data-i18n="profile">Profile</div>
       <div class="home-card-sub te-sub" data-i18n-te="profile_te">ప్రొఫైల్</div>
-    </div>
+      <span class="home-card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+    </a>
 
   </div>
 
@@ -234,13 +218,13 @@
 <!-- ═══════════════════════════════════════════════
      SCREEN 5 — PREDICT YIELD
 ═══════════════════════════════════════════════ -->
-<div id="screen-predict" class="screen feature-screen">
+<div id="screen-predict" class="screen {% if initial_screen == 'screen-predict' %}active{% endif %} feature-screen">
 
   <!-- Feature Top Bar -->
   <div class="feature-topbar">
-    <button class="btn-back" onclick="showScreen('screen-home')">
+    <a href="/" class="btn-back" title="Home">
       <i class="fa-solid fa-arrow-left"></i>
-    </button>
+    </a>
     <div class="feature-topbar-title">
       <i class="fa-solid fa-wheat-awn feature-screen-icon"></i>
       <div>
@@ -286,7 +270,7 @@
   <div class="feature-body">
     <div class="feature-col-left">
 
-      <!-- STEP 1: CROP -->
+      <!-- STEP 1: CROP & FARM DETAILS -->
       <div class="section-card">
         <div class="section-head">
           <i class="fa-solid fa-wheat-awn" style="color:#2d6a4f;"></i>
@@ -337,11 +321,16 @@
             </div>
           </div>
 
-          <!-- Live Weather -->
-          <div class="section-head" style="margin-top:1rem;">
-            <i class="fa-solid fa-cloud-sun-rain" style="color:#0284c7;"></i>
-            <span data-i18n="weather">Weather</span>
-            <span class="live-dot-badge"><span class="pulse-dot"></span> LIVE</span>
+          <!-- Location & Weather Selector -->
+          <div class="section-head" style="margin-top:1rem; justify-content:space-between;">
+            <div>
+              <i class="fa-solid fa-cloud-sun-rain" style="color:#0284c7;"></i>
+              <span data-i18n="weather">Weather</span>
+              <span class="te-sub section-head-te" data-i18n-te="weather_te">వాతావరణం</span>
+            </div>
+            <a href="/weather" class="compact-screen-link" title="Open full 7-day weather page">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Full Weather
+            </a>
           </div>
           <div class="weather-fetch-row">
             <select class="select-farmer" id="weatherDistrictSelect" style="flex:1;">
@@ -354,45 +343,24 @@
               <i class="fa-solid fa-location-crosshairs"></i> GPS
             </button>
           </div>
-          <div class="weather-mini-row">
-            <div class="weather-mini-box">
-              <div class="weather-mini-lbl">
-                <i class="fa-solid fa-temperature-half" style="color:#ef4444;"></i> Temp
-              </div>
-              <div class="weather-mini-val" id="liveTempDisplay">27.5°C</div>
-            </div>
-            <div class="weather-mini-box">
-              <div class="weather-mini-lbl">
-                <i class="fa-solid fa-droplet" style="color:#0284c7;"></i> Humidity
-              </div>
-              <div class="weather-mini-val" id="liveHumidityDisplay">75%</div>
-            </div>
-            <div class="weather-mini-box">
-              <div class="weather-mini-lbl">
-                <i class="fa-solid fa-cloud-showers-heavy" style="color:#3b82f6;"></i> Rain
-              </div>
-              <div class="weather-mini-val" id="liveRainDisplay">1200mm</div>
-            </div>
-          </div>
-          <div class="weather-source-bar" id="weatherSourceText">
-            <i class="fa-solid fa-satellite-dish"></i> Satellite Feed (Open-Meteo)
-          </div>
-          <div class="radar-strip" id="weatherRadarStrip">
-            <div class="radar-header">
-              <span><i class="fa-solid fa-satellite"></i> 7-Day Forecast</span>
-              <span id="radarLocationLabel" style="font-weight:600;">—</span>
-            </div>
-            <div class="radar-days-grid" id="radarDaysGrid"></div>
-            <div id="weatherAlertBox" style="display:none;" class="weather-alert-banner">
-              <i class="fa-solid fa-triangle-exclamation"></i> <span id="weatherAlertText"></span>
-            </div>
+          <div class="weather-compact-summary" id="weatherCompactSummary">
+            <span><i class="fa-solid fa-temperature-half" style="color:#ef4444;"></i> <strong id="liveTempDisplay">27.5°C</strong></span>
+            <span>&middot;</span>
+            <span><i class="fa-solid fa-droplet" style="color:#0284c7;"></i> <strong id="liveHumidityDisplay">75%</strong></span>
+            <span>&middot;</span>
+            <span><i class="fa-solid fa-cloud-showers-heavy" style="color:#3b82f6;"></i> <strong id="liveRainDisplay">1200mm</strong></span>
           </div>
 
           <!-- Soil Condition -->
-          <div class="section-head" style="margin-top:1rem;">
-            <i class="fa-solid fa-vial-circle-check" style="color:#2d6a4f;"></i>
-            <span data-i18n="soil_condition">Soil Condition</span>
-            <span class="te-sub section-head-te" data-i18n-te="soil_condition_te">నేల స్థితి</span>
+          <div class="section-head" style="margin-top:1rem; justify-content:space-between;">
+            <div>
+              <i class="fa-solid fa-vial-circle-check" style="color:#2d6a4f;"></i>
+              <span data-i18n="soil_condition">Soil Condition</span>
+              <span class="te-sub section-head-te" data-i18n-te="soil_condition_te">నేల స్థితి</span>
+            </div>
+            <a href="/soil-health" class="compact-screen-link" title="Open full soil health page">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Soil Health Lab
+            </a>
           </div>
           <div class="soil-condition-matrix">
             <div class="soil-condition-card active" data-soil-preset="fertile">
@@ -415,65 +383,12 @@
             </div>
           </div>
 
-          <!-- Expert Drawer -->
-          <div class="expert-drawer-toggle" id="expertDrawerToggle">
-            <span><i class="fa-solid fa-sliders" style="color:#2d6a4f;"></i> Custom soil lab values (Optional)</span>
-            <span id="drawerToggleIcon"><i class="fa-solid fa-chevron-down"></i></span>
-          </div>
-          <div class="expert-drawer-content" id="expertDrawerContent">
-            <div class="slider-group">
-              <div class="slider-header">
-                <div class="slider-label-box">
-                  <span class="slider-label"><i class="fa-solid fa-leaf" style="color:#40916c;"></i> Nitrogen (N)</span>
-                  <span id="nitrogenBadge" class="slider-info-badge badge-soil-opt"><i class="fa-solid fa-circle-check"></i> Optimal</span>
-                </div>
-                <div><input type="number" step="1" min="5" max="250" class="slider-number-input" id="nitrogenInput" value="110"> <span style="font-size:0.75rem;color:#6b7280;">kg/ha</span></div>
-              </div>
-              <input type="range" class="slider-range" id="nitrogenRange" min="5" max="250" value="110">
-            </div>
-            <div class="slider-group">
-              <div class="slider-header">
-                <div class="slider-label-box">
-                  <span class="slider-label"><i class="fa-solid fa-seedling" style="color:#40916c;"></i> Phosphorus (P)</span>
-                  <span id="phosphorusBadge" class="slider-info-badge badge-soil-opt"><i class="fa-solid fa-circle-check"></i> Healthy Roots</span>
-                </div>
-                <div><input type="number" step="1" min="5" max="150" class="slider-number-input" id="phosphorusInput" value="50"> <span style="font-size:0.75rem;color:#6b7280;">kg/ha</span></div>
-              </div>
-              <input type="range" class="slider-range" id="phosphorusRange" min="5" max="150" value="50">
-            </div>
-            <div class="slider-group">
-              <div class="slider-header">
-                <div class="slider-label-box">
-                  <span class="slider-label"><i class="fa-solid fa-shield-halved" style="color:#40916c;"></i> Potassium (K)</span>
-                  <span id="potassiumBadge" class="slider-info-badge badge-soil-opt"><i class="fa-solid fa-circle-check"></i> Disease Resistant</span>
-                </div>
-                <div><input type="number" step="1" min="5" max="180" class="slider-number-input" id="potassiumInput" value="45"> <span style="font-size:0.75rem;color:#6b7280;">kg/ha</span></div>
-              </div>
-              <input type="range" class="slider-range" id="potassiumRange" min="5" max="180" value="45">
-            </div>
-            <div class="slider-group">
-              <div class="slider-header">
-                <div class="slider-label-box">
-                  <span class="slider-label"><i class="fa-solid fa-flask" style="color:#40916c;"></i> Soil pH</span>
-                  <span id="phBadge" class="slider-info-badge badge-soil-opt"><i class="fa-solid fa-circle-check"></i> Sweet &amp; Fertile</span>
-                </div>
-                <div><input type="number" step="0.1" min="4.0" max="9.5" class="slider-number-input" id="phInput" value="6.5"> <span style="font-size:0.75rem;color:#6b7280;">pH</span></div>
-              </div>
-              <input type="range" class="slider-range" id="phRange" min="4.0" max="9.5" step="0.1" value="6.5">
-            </div>
-            <div class="slider-group" style="margin-bottom:0;">
-              <div class="slider-header">
-                <div class="slider-label-box">
-                  <span class="slider-label"><i class="fa-solid fa-cloud-showers-heavy" style="color:#0284c7;"></i> Seasonal Rainfall</span>
-                  <span id="rainfallBadge" class="slider-info-badge badge-soil-opt"><i class="fa-solid fa-circle-check"></i> Good Moisture</span>
-                </div>
-                <div><input type="number" step="10" min="50" max="2500" class="slider-number-input" id="rainfallInput" value="1200"> <span style="font-size:0.75rem;color:#6b7280;">mm</span></div>
-              </div>
-              <input type="range" class="slider-range" id="rainfallRange" min="50" max="2500" step="10" value="1200">
-            </div>
-          </div>
-
-          <!-- Hidden weather syncs -->
+          <!-- Hidden inputs for ML prediction accuracy -->
+          <input type="hidden" id="nitrogenInput" value="115">
+          <input type="hidden" id="phosphorusInput" value="55">
+          <input type="hidden" id="potassiumInput" value="48">
+          <input type="hidden" id="phInput" value="6.5">
+          <input type="hidden" id="rainfallInput" value="1200">
           <input type="hidden" id="tempInput" value="27.5">
           <input type="hidden" id="humidityInput" value="75">
 
@@ -516,16 +431,7 @@
           </div>
         </div>
 
-        <!-- Alternative Crops -->
-        <div class="alt-crops-container" id="altCropsContainer">
-          <div class="alt-crops-header">
-            <span><i class="fa-solid fa-arrows-rotate"></i> Alternative Crops For This Soil:</span>
-            <span style="font-size:0.72rem;color:#166534;font-weight:700;">Tap to Switch</span>
-          </div>
-          <div class="alt-crops-grid" id="altCropsGrid"></div>
-        </div>
-
-        <!-- Impact Simulator -->
+        <!-- Profit / Economic Impact -->
         <div class="impact-simulator-card" id="impactSimulatorCard">
           <div class="impact-header">
             <span><i class="fa-solid fa-chart-pie"></i> Profit Impact</span>
@@ -533,7 +439,7 @@
           </div>
           <div class="impact-grid">
             <div class="impact-col">
-              <div class="impact-col-lbl">Current</div>
+              <div class="impact-col-lbl">Current Harvest</div>
               <div class="impact-col-val" id="currentYieldColVal">—</div>
               <div style="font-size:0.75rem;color:#64748b;" id="currentRevColVal">Revenue: &#8377;—</div>
             </div>
@@ -553,41 +459,56 @@
           <div id="keyTakeawaysList"></div>
         </div>
 
-        <!-- KPIs -->
-        <div class="stat-kpi-grid">
-          <div class="stat-kpi-box">
-            <div class="lbl"><i class="fa-solid fa-indian-rupee-sign"></i> Revenue</div>
-            <div class="val" id="currentRevenueVal" style="color:#047857;">&#8377;—</div>
-          </div>
-          <div class="stat-kpi-box">
-            <div class="lbl"><i class="fa-solid fa-heart-pulse"></i> Soil Score</div>
-            <div class="val" id="soilHealthScoreVal" style="color:#16a34a;">—/100</div>
-          </div>
-          <div class="stat-kpi-box">
-            <div class="lbl"><i class="fa-solid fa-scale-balanced"></i> Benchmark</div>
-            <div class="val" id="benchmarkYieldVal">— t/ha</div>
+        <!-- Quick Jump to Other Dedicated Feature Pages -->
+        <div class="service-jump-container">
+          <div class="service-jump-title"><i class="fa-solid fa-compass"></i> Explore Dedicated Farm Services:</div>
+          <div class="service-jump-grid">
+            <a href="/weather" class="service-jump-card">
+              <div class="service-jump-icon" style="color:#0284c7;"><i class="fa-solid fa-cloud-sun-rain"></i></div>
+              <div>
+                <div class="service-jump-name">7-Day Weather</div>
+                <div class="service-jump-desc">Rain &amp; moisture forecast &rarr;</div>
+              </div>
+            </a>
+            <a href="/soil-health" class="service-jump-card">
+              <div class="service-jump-icon" style="color:#d97706;"><i class="fa-solid fa-flask-vial"></i></div>
+              <div>
+                <div class="service-jump-name">Soil Health Lab</div>
+                <div class="service-jump-desc">NPK nutrient testing &rarr;</div>
+              </div>
+            </a>
+            <a href="/recommend" class="service-jump-card">
+              <div class="service-jump-icon" style="color:#059669;"><i class="fa-solid fa-seedling"></i></div>
+              <div>
+                <div class="service-jump-name">Crop Recommend</div>
+                <div class="service-jump-desc">Best crops for this plot &rarr;</div>
+              </div>
+            </a>
+            <a href="/pest-detection" class="service-jump-card">
+              <div class="service-jump-icon" style="color:#dc2626;"><i class="fa-solid fa-bug"></i></div>
+              <div>
+                <div class="service-jump-name">Pest Doctor</div>
+                <div class="service-jump-desc">Remedies &amp; leaf scan &rarr;</div>
+              </div>
+            </a>
           </div>
         </div>
 
-        <!-- Fertilizer -->
-        <div class="section-sub-head"><i class="fa-solid fa-boxes-packing"></i> Fertilizer Shopping List</div>
-        <div id="fertilizerAdvisoryList"></div>
-
-        <!-- Soil pH -->
-        <div class="section-sub-head"><i class="fa-solid fa-flask"></i> Soil pH &amp; Conditioning</div>
-        <div id="soilAdvisoryList"></div>
-
-        <!-- Water -->
-        <div class="section-sub-head"><i class="fa-solid fa-droplet"></i> Watering &amp; Weather Advice</div>
-        <div id="irrigationAdvisoryList"></div>
-
-        <!-- Protection Tips -->
-        <div class="section-sub-head"><i class="fa-solid fa-shield-halved"></i> Protection Tips</div>
-        <ul id="managementTipsList" style="padding-left:0.5rem;margin-top:0.4rem;list-style-type:none;"></ul>
+        <!-- Hidden containers to maintain JS compatibility without cluttering UI -->
+        <div style="display:none;">
+          <div id="altCropsGrid"></div>
+          <span id="benchmarkYieldVal"></span>
+          <span id="soilHealthScoreVal"></span>
+          <span id="currentRevenueVal"></span>
+          <div id="fertilizerAdvisoryList"></div>
+          <div id="soilAdvisoryList"></div>
+          <div id="irrigationAdvisoryList"></div>
+          <ul id="managementTipsList"></ul>
+        </div>
 
         <!-- PDF Print -->
-        <button class="btn-print" id="printReportBtn">
-          <i class="fa-solid fa-file-pdf"></i> Download PDF Report
+        <button class="btn-print" id="printReportBtn" style="margin-top:1rem;">
+          <i class="fa-solid fa-file-pdf"></i> Download PDF Summary
         </button>
       </div>
     </div><!-- end feature-col-right -->
@@ -597,9 +518,9 @@
 <!-- ═══════════════════════════════════════════════
      SCREEN 6 — WEATHER
 ═══════════════════════════════════════════════ -->
-<div id="screen-weather" class="screen feature-screen">
+<div id="screen-weather" class="screen {% if initial_screen == 'screen-weather' %}active{% endif %} feature-screen">
   <div class="feature-topbar">
-    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <a href="/" class="btn-back" title="Home"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="feature-topbar-title">
       <i class="fa-solid fa-cloud-sun-rain feature-screen-icon"></i>
       <div>
@@ -690,9 +611,9 @@
 <!-- ═══════════════════════════════════════════════
      SCREEN 7 — SOIL HEALTH
 ═══════════════════════════════════════════════ -->
-<div id="screen-soil" class="screen feature-screen">
+<div id="screen-soil" class="screen {% if initial_screen == 'screen-soil' %}active{% endif %} feature-screen">
   <div class="feature-topbar">
-    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <a href="/" class="btn-back" title="Home"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="feature-topbar-title">
       <i class="fa-solid fa-flask-vial feature-screen-icon"></i>
       <div>
@@ -786,9 +707,9 @@
 <!-- ═══════════════════════════════════════════════
      SCREEN 8 — CROP RECOMMENDATION
 ═══════════════════════════════════════════════ -->
-<div id="screen-recommend" class="screen feature-screen">
+<div id="screen-recommend" class="screen {% if initial_screen == 'screen-recommend' %}active{% endif %} feature-screen">
   <div class="feature-topbar">
-    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <a href="/" class="btn-back" title="Home"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="feature-topbar-title">
       <i class="fa-solid fa-seedling feature-screen-icon"></i>
       <div>
@@ -890,9 +811,9 @@
 <!-- ═══════════════════════════════════════════════
      SCREEN 9 — PEST DETECTION
 ═══════════════════════════════════════════════ -->
-<div id="screen-pest" class="screen feature-screen">
+<div id="screen-pest" class="screen {% if initial_screen == 'screen-pest' %}active{% endif %} feature-screen">
   <div class="feature-topbar">
-    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <a href="/" class="btn-back" title="Home"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="feature-topbar-title">
       <i class="fa-solid fa-bug feature-screen-icon"></i>
       <div>
@@ -985,9 +906,9 @@
 <!-- ═══════════════════════════════════════════════
      SCREEN 10 — FARM REPORTS
 ═══════════════════════════════════════════════ -->
-<div id="screen-reports" class="screen feature-screen">
+<div id="screen-reports" class="screen {% if initial_screen == 'screen-reports' %}active{% endif %} feature-screen">
   <div class="feature-topbar">
-    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <a href="/" class="btn-back" title="Home"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="feature-topbar-title">
       <i class="fa-solid fa-chart-line feature-screen-icon"></i>
       <div>
@@ -1092,9 +1013,9 @@
 <!-- ═══════════════════════════════════════════════
      SCREEN 11 — TALK WITH AI
 ═══════════════════════════════════════════════ -->
-<div id="screen-talk" class="screen feature-screen">
+<div id="screen-talk" class="screen {% if initial_screen == 'screen-talk' %}active{% endif %} feature-screen">
   <div class="feature-topbar">
-    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <a href="/" class="btn-back" title="Home"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="feature-topbar-title">
       <i class="fa-solid fa-microphone feature-screen-icon"></i>
       <div>
@@ -1152,9 +1073,9 @@
 <!-- ═══════════════════════════════════════════════
      SCREEN 12 — PROFILE
 ═══════════════════════════════════════════════ -->
-<div id="screen-profile" class="screen feature-screen">
+<div id="screen-profile" class="screen {% if initial_screen == 'screen-profile' %}active{% endif %} feature-screen">
   <div class="feature-topbar">
-    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <a href="/" class="btn-back" title="Home"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="feature-topbar-title">
       <i class="fa-solid fa-user feature-screen-icon"></i>
       <div>

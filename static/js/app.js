@@ -126,6 +126,10 @@ function showScreen(id, pushHistory = true) {
       if (rcResult && rcResult.style.display === 'none') {
         getCropRecommendation();
       }
+    } else if (id === 'screen-soil') {
+      if (typeof analyzeSoil === 'function') {
+        analyzeSoil();
+      }
     }
   }
 }
@@ -262,7 +266,7 @@ function hideComingSoon() {
     const savedLang = localStorage.getItem('cropai_lang') || 'en';
     currentLang = savedLang;
     updateLabels();
-    showScreen(targetFromUrl);
+    showScreen(targetFromUrl, false);
     updateGreeting();
     return;
   }
