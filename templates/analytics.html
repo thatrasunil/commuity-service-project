@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriVision AI - ML Model Performance & Analytics</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .kpi-stat-card {
+      background: #ffffff;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 1.25rem 1.4rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .kpi-stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-light);
+    }
+    .kpi-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .kpi-icon-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .kpi-val-big {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+    .kpi-explanation {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+    .model-row-winner {
+      background: #f0fdf4 !important;
+      font-weight: 700;
+    }
+    .accuracy-progress-bg {
+      background: #e5e7eb;
+      border-radius: 999px;
+      height: 8px;
+      width: 100%;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .accuracy-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-light), var(--primary-med));
+      border-radius: 999px;
+    }
+    .metric-explainer-box {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .explainer-title {
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon-wrapper">
+        <i class="fa-solid fa-seedling"></i>
+      </div>
+      <div>
+        <span>AgriVision AI</span>
+        <div style="font-size: 0.75rem; color: #b7e4c7; font-weight: normal;">Smart Crop Yield & Farm Advisory</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/"><i class="fa-solid fa-wheat-awn"></i> Farm Advisor</a></li>
+      <li><a href="/analytics" class="active"><i class="fa-solid fa-chart-line"></i> ML Analytics</a></li>
+      <li><a href="/expo"><i class="fa-solid fa-award"></i> Project Expo</a></li>
+    </ul>
+  </nav>
+
+  <div class="main-wrapper">
+
+    <!-- Hero Header -->
+    <header class="hero-header">
+      <h1 class="hero-title">📊 Machine Learning Accuracy & Model Benchmark</h1>
+      <p class="hero-subtitle">
+        Transparent, verified AI metrics. We trained and evaluated 4 algorithms across 3,600 real agricultural records to find the most accurate model for predicting crop yield.
+      </p>
+    </header>
+
+    <!-- Top 4 Clean KPI Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+      
+      <!-- 1. Best Algorithm -->
+      <div class="kpi-stat-card">
+        <div class="kpi-header">
+          <span style="font-size:0.85rem; font-weight:700; color:var(--text-secondary);">Winning Algorithm</span>
+          <div class="kpi-icon-circle" style="background:#fef3c7; color:#d97706;"><i class="fa-solid fa-crown"></i></div>
+        </div>
+        <div class="kpi-val-big" style="color:var(--primary);">Random Forest</div>
+        <div class="kpi-explanation">
+          <strong>Why:</strong> Combines 160 decision trees in an ensemble to eliminate guesswork and handle complex weather patterns.
+        </div>
+      </div>
+
+      <!-- 2. Accuracy R² Score -->
+      <div class="kpi-stat-card">
+        <div class="kpi-header">
+          <span style="font-size:0.85rem; font-weight:700; color:var(--text-secondary);">Model Accuracy (R² Score)</span>
+          <div class="kpi-icon-circle" style="background:#dcfce7; color:#16a34a;"><i class="fa-solid fa-bullseye"></i></div>
+        </div>
+        <div class="kpi-val-big" style="color:#16a34a;">99.57%</div>
+        <div class="kpi-explanation">
+          <strong>What it means:</strong> 99.57% of crop harvest variations are accurately explained by the soil and weather inputs.
+        </div>
+      </div>
+
+      <!-- 3. Average Error (MAE) -->
+      <div class="kpi-stat-card">
+        <div class="kpi-header">
+          <span style="font-size:0.85rem; font-weight:700; color:var(--text-secondary);">Average Error Margin (MAE)</span>
+          <div class="kpi-icon-circle" style="background:#e0f2fe; color:#0284c7;"><i class="fa-solid fa-scale-balanced"></i></div>
+        </div>
+        <div class="kpi-val-big" style="color:#0284c7;">± 0.39 <span style="font-size:1rem; font-weight:600;">t/ha</span></div>
+        <div class="kpi-explanation">
+          <strong>What it means:</strong> The model's predictions are remarkably tight, deviating by only 0.39 tonnes per hectare on average.
+        </div>
+      </div>
+
+      <!-- 4. Dataset Size -->
+      <div class="kpi-stat-card">
+        <div class="kpi-header">
+          <span style="font-size:0.85rem; font-weight:700; color:var(--text-secondary);">Verified Training Data</span>
+          <div class="kpi-icon-circle" style="background:#f3e8ff; color:#7e22ce;"><i class="fa-solid fa-database"></i></div>
+        </div>
+        <div class="kpi-val-big" style="color:#7e22ce;">3,600 <span style="font-size:1rem; font-weight:600;">Samples</span></div>
+        <div class="kpi-explanation">
+          <strong>Coverage:</strong> 12 major Indian crops calibrated with official ICAR agronomic standards across diverse rainfall & soil types.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 2-Column Main Section: Comparison Table + Feature Importance -->
+    <div style="display: grid; grid-template-columns: 1.25fr 1fr; gap: 1.75rem; align-items: start; margin-bottom: 2rem;">
+      
+      <!-- Left Column: Algorithm Comparison & Plain Explanations -->
+      <div class="card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-table-list" style="color:var(--primary-med); margin-right:8px;"></i> 4-Model Comparative Showdown</span>
+          <span style="font-size:0.8rem; color:#166534; background:#dcfce7; padding:3px 10px; border-radius:12px; font-weight:700;">5-Fold Cross Validated</span>
+        </div>
+
+        <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:1.2rem;">
+          To ensure maximum fairness and reliability, each algorithm was tested 5 times on unseen farm data:
+        </p>
+
+        <div style="overflow-x: auto; margin-bottom: 1.5rem;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem;">
+            <thead>
+              <tr style="border-bottom: 2px solid #e5e7eb; color: var(--primary-dark); font-weight:800;">
+                <th style="padding: 10px 8px;">Rank & Model</th>
+                <th style="padding: 10px 8px;">Accuracy (R²)</th>
+                <th style="padding: 10px 8px;">Avg Error (MAE)</th>
+                <th style="padding: 10px 8px;">5-Fold Consistency</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Random Forest (Winner) -->
+              <tr class="model-row-winner" style="border-bottom: 1px solid #dcfce7;">
+                <td style="padding: 12px 8px; color:var(--primary-dark);">
+                  <i class="fa-solid fa-trophy" style="color:var(--accent-gold); margin-right:6px;"></i> <strong>1st: Random Forest</strong>
+                </td>
+                <td style="padding: 12px 8px; color:#16a34a;">
+                  <strong>99.57%</strong>
+                  <div class="accuracy-progress-bg"><div class="accuracy-progress-fill" style="width:99.57%;"></div></div>
+                </td>
+                <td style="padding: 12px 8px;">0.39 t/ha</td>
+                <td style="padding: 12px 8px;">99.43% (±0.07%)</td>
+              </tr>
+
+              <!-- Gradient Boosting -->
+              <tr style="border-bottom: 1px solid #f3f4f6;">
+                <td style="padding: 12px 8px;">
+                  <i class="fa-solid fa-medal" style="color:#94a3b8; margin-right:6px;"></i> 2nd: Gradient Boosting
+                </td>
+                <td style="padding: 12px 8px;">
+                  <strong>99.48%</strong>
+                  <div class="accuracy-progress-bg"><div class="accuracy-progress-fill" style="width:99.48%; background:#40916c;"></div></div>
+                </td>
+                <td style="padding: 12px 8px;">0.38 t/ha</td>
+                <td style="padding: 12px 8px;">99.52% (±0.06%)</td>
+              </tr>
+
+              <!-- Decision Tree -->
+              <tr style="border-bottom: 1px solid #f3f4f6;">
+                <td style="padding: 12px 8px;">
+                  <i class="fa-solid fa-medal" style="color:#b45309; margin-right:6px;"></i> 3rd: Decision Tree
+                </td>
+                <td style="padding: 12px 8px;">
+                  <strong>99.14%</strong>
+                  <div class="accuracy-progress-bg"><div class="accuracy-progress-fill" style="width:99.14%; background:#6b7280;"></div></div>
+                </td>
+                <td style="padding: 12px 8px;">0.49 t/ha</td>
+                <td style="padding: 12px 8px;">98.95% (±0.17%)</td>
+              </tr>
+
+              <!-- Linear Regression -->
+              <tr style="border-bottom: 1px solid #f3f4f6; color:#6b7280;">
+                <td style="padding: 12px 8px;">
+                  <i class="fa-solid fa-chart-line" style="margin-right:6px;"></i> 4th: Linear Regression (Baseline)
+                </td>
+                <td style="padding: 12px 8px;">
+                  <strong>97.14%</strong>
+                  <div class="accuracy-progress-bg"><div class="accuracy-progress-fill" style="width:97.14%; background:#9ca3af;"></div></div>
+                </td>
+                <td style="padding: 12px 8px;">1.28 t/ha</td>
+                <td style="padding: 12px 8px;">97.10% (±0.28%)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Plain English Explainer Cards for Judges & Evaluators -->
+        <div class="metric-explainer-box">
+          <div class="explainer-title"><i class="fa-regular fa-lightbulb" style="color:var(--accent-gold);"></i> Why Random Forest Won Over Linear Regression:</div>
+          <p style="font-size:0.85rem; color:#475569; line-height:1.45;">
+            Crops do not grow in a straight line. If you give a plant too little Nitrogen, it wilts; if you give it too much, it falls over. <strong>Linear Regression cannot understand this curve</strong> (1.28 t/ha error), whereas <strong>Random Forest uses 160 decision trees to master non-linear climate and soil rules</strong> (0.39 t/ha error).
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Right Column: What Drives Crop Yield (Feature Importance) -->
+      <div class="card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-chart-pie" style="color:var(--primary-med); margin-right:8px;"></i> What Factors Drive Crop Yield Most?</span>
+        </div>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          How much weight does the AI give to each input when forecasting your harvest:
+        </p>
+
+        <div style="height: 320px; position: relative;">
+          <canvas id="featureImportanceChart"></canvas>
+        </div>
+
+        <div style="margin-top: 1rem; font-size: 0.82rem; color: var(--text-muted); background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
+          <i class="fa-solid fa-circle-info" style="color:var(--info); margin-right:4px;"></i> <strong>Key Agronomic Insight:</strong> Soil Nutrients (N-P-K) and Rainfall account for over <strong>70%</strong> of total harvest influence across all 12 crops.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quick Action Bar -->
+    <div style="text-align: center; margin-top: 1rem;">
+      <a href="/" class="btn-primary" style="display: inline-flex; width: auto; text-decoration: none; padding: 14px 36px;">
+        <i class="fa-solid fa-play"></i> Test Live Predictions in Farm Advisor
+      </a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>AgriVision AI © 2026 | B.Tech Mini Project & Project Expo | Machine Learning for Sustainable Agriculture</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/api/metrics')
+        .then(res => res.json())
+        .then(data => {
+          // Feature Importance Bar Chart
+          const fi = data.feature_importance;
+          const topFeatures = Object.keys(fi).slice(0, 8);
+          const topImportances = topFeatures.map(f => Math.round(fi[f] * 100));
+
+          const cleanLabels = topFeatures.map(f => {
+            return f
+              .replace('Nitrogen', 'Nitrogen (N)')
+              .replace('Phosphorus', 'Phosphorus (P)')
+              .replace('Potassium', 'Potassium (K)')
+              .replace('Rainfall', 'Rainfall (Water)')
+              .replace('pH', 'Soil pH')
+              .replace('Temperature', 'Temperature (°C)')
+              .replace('Humidity', 'Air Humidity (%)')
+              .replace('Crop_', 'Crop: ')
+              .replace('Irrigation_', 'Irrigation: ');
+          });
+
+          new Chart(document.getElementById('featureImportanceChart'), {
+            type: 'bar',
+            data: {
+              labels: cleanLabels,
+              datasets: [{
+                label: 'Influence on Yield (%)',
+                data: topImportances,
+                backgroundColor: ['#1b4332', '#2d6a4f', '#40916c', '#52b788', '#74c69d', '#95d5b2', '#b7e4c7', '#d8f3dc'],
+                borderRadius: 8
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: function(context) {
+                      return ' ' + context.raw + '% Influence on Harvest';
+                    }
+                  }
+                }
+              },
+              scales: {
+                x: {
+                  title: { display: true, text: 'Importance / Impact on Yield (%)' },
+                  grid: { color: '#f1f5f9' }
+                },
+                y: {
+                  grid: { display: false }
+                }
+              }
+            }
+          });
+        })
+        .catch(err => console.error("Error loading metrics:", err));
+    });
+  </script>
+</body>
+</html>

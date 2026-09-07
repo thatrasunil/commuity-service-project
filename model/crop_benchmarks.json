@@ -1,0 +1,434 @@
+{
+    "Rice": {
+        "mean_yield": 2.34,
+        "min_yield": 1.19,
+        "max_yield": 3.26,
+        "p25_yield": 2.12,
+        "p75_yield": 2.66,
+        "market_price_per_tonne": 22000,
+        "optimal_n_range": [
+            80.7,
+            129.6
+        ],
+        "optimal_p_range": [
+            38.6,
+            64.9
+        ],
+        "optimal_k_range": [
+            35.4,
+            54.7
+        ],
+        "optimal_ph_range": [
+            5.79,
+            7.08
+        ],
+        "optimal_rain_range": [
+            1301.6,
+            2362.5
+        ],
+        "optimal_temp_range": [
+            23.8,
+            34.9
+        ],
+        "optimal_humidity_range": [
+            64.9,
+            83.5
+        ]
+    },
+    "Wheat": {
+        "mean_yield": 2.57,
+        "min_yield": 1.31,
+        "max_yield": 3.55,
+        "p25_yield": 2.32,
+        "p75_yield": 2.89,
+        "market_price_per_tonne": 23000,
+        "optimal_n_range": [
+            94.4,
+            140.0
+        ],
+        "optimal_p_range": [
+            47.6,
+            74.9
+        ],
+        "optimal_k_range": [
+            31.6,
+            51.1
+        ],
+        "optimal_ph_range": [
+            6.21,
+            7.4
+        ],
+        "optimal_rain_range": [
+            471.2,
+            818.6
+        ],
+        "optimal_temp_range": [
+            14.8,
+            25.6
+        ],
+        "optimal_humidity_range": [
+            46.8,
+            66.4
+        ]
+    },
+    "Maize": {
+        "mean_yield": 2.84,
+        "min_yield": 1.26,
+        "max_yield": 3.93,
+        "p25_yield": 2.58,
+        "p75_yield": 3.22,
+        "market_price_per_tonne": 21000,
+        "optimal_n_range": [
+            104.2,
+            149.9
+        ],
+        "optimal_p_range": [
+            44.2,
+            71.0
+        ],
+        "optimal_k_range": [
+            40.0,
+            61.7
+        ],
+        "optimal_ph_range": [
+            6.06,
+            7.16
+        ],
+        "optimal_rain_range": [
+            592.4,
+            1014.4
+        ],
+        "optimal_temp_range": [
+            21.8,
+            32.6
+        ],
+        "optimal_humidity_range": [
+            53.9,
+            77.2
+        ]
+    },
+    "Cotton": {
+        "mean_yield": 1.41,
+        "min_yield": 0.64,
+        "max_yield": 2.03,
+        "p25_yield": 1.25,
+        "p75_yield": 1.61,
+        "market_price_per_tonne": 65000,
+        "optimal_n_range": [
+            74.5,
+            123.5
+        ],
+        "optimal_p_range": [
+            36.1,
+            56.9
+        ],
+        "optimal_k_range": [
+            30.6,
+            46.7
+        ],
+        "optimal_ph_range": [
+            6.18,
+            7.75
+        ],
+        "optimal_rain_range": [
+            604.3,
+            957.3
+        ],
+        "optimal_temp_range": [
+            25.9,
+            34.7
+        ],
+        "optimal_humidity_range": [
+            49.5,
+            71.5
+        ]
+    },
+    "Sugarcane": {
+        "mean_yield": 47.86,
+        "min_yield": 24.04,
+        "max_yield": 63.39,
+        "p25_yield": 44.07,
+        "p75_yield": 53.57,
+        "market_price_per_tonne": 3200,
+        "optimal_n_range": [
+            143.6,
+            229.6
+        ],
+        "optimal_p_range": [
+            59.8,
+            95.5
+        ],
+        "optimal_k_range": [
+            75.3,
+            125.9
+        ],
+        "optimal_ph_range": [
+            6.23,
+            7.63
+        ],
+        "optimal_rain_range": [
+            1350.4,
+            2125.1
+        ],
+        "optimal_temp_range": [
+            25.0,
+            35.4
+        ],
+        "optimal_humidity_range": [
+            63.6,
+            83.1
+        ]
+    },
+    "Chickpea": {
+        "mean_yield": 1.11,
+        "min_yield": 0.54,
+        "max_yield": 1.53,
+        "p25_yield": 1.0,
+        "p75_yield": 1.26,
+        "market_price_per_tonne": 54000,
+        "optimal_n_range": [
+            26.2,
+            44.3
+        ],
+        "optimal_p_range": [
+            46.1,
+            71.0
+        ],
+        "optimal_k_range": [
+            23.6,
+            39.9
+        ],
+        "optimal_ph_range": [
+            6.12,
+            7.17
+        ],
+        "optimal_rain_range": [
+            362.8,
+            650.4
+        ],
+        "optimal_temp_range": [
+            18.6,
+            27.7
+        ],
+        "optimal_humidity_range": [
+            39.5,
+            57.6
+        ]
+    },
+    "Potato": {
+        "mean_yield": 13.78,
+        "min_yield": 7.17,
+        "max_yield": 18.91,
+        "p25_yield": 12.49,
+        "p75_yield": 15.6,
+        "market_price_per_tonne": 14000,
+        "optimal_n_range": [
+            118.7,
+            169.5
+        ],
+        "optimal_p_range": [
+            68.2,
+            105.5
+        ],
+        "optimal_k_range": [
+            93.5,
+            143.1
+        ],
+        "optimal_ph_range": [
+            5.34,
+            6.55
+        ],
+        "optimal_rain_range": [
+            473.4,
+            755.3
+        ],
+        "optimal_temp_range": [
+            16.1,
+            23.3
+        ],
+        "optimal_humidity_range": [
+            62.4,
+            78.8
+        ]
+    },
+    "Groundnut": {
+        "mean_yield": 1.53,
+        "min_yield": 0.68,
+        "max_yield": 2.02,
+        "p25_yield": 1.39,
+        "p75_yield": 1.73,
+        "market_price_per_tonne": 67000,
+        "optimal_n_range": [
+            25.5,
+            46.4
+        ],
+        "optimal_p_range": [
+            46.1,
+            67.6
+        ],
+        "optimal_k_range": [
+            37.0,
+            57.5
+        ],
+        "optimal_ph_range": [
+            5.96,
+            6.98
+        ],
+        "optimal_rain_range": [
+            519.7,
+            845.0
+        ],
+        "optimal_temp_range": [
+            24.5,
+            32.7
+        ],
+        "optimal_humidity_range": [
+            54.4,
+            73.3
+        ]
+    },
+    "Mustard": {
+        "mean_yield": 0.99,
+        "min_yield": 0.51,
+        "max_yield": 1.33,
+        "p25_yield": 0.89,
+        "p75_yield": 1.12,
+        "market_price_per_tonne": 56000,
+        "optimal_n_range": [
+            60.4,
+            92.7
+        ],
+        "optimal_p_range": [
+            30.6,
+            51.8
+        ],
+        "optimal_k_range": [
+            24.9,
+            40.0
+        ],
+        "optimal_ph_range": [
+            6.22,
+            7.21
+        ],
+        "optimal_rain_range": [
+            318.9,
+            550.3
+        ],
+        "optimal_temp_range": [
+            15.2,
+            23.6
+        ],
+        "optimal_humidity_range": [
+            43.7,
+            61.6
+        ]
+    },
+    "Tomato": {
+        "mean_yield": 18.05,
+        "min_yield": 9.22,
+        "max_yield": 24.31,
+        "p25_yield": 16.43,
+        "p75_yield": 20.38,
+        "market_price_per_tonne": 18000,
+        "optimal_n_range": [
+            102.6,
+            148.3
+        ],
+        "optimal_p_range": [
+            56.8,
+            84.5
+        ],
+        "optimal_k_range": [
+            69.0,
+            111.4
+        ],
+        "optimal_ph_range": [
+            6.08,
+            6.93
+        ],
+        "optimal_rain_range": [
+            507.8,
+            828.6
+        ],
+        "optimal_temp_range": [
+            20.9,
+            29.5
+        ],
+        "optimal_humidity_range": [
+            59.3,
+            78.9
+        ]
+    },
+    "Soybean": {
+        "mean_yield": 1.4,
+        "min_yield": 0.74,
+        "max_yield": 1.97,
+        "p25_yield": 1.25,
+        "p75_yield": 1.58,
+        "market_price_per_tonne": 48000,
+        "optimal_n_range": [
+            30.9,
+            51.0
+        ],
+        "optimal_p_range": [
+            52.9,
+            80.1
+        ],
+        "optimal_k_range": [
+            38.1,
+            59.6
+        ],
+        "optimal_ph_range": [
+            6.23,
+            7.18
+        ],
+        "optimal_rain_range": [
+            638.7,
+            1002.4
+        ],
+        "optimal_temp_range": [
+            22.6,
+            31.0
+        ],
+        "optimal_humidity_range": [
+            55.7,
+            73.9
+        ]
+    },
+    "Kidney Beans": {
+        "mean_yield": 1.06,
+        "min_yield": 0.54,
+        "max_yield": 1.52,
+        "p25_yield": 0.94,
+        "p75_yield": 1.21,
+        "market_price_per_tonne": 72000,
+        "optimal_n_range": [
+            30.0,
+            51.8
+        ],
+        "optimal_p_range": [
+            53.4,
+            82.2
+        ],
+        "optimal_k_range": [
+            30.4,
+            51.3
+        ],
+        "optimal_ph_range": [
+            5.78,
+            6.73
+        ],
+        "optimal_rain_range": [
+            475.0,
+            791.0
+        ],
+        "optimal_temp_range": [
+            17.5,
+            25.8
+        ],
+        "optimal_humidity_range": [
+            47.9,
+            68.0
+        ]
+    }
+}

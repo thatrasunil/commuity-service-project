@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>CropAI – Predict Early. Improve Yield.</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script>
+    window.SERVER_INITIAL_SCREEN = "{{ initial_screen|default('') }}";
+  </script>
+</head>
+<body>
+
+<div id="screen-splash" class="screen {% if not initial_screen or initial_screen == 'screen-splash' %}active{% endif %} splash-bg">
+  <div class="splash-content">
+    <div class="splash-logo-ring">
+      <i class="fa-solid fa-seedling splash-leaf"></i>
+    </div>
+    <h1 class="splash-title">CropAI</h1>
+    <p class="splash-sub">AI-Based Crop Yield Prediction</p>
+    <p class="splash-tagline">"Predict Early. Improve Yield."</p>
+    <div class="splash-loader-bar">
+      <div class="splash-loader-fill" id="splashFill"></div>
+    </div>
+    <p class="splash-loading-text">Loading...</p>
+  </div>
+  <div class="splash-footer">
+    <p>CSP Project &middot; AI &amp; Data Science &middot; 2026</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 2 — LANGUAGE SELECTION
+═══════════════════════════════════════════════ -->
+<div id="screen-language" class="screen lang-bg">
+  <div class="screen-center-card">
+    <div class="lang-header">
+      <i class="fa-solid fa-globe lang-globe-icon"></i>
+      <h2>Choose Language</h2>
+      <p class="te-sub">భాషను ఎంచుకోండి</p>
+      <p class="hi-sub">भाषा चुनें</p>
+    </div>
+    <div class="lang-btn-stack">
+      <button class="btn-lang" data-lang="en" onclick="selectLanguage('en')">
+        <span class="lang-flag-icon lang-flag-en"><i class="fa-solid fa-globe"></i></span>
+        <div>
+          <div class="lang-name">English</div>
+          <div class="lang-native">English</div>
+        </div>
+      </button>
+      <button class="btn-lang btn-lang-te" data-lang="te" onclick="selectLanguage('te')">
+        <span class="lang-flag-icon lang-flag-te"><i class="fa-solid fa-leaf"></i></span>
+        <div>
+          <div class="lang-name">Telugu</div>
+          <div class="lang-native te-text">తెలుగు</div>
+        </div>
+      </button>
+      <button class="btn-lang btn-lang-hi" data-lang="hi" onclick="selectLanguage('hi')">
+        <span class="lang-flag-icon lang-flag-hi"><i class="fa-solid fa-flag"></i></span>
+        <div>
+          <div class="lang-name">Hindi</div>
+          <div class="lang-native hi-text">हिन्दी</div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 3 — LOGIN
+═══════════════════════════════════════════════ -->
+<div id="screen-login" class="screen login-bg">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-ring"><i class="fa-solid fa-seedling"></i></div>
+      <h2>CropAI</h2>
+    </div>
+
+    <h3 class="login-title" data-i18n="login_title">Welcome Farmer</h3>
+    <p class="login-sub te-sub" data-i18n-te="login_title_te">రైతుకు స్వాగతం</p>
+
+    <div class="login-form">
+      <label class="login-label" data-i18n="mobile_number">
+        <i class="fa-solid fa-mobile-screen-button" style="color:var(--primary-med);"></i> Mobile Number
+      </label>
+      <input type="tel" class="login-input" placeholder="Enter 10-digit mobile number"
+             maxlength="10" pattern="[0-9]{10}" id="loginMobile">
+
+      <label class="login-label" style="margin-top:1rem;" data-i18n="otp_label">
+        <i class="fa-solid fa-key" style="color:var(--primary-med);"></i> OTP
+      </label>
+      <div style="display:flex; gap:0.5rem;">
+        <input type="text" class="login-input" placeholder="Enter OTP" id="loginOTP"
+               maxlength="6" style="flex:1;">
+        <button class="btn-otp" id="btnSendOtp" onclick="sendOtp()">
+          <span data-i18n="send_otp">Send OTP</span>
+        </button>
+      </div>
+
+      <button class="btn-login-primary" onclick="doLogin()">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        <span data-i18n="login_btn">Login</span>
+      </button>
+
+      <div class="login-divider"><span data-i18n="or_text">OR</span></div>
+
+      <button class="btn-guest" onclick="continueAsGuest()">
+        <i class="fa-solid fa-user-check"></i>
+        <span data-i18n="guest_btn">Continue as Guest</span>
+        <span class="te-sub" data-i18n-te="guest_btn_te"> &middot; అతిథిగా కొనసాగండి</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 4 — HOME GRID
+═══════════════════════════════════════════════ -->
+<div id="screen-home" class="screen home-bg">
+  <!-- Top bar -->
+  <div class="home-topbar">
+    <div class="home-brand">
+      <div class="home-brand-icon"><i class="fa-solid fa-seedling"></i></div>
+      <div>
+        <div class="home-brand-name">CropAI</div>
+        <div class="home-brand-tagline" data-i18n="tagline">Predict Early. Improve Yield.</div>
+      </div>
+    </div>
+    <div class="home-topbar-actions">
+      <button class="btn-icon-round" onclick="showScreen('screen-language')" title="Change Language">
+        <i class="fa-solid fa-globe"></i>
+      </button>
+      <button class="btn-icon-round" onclick="toggleHighContrast()" title="High Contrast">
+        <i class="fa-solid fa-circle-half-stroke"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Greeting -->
+  <div class="home-greeting" id="homeGreeting">
+    <p class="greeting-main" data-i18n="good_morning">
+      <i class="fa-solid fa-sun greeting-icon"></i> Good Morning, Farmer!
+    </p>
+    <p class="greeting-sub te-sub" data-i18n-te="good_morning_te">శుభోదయం, రైతు!</p>
+  </div>
+
+  <!-- Feature Cards Grid -->
+  <div class="home-grid">
+
+    <div class="home-card home-card-green" onclick="showScreen('screen-predict')">
+      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/predict-yield');" title="Open in new page">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </button>
+      <div class="home-card-icon"><i class="fa-solid fa-wheat-awn"></i></div>
+      <div class="home-card-label" data-i18n="predict_yield">Predict Crop Yield</div>
+      <div class="home-card-sub te-sub" data-i18n-te="predict_yield_te">పంట దిగుబడి అంచనా</div>
+    </div>
+
+    <div class="home-card home-card-teal" onclick="showScreen('screen-recommend')">
+      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/recommend');" title="Open in new page">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </button>
+      <div class="home-card-icon"><i class="fa-solid fa-seedling"></i></div>
+      <div class="home-card-label" data-i18n="crop_recommend">Crop Recommendation</div>
+      <div class="home-card-sub te-sub" data-i18n-te="crop_recommend_te">పంట సిఫారసు</div>
+    </div>
+
+    <div class="home-card home-card-blue" onclick="showScreen('screen-weather')">
+      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/weather');" title="Open in new page">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </button>
+      <div class="home-card-icon"><i class="fa-solid fa-cloud-sun-rain"></i></div>
+      <div class="home-card-label" data-i18n="weather">Weather</div>
+      <div class="home-card-sub te-sub" data-i18n-te="weather_te">వాతావరణం</div>
+    </div>
+
+    <div class="home-card home-card-orange" onclick="showScreen('screen-soil')">
+      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/soil-health');" title="Open in new page">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </button>
+      <div class="home-card-icon"><i class="fa-solid fa-flask-vial"></i></div>
+      <div class="home-card-label" data-i18n="soil_health">Soil Health</div>
+      <div class="home-card-sub te-sub" data-i18n-te="soil_health_te">నేల ఆరోగ్యం</div>
+    </div>
+
+    <div class="home-card home-card-red" onclick="showScreen('screen-pest')">
+      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/pest-detection');" title="Open in new page">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </button>
+      <div class="home-card-icon"><i class="fa-solid fa-bug"></i></div>
+      <div class="home-card-label" data-i18n="pest_detect">Pest Detection</div>
+      <div class="home-card-sub te-sub" data-i18n-te="pest_detect_te">తెగులు గుర్తింపు</div>
+    </div>
+
+    <div class="home-card home-card-purple" onclick="showScreen('screen-reports')">
+      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/farm-reports');" title="Open in new page">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </button>
+      <div class="home-card-icon"><i class="fa-solid fa-chart-line"></i></div>
+      <div class="home-card-label" data-i18n="farm_reports">Farm Reports</div>
+      <div class="home-card-sub te-sub" data-i18n-te="farm_reports_te">వ్యవసాయ నివేదికలు</div>
+    </div>
+
+    <div class="home-card home-card-indigo" onclick="showScreen('screen-talk')">
+      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/talk-with-ai');" title="Open in new page">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </button>
+      <div class="home-card-icon"><i class="fa-solid fa-microphone"></i></div>
+      <div class="home-card-label" data-i18n="ai_talk">Talk with AI</div>
+      <div class="home-card-sub te-sub" data-i18n-te="ai_talk_te">AI తో మాట్లాడండి</div>
+    </div>
+
+    <div class="home-card home-card-gray" onclick="showScreen('screen-profile')">
+      <button class="btn-card-popout" onclick="event.stopPropagation(); openInNewTab('/profile');" title="Open in new page">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </button>
+      <div class="home-card-icon"><i class="fa-solid fa-user"></i></div>
+      <div class="home-card-label" data-i18n="profile">Profile</div>
+      <div class="home-card-sub te-sub" data-i18n-te="profile_te">ప్రొఫైల్</div>
+    </div>
+
+  </div>
+
+  <footer class="home-footer">
+    CropAI &copy; 2026 &middot; AI &amp; Data Science CSP Project
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 5 — PREDICT YIELD
+═══════════════════════════════════════════════ -->
+<div id="screen-predict" class="screen feature-screen">
+
+  <!-- Feature Top Bar -->
+  <div class="feature-topbar">
+    <button class="btn-back" onclick="showScreen('screen-home')">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <div class="feature-topbar-title">
+      <i class="fa-solid fa-wheat-awn feature-screen-icon"></i>
+      <div>
+        <div data-i18n="predict_yield">Predict Crop Yield</div>
+        <div class="feature-topbar-sub te-sub" data-i18n-te="predict_yield_te">పంట దిగుబడి అంచనా</div>
+      </div>
+    </div>
+    <div class="feature-topbar-actions">
+      <select class="lang-pill-select" id="voiceLangSelect" title="Audio language">
+        <option value="en">EN</option>
+        <option value="te">TE</option>
+        <option value="hi">HI</option>
+        <option value="ta">TA</option>
+      </select>
+      <button class="btn-voice-small" id="voiceAdvisoryBtn" title="Listen">
+        <i class="fa-solid fa-volume-high"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Quick Scenarios -->
+  <div class="quick-bar">
+    <div class="quick-bar-label"><i class="fa-solid fa-bolt" style="color:#f59e0b;"></i> Quick Scenarios:</div>
+    <div class="quick-pills">
+      <button class="qpill qpill-green" data-preset="optimal_rice">
+        <i class="fa-solid fa-circle-check"></i> Healthy Rice
+      </button>
+      <button class="qpill qpill-orange" data-preset="drought_wheat">
+        <i class="fa-solid fa-sun"></i> Drought Wheat
+      </button>
+      <button class="qpill qpill-red" data-preset="nutrient_deficient_cotton">
+        <i class="fa-solid fa-triangle-exclamation"></i> Low N Cotton
+      </button>
+      <button class="qpill qpill-blue" data-preset="acidic_potato">
+        <i class="fa-solid fa-flask"></i> Acidic Potato
+      </button>
+      <button class="qpill qpill-teal" data-preset="optimal_sugarcane">
+        <i class="fa-solid fa-leaf"></i> Sugarcane
+      </button>
+    </div>
+  </div>
+
+  <div class="feature-body">
+    <div class="feature-col-left">
+
+      <!-- STEP 1: CROP -->
+      <div class="section-card">
+        <div class="section-head">
+          <i class="fa-solid fa-wheat-awn" style="color:#2d6a4f;"></i>
+          <span data-i18n="select_crop">Select Crop</span>
+          <span class="te-sub section-head-te" data-i18n-te="select_crop_te">పంటను ఎంచుకోండి</span>
+        </div>
+        <form id="predictionForm">
+          <div class="crop-visual-grid">
+            <div class="crop-card-choice selected" data-crop="Rice"><div class="crop-icon-box"><i class="fa-solid fa-wheat-awn"></i></div><span class="crop-name">Rice</span></div>
+            <div class="crop-card-choice" data-crop="Wheat"><div class="crop-icon-box"><i class="fa-solid fa-seedling"></i></div><span class="crop-name">Wheat</span></div>
+            <div class="crop-card-choice" data-crop="Maize"><div class="crop-icon-box"><i class="fa-solid fa-cubes-stacked"></i></div><span class="crop-name">Maize</span></div>
+            <div class="crop-card-choice" data-crop="Cotton"><div class="crop-icon-box"><i class="fa-solid fa-feather-pointed"></i></div><span class="crop-name">Cotton</span></div>
+            <div class="crop-card-choice" data-crop="Sugarcane"><div class="crop-icon-box"><i class="fa-solid fa-tree"></i></div><span class="crop-name">Sugarcane</span></div>
+            <div class="crop-card-choice" data-crop="Chickpea"><div class="crop-icon-box"><i class="fa-solid fa-circle-dot"></i></div><span class="crop-name">Chickpea</span></div>
+            <div class="crop-card-choice" data-crop="Potato"><div class="crop-icon-box"><i class="fa-solid fa-egg"></i></div><span class="crop-name">Potato</span></div>
+            <div class="crop-card-choice" data-crop="Groundnut"><div class="crop-icon-box"><i class="fa-solid fa-bowl-food"></i></div><span class="crop-name">Groundnut</span></div>
+            <div class="crop-card-choice" data-crop="Mustard"><div class="crop-icon-box"><i class="fa-solid fa-sun"></i></div><span class="crop-name">Mustard</span></div>
+            <div class="crop-card-choice" data-crop="Tomato"><div class="crop-icon-box"><i class="fa-solid fa-apple-whole"></i></div><span class="crop-name">Tomato</span></div>
+            <div class="crop-card-choice" data-crop="Soybean"><div class="crop-icon-box"><i class="fa-solid fa-spa"></i></div><span class="crop-name">Soybean</span></div>
+            <div class="crop-card-choice" data-crop="Kidney Beans"><div class="crop-icon-box"><i class="fa-solid fa-shapes"></i></div><span class="crop-name">K. Beans</span></div>
+          </div>
+          <input type="hidden" id="cropSelect" name="Crop" value="Rice">
+          <input type="hidden" id="algoSelect" name="Algorithm" value="Random Forest">
+
+          <!-- Farm Details -->
+          <div class="section-head" style="margin-top:1rem;">
+            <i class="fa-solid fa-ruler-combined" style="color:#2d6a4f;"></i>
+            <span data-i18n="farm_details">Farm Details</span>
+            <span class="te-sub section-head-te" data-i18n-te="farm_details_te">వ్యవసాయ వివరాలు</span>
+          </div>
+          <div class="two-col-inputs">
+            <div class="input-group-farmer">
+              <label class="input-label-farmer">
+                <i class="fa-solid fa-ruler-combined" style="color:#2d6a4f;"></i> Farm Size (Acres)
+              </label>
+              <input type="number" step="0.5" min="0.5" max="50" class="input-farmer" id="farmSizeInput" value="2.5">
+            </div>
+            <div class="input-group-farmer">
+              <label class="input-label-farmer">
+                <i class="fa-solid fa-droplet" style="color:#0284c7;"></i> Irrigation
+              </label>
+              <select class="select-farmer" id="irrigationSelect" name="Irrigation">
+                <option value="Drip"><i class="fa-solid fa-droplet"></i> Drip Irrigation</option>
+                <option value="Sprinkler">Sprinkler</option>
+                <option value="Flood">Surface Flood</option>
+                <option value="Rainfed">Rainfed</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Live Weather -->
+          <div class="section-head" style="margin-top:1rem;">
+            <i class="fa-solid fa-cloud-sun-rain" style="color:#0284c7;"></i>
+            <span data-i18n="weather">Weather</span>
+            <span class="live-dot-badge"><span class="pulse-dot"></span> LIVE</span>
+          </div>
+          <div class="weather-fetch-row">
+            <select class="select-farmer" id="weatherDistrictSelect" style="flex:1;">
+              <option value=""><i class="fa-solid fa-location-dot"></i> Choose District...</option>
+              {% for key, dist in districts.items() %}
+                <option value="{{ key }}">{{ dist.name }}</option>
+              {% endfor %}
+            </select>
+            <button type="button" class="btn-gps" id="btnDetectGpsWeather">
+              <i class="fa-solid fa-location-crosshairs"></i> GPS
+            </button>
+          </div>
+          <div class="weather-mini-row">
+            <div class="weather-mini-box">
+              <div class="weather-mini-lbl">
+                <i class="fa-solid fa-temperature-half" style="color:#ef4444;"></i> Temp
+              </div>
+              <div class="weather-mini-val" id="liveTempDisplay">27.5°C</div>
+            </div>
+            <div class="weather-mini-box">
+              <div class="weather-mini-lbl">
+                <i class="fa-solid fa-droplet" style="color:#0284c7;"></i> Humidity
+              </div>
+              <div class="weather-mini-val" id="liveHumidityDisplay">75%</div>
+            </div>
+            <div class="weather-mini-box">
+              <div class="weather-mini-lbl">
+                <i class="fa-solid fa-cloud-showers-heavy" style="color:#3b82f6;"></i> Rain
+              </div>
+              <div class="weather-mini-val" id="liveRainDisplay">1200mm</div>
+            </div>
+          </div>
+          <div class="weather-source-bar" id="weatherSourceText">
+            <i class="fa-solid fa-satellite-dish"></i> Satellite Feed (Open-Meteo)
+          </div>
+          <div class="radar-strip" id="weatherRadarStrip">
+            <div class="radar-header">
+              <span><i class="fa-solid fa-satellite"></i> 7-Day Forecast</span>
+              <span id="radarLocationLabel" style="font-weight:600;">—</span>
+            </div>
+            <div class="radar-days-grid" id="radarDaysGrid"></div>
+            <div id="weatherAlertBox" style="display:none;" class="weather-alert-banner">
+              <i class="fa-solid fa-triangle-exclamation"></i> <span id="weatherAlertText"></span>
+            </div>
+          </div>
+
+          <!-- Soil Condition -->
+          <div class="section-head" style="margin-top:1rem;">
+            <i class="fa-solid fa-vial-circle-check" style="color:#2d6a4f;"></i>
+            <span data-i18n="soil_condition">Soil Condition</span>
+            <span class="te-sub section-head-te" data-i18n-te="soil_condition_te">నేల స్థితి</span>
+          </div>
+          <div class="soil-condition-matrix">
+            <div class="soil-condition-card active" data-soil-preset="fertile">
+              <div class="sc-icon" style="background:#dcfce7;color:#166534;"><i class="fa-solid fa-circle-check"></i></div>
+              <div class="sc-title">Rich &amp; Fertile</div>
+              <div class="sc-desc te-text">సారవంతమైన నేల</div>
+              <span class="sc-badge sc-badge-green">High Yield</span>
+            </div>
+            <div class="soil-condition-card" data-soil-preset="moderate">
+              <div class="sc-icon" style="background:#fef3c7;color:#92400e;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              <div class="sc-title">Mild Deficit</div>
+              <div class="sc-desc te-text">తక్కువ పోషకాలు</div>
+              <span class="sc-badge sc-badge-yellow">Needs Fertilizer</span>
+            </div>
+            <div class="soil-condition-card" data-soil-preset="poor">
+              <div class="sc-icon" style="background:#fee2e2;color:#991b1b;"><i class="fa-solid fa-skull-crossbones"></i></div>
+              <div class="sc-title">Depleted</div>
+              <div class="sc-desc te-text">నేల అవసరం అధికం</div>
+              <span class="sc-badge sc-badge-red">High Risk</span>
+            </div>
+          </div>
+
+          <!-- Expert Drawer -->
+          <div class="expert-drawer-toggle" id="expertDrawerToggle">
+            <span><i class="fa-solid fa-sliders" style="color:#2d6a4f;"></i> Custom soil lab values (Optional)</span>
+            <span id="drawerToggleIcon"><i class="fa-solid fa-chevron-down"></i></span>
+          </div>
+          <div class="expert-drawer-content" id="expertDrawerContent">
+            <div class="slider-group">
+              <div class="slider-header">
+                <div class="slider-label-box">
+                  <span class="slider-label"><i class="fa-solid fa-leaf" style="color:#40916c;"></i> Nitrogen (N)</span>
+                  <span id="nitrogenBadge" class="slider-info-badge badge-soil-opt"><i class="fa-solid fa-circle-check"></i> Optimal</span>
+                </div>
+                <div><input type="number" step="1" min="5" max="250" class="slider-number-input" id="nitrogenInput" value="110"> <span style="font-size:0.75rem;color:#6b7280;">kg/ha</span></div>
+              </div>
+              <input type="range" class="slider-range" id="nitrogenRange" min="5" max="250" value="110">
+            </div>
+            <div class="slider-group">
+              <div class="slider-header">
+                <div class="slider-label-box">
+                  <span class="slider-label"><i class="fa-solid fa-seedling" style="color:#40916c;"></i> Phosphorus (P)</span>
+                  <span id="phosphorusBadge" class="slider-info-badge badge-soil-opt"><i class="fa-solid fa-circle-check"></i> Healthy Roots</span>
+                </div>
+                <div><input type="number" step="1" min="5" max="150" class="slider-number-input" id="phosphorusInput" value="50"> <span style="font-size:0.75rem;color:#6b7280;">kg/ha</span></div>
+              </div>
+              <input type="range" class="slider-range" id="phosphorusRange" min="5" max="150" value="50">
+            </div>
+            <div class="slider-group">
+              <div class="slider-header">
+                <div class="slider-label-box">
+                  <span class="slider-label"><i class="fa-solid fa-shield-halved" style="color:#40916c;"></i> Potassium (K)</span>
+                  <span id="potassiumBadge" class="slider-info-badge badge-soil-opt"><i class="fa-solid fa-circle-check"></i> Disease Resistant</span>
+                </div>
+                <div><input type="number" step="1" min="5" max="180" class="slider-number-input" id="potassiumInput" value="45"> <span style="font-size:0.75rem;color:#6b7280;">kg/ha</span></div>
+              </div>
+              <input type="range" class="slider-range" id="potassiumRange" min="5" max="180" value="45">
+            </div>
+            <div class="slider-group">
+              <div class="slider-header">
+                <div class="slider-label-box">
+                  <span class="slider-label"><i class="fa-solid fa-flask" style="color:#40916c;"></i> Soil pH</span>
+                  <span id="phBadge" class="slider-info-badge badge-soil-opt"><i class="fa-solid fa-circle-check"></i> Sweet &amp; Fertile</span>
+                </div>
+                <div><input type="number" step="0.1" min="4.0" max="9.5" class="slider-number-input" id="phInput" value="6.5"> <span style="font-size:0.75rem;color:#6b7280;">pH</span></div>
+              </div>
+              <input type="range" class="slider-range" id="phRange" min="4.0" max="9.5" step="0.1" value="6.5">
+            </div>
+            <div class="slider-group" style="margin-bottom:0;">
+              <div class="slider-header">
+                <div class="slider-label-box">
+                  <span class="slider-label"><i class="fa-solid fa-cloud-showers-heavy" style="color:#0284c7;"></i> Seasonal Rainfall</span>
+                  <span id="rainfallBadge" class="slider-info-badge badge-soil-opt"><i class="fa-solid fa-circle-check"></i> Good Moisture</span>
+                </div>
+                <div><input type="number" step="10" min="50" max="2500" class="slider-number-input" id="rainfallInput" value="1200"> <span style="font-size:0.75rem;color:#6b7280;">mm</span></div>
+              </div>
+              <input type="range" class="slider-range" id="rainfallRange" min="50" max="2500" step="10" value="1200">
+            </div>
+          </div>
+
+          <!-- Hidden weather syncs -->
+          <input type="hidden" id="tempInput" value="27.5">
+          <input type="hidden" id="humidityInput" value="75">
+
+          <!-- BIG PREDICT BUTTON -->
+          <button type="submit" class="btn-predict-big" id="submitBtn">
+            <i class="fa-solid fa-calculator" style="font-size:1.4rem;"></i>
+            <span data-i18n="predict_btn">Predict Yield</span>
+            <span class="te-sub btn-predict-te" data-i18n-te="predict_btn_te">దిగుబడి అంచనా వేయండి</span>
+          </button>
+        </form>
+      </div>
+    </div><!-- end feature-col-left -->
+
+    <!-- RIGHT: Results -->
+    <div class="feature-col-right">
+      <div id="placeholderContainer" class="result-placeholder-new">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size:2.5rem;color:#40916c;"></i>
+        <h3 style="margin-top:0.75rem;" data-i18n="analyzing">Analyzing Your Field...</h3>
+        <p class="te-sub" data-i18n-te="analyzing_te">మీ పొలాన్ని విశ్లేషిస్తున్నాము...</p>
+      </div>
+
+      <div id="resultContainer">
+        <!-- Hero Yield Card -->
+        <div class="result-hero-card">
+          <div class="result-hero-top">
+            <div>
+              <div class="result-hero-label" data-i18n="expected_yield">Expected Yield</div>
+              <div class="te-sub result-hero-label-te" data-i18n-te="expected_yield_te">అంచనా దిగుబడి</div>
+              <div class="result-hero-value">
+                <span id="predictedYieldVal">—</span>
+                <span class="result-hero-unit">T / Ha</span>
+              </div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:0.78rem;color:#b7e4c7;margin-bottom:4px;">Field Health</div>
+              <span id="riskBadge" class="risk-badge badge-success">
+                <i class="fa-solid fa-circle-check"></i> Healthy
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alternative Crops -->
+        <div class="alt-crops-container" id="altCropsContainer">
+          <div class="alt-crops-header">
+            <span><i class="fa-solid fa-arrows-rotate"></i> Alternative Crops For This Soil:</span>
+            <span style="font-size:0.72rem;color:#166534;font-weight:700;">Tap to Switch</span>
+          </div>
+          <div class="alt-crops-grid" id="altCropsGrid"></div>
+        </div>
+
+        <!-- Impact Simulator -->
+        <div class="impact-simulator-card" id="impactSimulatorCard">
+          <div class="impact-header">
+            <span><i class="fa-solid fa-chart-pie"></i> Profit Impact</span>
+            <span id="impactGainBadge" class="impact-gain-pill">+&#8377;0 Boost</span>
+          </div>
+          <div class="impact-grid">
+            <div class="impact-col">
+              <div class="impact-col-lbl">Current</div>
+              <div class="impact-col-val" id="currentYieldColVal">—</div>
+              <div style="font-size:0.75rem;color:#64748b;" id="currentRevColVal">Revenue: &#8377;—</div>
+            </div>
+            <div class="impact-col after-col">
+              <div class="impact-col-lbl" style="color:#166534;">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> With AI Plan
+              </div>
+              <div class="impact-col-val" style="color:#166534;" id="potentialYieldColVal">—</div>
+              <div style="font-size:0.75rem;color:#166534;font-weight:700;" id="potentialRevColVal">Target: &#8377;—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Key Takeaways -->
+        <div class="key-takeaways-container">
+          <div class="takeaways-title"><i class="fa-solid fa-list-check"></i> 3 Key Takeaways:</div>
+          <div id="keyTakeawaysList"></div>
+        </div>
+
+        <!-- KPIs -->
+        <div class="stat-kpi-grid">
+          <div class="stat-kpi-box">
+            <div class="lbl"><i class="fa-solid fa-indian-rupee-sign"></i> Revenue</div>
+            <div class="val" id="currentRevenueVal" style="color:#047857;">&#8377;—</div>
+          </div>
+          <div class="stat-kpi-box">
+            <div class="lbl"><i class="fa-solid fa-heart-pulse"></i> Soil Score</div>
+            <div class="val" id="soilHealthScoreVal" style="color:#16a34a;">—/100</div>
+          </div>
+          <div class="stat-kpi-box">
+            <div class="lbl"><i class="fa-solid fa-scale-balanced"></i> Benchmark</div>
+            <div class="val" id="benchmarkYieldVal">— t/ha</div>
+          </div>
+        </div>
+
+        <!-- Fertilizer -->
+        <div class="section-sub-head"><i class="fa-solid fa-boxes-packing"></i> Fertilizer Shopping List</div>
+        <div id="fertilizerAdvisoryList"></div>
+
+        <!-- Soil pH -->
+        <div class="section-sub-head"><i class="fa-solid fa-flask"></i> Soil pH &amp; Conditioning</div>
+        <div id="soilAdvisoryList"></div>
+
+        <!-- Water -->
+        <div class="section-sub-head"><i class="fa-solid fa-droplet"></i> Watering &amp; Weather Advice</div>
+        <div id="irrigationAdvisoryList"></div>
+
+        <!-- Protection Tips -->
+        <div class="section-sub-head"><i class="fa-solid fa-shield-halved"></i> Protection Tips</div>
+        <ul id="managementTipsList" style="padding-left:0.5rem;margin-top:0.4rem;list-style-type:none;"></ul>
+
+        <!-- PDF Print -->
+        <button class="btn-print" id="printReportBtn">
+          <i class="fa-solid fa-file-pdf"></i> Download PDF Report
+        </button>
+      </div>
+    </div><!-- end feature-col-right -->
+  </div><!-- end feature-body -->
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 6 — WEATHER
+═══════════════════════════════════════════════ -->
+<div id="screen-weather" class="screen feature-screen">
+  <div class="feature-topbar">
+    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="feature-topbar-title">
+      <i class="fa-solid fa-cloud-sun-rain feature-screen-icon"></i>
+      <div>
+        <div data-i18n="weather">Weather</div>
+        <div class="feature-topbar-sub te-sub" data-i18n-te="weather_te">వాతావరణం</div>
+      </div>
+    </div>
+    <div></div>
+  </div>
+  <div class="feature-body-single">
+    <div class="section-card">
+      <div class="section-head">
+        <i class="fa-solid fa-location-dot" style="color:#0284c7;"></i>
+        <span>Select Your District</span>
+        <span class="te-sub section-head-te">మీ జిల్లా ఎంచుకోండి</span>
+      </div>
+      <div class="weather-fetch-row">
+        <select class="select-farmer" id="weatherDistrictSelectW" style="flex:1;">
+          <option value="">Choose District...</option>
+          {% for key, dist in districts.items() %}
+            <option value="{{ key }}">{{ dist.name }}</option>
+          {% endfor %}
+        </select>
+        <button type="button" class="btn-gps" onclick="fetchWeatherForScreen()">
+          <i class="fa-solid fa-location-crosshairs"></i> GPS
+        </button>
+      </div>
+
+      <div class="weather-big-row">
+        <div class="weather-big-box weather-bg-temp">
+          <div class="weather-big-lbl">
+            <i class="fa-solid fa-temperature-half"></i> Temperature
+          </div>
+          <div class="weather-big-val" id="wTempBig">—</div>
+          <div class="te-sub" style="font-size:0.8rem;">ఉష్ణోగ్రత</div>
+        </div>
+        <div class="weather-big-box weather-bg-humid">
+          <div class="weather-big-lbl">
+            <i class="fa-solid fa-droplet"></i> Humidity
+          </div>
+          <div class="weather-big-val" id="wHumidBig">—</div>
+          <div class="te-sub" style="font-size:0.8rem;">తేమ</div>
+        </div>
+        <div class="weather-big-box weather-bg-rain">
+          <div class="weather-big-lbl">
+            <i class="fa-solid fa-cloud-showers-heavy"></i> Rainfall
+          </div>
+          <div class="weather-big-val" id="wRainBig">—</div>
+          <div class="te-sub" style="font-size:0.8rem;">వర్షపాతం</div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:1.2rem;">
+        <i class="fa-solid fa-calendar-days" style="color:#0284c7;"></i>
+        <span>7-Day Forecast</span>
+        <span class="te-sub section-head-te">7 రోజుల అంచనా</span>
+      </div>
+      <div class="forecast-grid" id="forecastGrid">
+        <div class="forecast-placeholder">
+          <i class="fa-solid fa-cloud-sun" style="font-size:2rem;color:#94a3b8;display:block;margin-bottom:0.5rem;"></i>
+          Select a district to load forecast
+        </div>
+      </div>
+
+      <div id="weatherAlertBoxW" style="display:none;" class="weather-alert-banner">
+        <i class="fa-solid fa-triangle-exclamation"></i> <span id="weatherAlertTextW"></span>
+      </div>
+
+      <div class="weather-tips-box">
+        <div class="section-head">
+          <i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i> Farmer Tips
+        </div>
+        <ul class="weather-tips-list" id="weatherTipsList">
+          <li><i class="fa-solid fa-cloud-sun" style="color:#f59e0b;"></i> Check forecast before spraying pesticides</li>
+          <li><i class="fa-solid fa-droplet" style="color:#0284c7;"></i> Irrigate in the evening to reduce evaporation</li>
+          <li><i class="fa-solid fa-cloud-showers-heavy" style="color:#3b82f6;"></i> Delay fertilizer before heavy rain days</li>
+          <li><i class="fa-solid fa-temperature-high" style="color:#ef4444;"></i> High temp days: add extra watering round</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 7 — SOIL HEALTH
+═══════════════════════════════════════════════ -->
+<div id="screen-soil" class="screen feature-screen">
+  <div class="feature-topbar">
+    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="feature-topbar-title">
+      <i class="fa-solid fa-flask-vial feature-screen-icon"></i>
+      <div>
+        <div data-i18n="soil_health">Soil Health</div>
+        <div class="feature-topbar-sub te-sub" data-i18n-te="soil_health_te">నేల ఆరోగ్యం</div>
+      </div>
+    </div>
+    <div></div>
+  </div>
+  <div class="feature-body-single">
+    <div class="section-card">
+      <div class="section-head">
+        <i class="fa-solid fa-vial" style="color:#2d6a4f;"></i>
+        <span>Enter Soil Test Values</span>
+        <span class="te-sub section-head-te">మీ నేల విలువలు నమోదు చేయండి</span>
+      </div>
+
+      <div class="soil-inputs-grid">
+        <div class="soil-input-box">
+          <label class="soil-input-label">
+            <i class="fa-solid fa-leaf" style="color:#16a34a;"></i> Nitrogen (N)
+          </label>
+          <input type="number" class="input-farmer" id="soilN" value="90" min="0" max="300">
+          <div class="soil-input-unit">kg/ha</div>
+        </div>
+        <div class="soil-input-box">
+          <label class="soil-input-label">
+            <i class="fa-solid fa-seedling" style="color:#059669;"></i> Phosphorus (P)
+          </label>
+          <input type="number" class="input-farmer" id="soilP" value="45" min="0" max="200">
+          <div class="soil-input-unit">kg/ha</div>
+        </div>
+        <div class="soil-input-box">
+          <label class="soil-input-label">
+            <i class="fa-solid fa-shield-halved" style="color:#7c3aed;"></i> Potassium (K)
+          </label>
+          <input type="number" class="input-farmer" id="soilK" value="40" min="0" max="200">
+          <div class="soil-input-unit">kg/ha</div>
+        </div>
+        <div class="soil-input-box">
+          <label class="soil-input-label">
+            <i class="fa-solid fa-flask" style="color:#d97706;"></i> Soil pH
+          </label>
+          <input type="number" class="input-farmer" id="soilPH" value="6.5" min="4.0" max="9.5" step="0.1">
+          <div class="soil-input-unit">pH</div>
+        </div>
+        <div class="soil-input-box">
+          <label class="soil-input-label">
+            <i class="fa-solid fa-water" style="color:#0284c7;"></i> Moisture %
+          </label>
+          <input type="number" class="input-farmer" id="soilMoisture" value="65" min="10" max="100">
+          <div class="soil-input-unit">%</div>
+        </div>
+        <div class="soil-input-box">
+          <label class="soil-input-label">
+            <i class="fa-solid fa-spa" style="color:#65a30d;"></i> Organic Matter
+          </label>
+          <select class="select-farmer" id="soilOM">
+            <option value="high">High (&gt; 3%)</option>
+            <option value="medium" selected>Medium (1–3%)</option>
+            <option value="low">Low (&lt; 1%)</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-predict-big" onclick="analyzeSoil()" style="margin-top:1rem;">
+        <i class="fa-solid fa-magnifying-glass-chart" style="font-size:1.4rem;"></i>
+        <span>Analyze Soil</span>
+        <span class="te-sub btn-predict-te">నేలను విశ్లేషించండి</span>
+      </button>
+
+      <!-- Soil Result -->
+      <div id="soilResult" style="display:none; margin-top:1.5rem;">
+        <div class="soil-result-hero" id="soilResultHero">
+          <div class="soil-result-status" id="soilResultStatus">
+            <i class="fa-solid fa-circle-check"></i> Healthy Soil
+          </div>
+          <div class="soil-result-score" id="soilResultScore">Score: 87/100</div>
+          <div class="te-sub" id="soilResultStatusTe">ఆరోగ్యకరమైన నేల</div>
+        </div>
+        <div class="soil-result-list" id="soilResultList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 8 — CROP RECOMMENDATION
+═══════════════════════════════════════════════ -->
+<div id="screen-recommend" class="screen feature-screen">
+  <div class="feature-topbar">
+    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="feature-topbar-title">
+      <i class="fa-solid fa-seedling feature-screen-icon"></i>
+      <div>
+        <div data-i18n="crop_recommend">Crop Recommendation</div>
+        <div class="feature-topbar-sub te-sub" data-i18n-te="crop_recommend_te">పంట సిఫారసు</div>
+      </div>
+    </div>
+    <div></div>
+  </div>
+  <div class="feature-body-single">
+    <div class="section-card">
+      <div class="section-head">
+        <i class="fa-solid fa-sliders" style="color:#2d6a4f;"></i>
+        <span>Your Farm Conditions</span>
+        <span class="te-sub section-head-te">మీ పొలం పరిస్థితులు</span>
+      </div>
+      <div class="two-col-inputs">
+        <div class="input-group-farmer">
+          <label class="input-label-farmer">
+            <i class="fa-solid fa-earth-asia" style="color:#2d6a4f;"></i> Soil Type
+          </label>
+          <select class="select-farmer" id="rcSoilType">
+            <option value="alluvial">Alluvial (River Soil)</option>
+            <option value="black">Black (Cotton) Soil</option>
+            <option value="red">Red Laterite Soil</option>
+            <option value="sandy">Sandy Soil</option>
+            <option value="loamy">Loamy Soil</option>
+            <option value="clay">Clay Soil</option>
+          </select>
+        </div>
+        <div class="input-group-farmer">
+          <label class="input-label-farmer">
+            <i class="fa-solid fa-calendar-days" style="color:#2d6a4f;"></i> Season
+          </label>
+          <select class="select-farmer" id="rcSeason">
+            <option value="kharif">Kharif (Jun–Oct)</option>
+            <option value="rabi">Rabi (Nov–Mar)</option>
+            <option value="zaid">Zaid (Mar–Jun)</option>
+            <option value="perennial">Year-Round</option>
+          </select>
+        </div>
+        <div class="input-group-farmer">
+          <label class="input-label-farmer">
+            <i class="fa-solid fa-droplet" style="color:#0284c7;"></i> Water Availability
+          </label>
+          <select class="select-farmer" id="rcWater">
+            <option value="high">High (Irrigated)</option>
+            <option value="medium" selected>Medium (Partial)</option>
+            <option value="low">Low (Rainfed)</option>
+          </select>
+        </div>
+        <div class="input-group-farmer">
+          <label class="input-label-farmer">
+            <i class="fa-solid fa-location-dot" style="color:#0284c7;"></i> District
+          </label>
+          <select class="select-farmer" id="rcDistrict">
+            <option value="">Select District</option>
+            {% for key, dist in districts.items() %}
+              <option value="{{ key }}">{{ dist.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-predict-big" onclick="getCropRecommendation()" style="margin-top:1rem;">
+        <i class="fa-solid fa-wand-magic-sparkles" style="font-size:1.4rem;"></i>
+        <span>Get Recommendation</span>
+        <span class="te-sub btn-predict-te">సిఫారసు పొందండి</span>
+      </button>
+
+      <!-- Recommendation Results -->
+      <div id="rcResult" style="display:none; margin-top:1.5rem;">
+        <div class="rc-best-card" id="rcBestCard">
+          <div class="rc-best-label">
+            <i class="fa-solid fa-trophy"></i> Best Crop
+          </div>
+          <div class="rc-best-name" id="rcBestName">Groundnut</div>
+          <div class="rc-best-score" id="rcBestScore">Suitability: 94%</div>
+          <div class="rc-best-reasons" id="rcBestReasons"></div>
+        </div>
+        <div class="rc-others-title">
+          <i class="fa-solid fa-star" style="color:#f59e0b;"></i> Also Good Alternatives:
+        </div>
+        <div class="rc-others-grid" id="rcOthersGrid"></div>
+        <div class="rc-avoid-box" id="rcAvoidBox">
+          <div class="rc-avoid-label">
+            <i class="fa-solid fa-circle-xmark" style="color:#dc2626;"></i> Avoid These Crops:
+          </div>
+          <div id="rcAvoidList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ═══════════════════════════════════════════════
+     SCREEN 9 — PEST DETECTION
+═══════════════════════════════════════════════ -->
+<div id="screen-pest" class="screen feature-screen">
+  <div class="feature-topbar">
+    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="feature-topbar-title">
+      <i class="fa-solid fa-bug feature-screen-icon"></i>
+      <div>
+        <div data-i18n="pest_detect">Pest Detection</div>
+        <div class="feature-topbar-sub te-sub" data-i18n-te="pest_detect_te">తెగులు గుర్తింపు</div>
+      </div>
+    </div>
+    <div></div>
+  </div>
+  <div class="feature-body-single">
+    <div class="section-card">
+      <div class="section-head">
+        <i class="fa-solid fa-camera" style="color:#dc2626;"></i>
+        <span>Pest &amp; Disease Diagnosis</span>
+        <span class="te-sub section-head-te">తెగులు నిర్ధారణ</span>
+      </div>
+
+      <div class="two-col-inputs">
+        <div class="input-group-farmer">
+          <label class="input-label-farmer">
+            <i class="fa-solid fa-wheat-awn" style="color:#2d6a4f;"></i> Crop
+          </label>
+          <select class="select-farmer" id="pestCropSelect">
+            <option value="Rice">Rice (వరి)</option>
+            <option value="Wheat">Wheat (గోధుమ)</option>
+            <option value="Cotton" selected>Cotton (పత్తి)</option>
+            <option value="Maize">Maize (మొక్కజొన్న)</option>
+            <option value="Tomato">Tomato (టమాట)</option>
+            <option value="Groundnut">Groundnut (వేరుశనగ)</option>
+          </select>
+        </div>
+        <div class="input-group-farmer">
+          <label class="input-label-farmer">
+            <i class="fa-solid fa-circle-exclamation" style="color:#dc2626;"></i> Symptoms Observed
+          </label>
+          <select class="select-farmer" id="pestSymptomSelect">
+            <option value="bollworm">Holes in bolls / chewed leaves (పురుగు కన్నాలు)</option>
+            <option value="blast">Diamond-shaped lesions on leaves (ఆకు మచ్చలు)</option>
+            <option value="aphids">Curled leaves &amp; sticky dew (ముడుచుకున్న ఆకులు)</option>
+            <option value="rust">Brown / orange rust pustules (తుప్పు మచ్చలు)</option>
+            <option value="stem_borer">Dead heart / dried central shoot (కాండం తొలుచు పురుగు)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin:1rem 0; border:2px dashed var(--border-subtle); border-radius:12px; padding:1.5rem; text-align:center; background:#f8fafc; cursor:pointer;" onclick="document.getElementById('pestImageInput').click()">
+        <i class="fa-solid fa-cloud-arrow-up" style="font-size:2rem; color:var(--primary-med); margin-bottom:0.5rem; display:block;"></i>
+        <div style="font-weight:700; font-size:0.95rem;">Upload Crop Leaf Photo</div>
+        <div class="te-sub" style="font-size:0.8rem; color:var(--text-muted);">ఆకు లేదా మొక్క ఫోటోను అప్‌లోడ్ చేయండి</div>
+        <input type="file" id="pestImageInput" accept="image/*" style="display:none;" onchange="previewPestImage(event)">
+        <div id="pestImagePreview" style="margin-top:0.75rem; display:none;">
+          <img id="pestPreviewImg" src="" alt="Crop photo" style="max-height:160px; border-radius:8px; box-shadow:var(--shadow-sm);">
+        </div>
+      </div>
+
+      <button class="btn-predict-big" onclick="diagnosePest()" style="margin-top:0.5rem;">
+        <i class="fa-solid fa-microscope" style="font-size:1.4rem;"></i>
+        <span>Diagnose Pest &amp; Get Remedy</span>
+        <span class="te-sub btn-predict-te">తెగులును గుర్తించి మందులను పొందండి</span>
+      </button>
+
+      <div id="pestResult" style="display:none; margin-top:1.5rem;">
+        <div class="result-hero-card" id="pestHeroCard" style="background:linear-gradient(135deg, #7f1d1d, #991b1b);">
+          <div class="result-hero-top">
+            <div>
+              <div class="result-hero-label" id="pestDiagnosisName">Pink Bollworm Detected</div>
+              <div class="te-sub result-hero-label-te" id="pestDiagnosisTe">గులాబీ రంగు కాయ తొలిచే పురుగు</div>
+              <div style="font-size:1.1rem; font-weight:700; margin-top:0.4rem;" id="pestConfidence">AI Confidence: 96%</div>
+            </div>
+            <div style="text-align:right;">
+              <span class="risk-badge badge-danger" id="pestSeverityBadge"><i class="fa-solid fa-triangle-exclamation"></i> High Severity</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-sub-head"><i class="fa-solid fa-prescription-bottle-medical" style="color:#059669;"></i> Recommended Treatment &amp; Pesticide Spray</div>
+        <div id="pestTreatmentList"></div>
+
+        <div class="section-sub-head" style="margin-top:1rem;"><i class="fa-solid fa-shield-halved" style="color:#2d6a4f;"></i> Cultural &amp; Preventive Measures</div>
+        <div id="pestPreventionList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 10 — FARM REPORTS
+═══════════════════════════════════════════════ -->
+<div id="screen-reports" class="screen feature-screen">
+  <div class="feature-topbar">
+    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="feature-topbar-title">
+      <i class="fa-solid fa-chart-line feature-screen-icon"></i>
+      <div>
+        <div data-i18n="farm_reports">Farm Reports</div>
+        <div class="feature-topbar-sub te-sub" data-i18n-te="farm_reports_te">వ్యవసాయ నివేదికలు</div>
+      </div>
+    </div>
+    <div class="feature-topbar-actions">
+      <button class="btn-voice-small" onclick="window.print()" title="Print / Save PDF">
+        <i class="fa-solid fa-file-pdf"></i>
+      </button>
+    </div>
+  </div>
+  <div class="feature-body-single">
+    <div class="section-card">
+      <div class="section-head">
+        <i class="fa-solid fa-file-lines" style="color:#6b21a8;"></i>
+        <span>Crop Season Performance &amp; Advisory Report</span>
+        <span class="te-sub section-head-te">పంట సీజన్ నివేదిక</span>
+      </div>
+
+      <!-- Report summary banner -->
+      <div style="background:linear-gradient(135deg, #3b0764, #581c87); border-radius:14px; padding:1.2rem; color:#fff; margin-bottom:1rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+          <div style="font-size:0.8rem; color:#e9d5ff; text-transform:uppercase; letter-spacing:0.5px;">Current Season Audit</div>
+          <span class="risk-badge" style="background:#16a34a; color:#fff;">Season 2025-26</span>
+        </div>
+        <div style="font-size:1.8rem; font-weight:900;" id="reportCropSummary">Rice — Kharif Season</div>
+        <div style="font-size:0.88rem; color:#d8b4fe;" id="reportFarmDetails">Plot: 2.5 Acres &middot; Drip Irrigation &middot; Model: Random Forest</div>
+      </div>
+
+      <!-- 4-Stat Overview -->
+      <div class="stat-kpi-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom:1rem;">
+        <div class="stat-kpi-box">
+          <div class="lbl"><i class="fa-solid fa-wheat-awn"></i> Expected Yield</div>
+          <div class="val" id="reportYieldVal" style="color:#15803d;">2.83 T/Ha</div>
+          <div style="font-size:0.7rem; color:var(--text-muted);">Mean Benchmark: 2.30 T/Ha</div>
+        </div>
+        <div class="stat-kpi-box">
+          <div class="lbl"><i class="fa-solid fa-indian-rupee-sign"></i> Projected Revenue</div>
+          <div class="val" id="reportRevenueVal" style="color:#047857;">&#8377;1,55,650</div>
+          <div style="font-size:0.7rem; color:var(--text-muted);">AI Target: +&#8377;26,400</div>
+        </div>
+        <div class="stat-kpi-box">
+          <div class="lbl"><i class="fa-solid fa-flask"></i> Soil Score</div>
+          <div class="val" id="reportSoilVal" style="color:#2563eb;">85/100</div>
+          <div style="font-size:0.7rem; color:var(--text-muted);">NPK Balanced</div>
+        </div>
+        <div class="stat-kpi-box">
+          <div class="lbl"><i class="fa-solid fa-shield-halved"></i> Risk Index</div>
+          <div class="val" id="reportRiskVal" style="color:#16a34a;">Low Risk</div>
+          <div style="font-size:0.7rem; color:var(--text-muted);">Weather safe</div>
+        </div>
+      </div>
+
+      <!-- Historical Logs Table -->
+      <div class="section-sub-head"><i class="fa-solid fa-clock-rotate-left"></i> Farm Advisory History &amp; Inputs Log</div>
+      <div style="overflow-x:auto; margin-bottom:1rem;">
+        <table style="width:100%; border-collapse:collapse; font-size:0.82rem; text-align:left;">
+          <thead>
+            <tr style="background:#f1f5f9; border-bottom:2px solid var(--border-subtle);">
+              <th style="padding:0.6rem;">Date</th>
+              <th style="padding:0.6rem;">Crop</th>
+              <th style="padding:0.6rem;">Yield Pred.</th>
+              <th style="padding:0.6rem;">Est. Revenue</th>
+              <th style="padding:0.6rem;">Action Taken</th>
+            </tr>
+          </thead>
+          <tbody id="farmReportTableBody">
+            <tr style="border-bottom:1px solid var(--border-subtle);">
+              <td style="padding:0.6rem;">Today</td>
+              <td style="padding:0.6rem; font-weight:700;">Rice</td>
+              <td style="padding:0.6rem; color:#16a34a; font-weight:700;">2.83 T/Ha</td>
+              <td style="padding:0.6rem;">&#8377;1,55,650</td>
+              <td style="padding:0.6rem;"><span class="risk-badge badge-success" style="font-size:0.65rem;">Optimal Soil</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-subtle);">
+              <td style="padding:0.6rem;">15 Aug 2025</td>
+              <td style="padding:0.6rem; font-weight:700;">Cotton</td>
+              <td style="padding:0.6rem; color:#d97706; font-weight:700;">1.85 T/Ha</td>
+              <td style="padding:0.6rem;">&#8377;1,12,000</td>
+              <td style="padding:0.6rem;"><span class="risk-badge badge-warning" style="font-size:0.65rem;">Added Urea + DAP</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-subtle);">
+              <td style="padding:0.6rem;">10 Jan 2025</td>
+              <td style="padding:0.6rem; font-weight:700;">Wheat</td>
+              <td style="padding:0.6rem; color:#16a34a; font-weight:700;">3.40 T/Ha</td>
+              <td style="padding:0.6rem;">&#8377;1,80,200</td>
+              <td style="padding:0.6rem;"><span class="risk-badge badge-success" style="font-size:0.65rem;">Harvest Done</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button class="btn-print" onclick="window.print()">
+        <i class="fa-solid fa-file-arrow-down"></i> Download / Print Full Farm Report
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 11 — TALK WITH AI
+═══════════════════════════════════════════════ -->
+<div id="screen-talk" class="screen feature-screen">
+  <div class="feature-topbar">
+    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="feature-topbar-title">
+      <i class="fa-solid fa-microphone feature-screen-icon"></i>
+      <div>
+        <div data-i18n="ai_talk">Talk with AI</div>
+        <div class="feature-topbar-sub te-sub" data-i18n-te="ai_talk_te">AI తో మాట్లాడండి</div>
+      </div>
+    </div>
+    <div class="feature-topbar-actions">
+      <button class="btn-icon-round" onclick="clearAiChat()" title="Clear Chat">
+        <i class="fa-solid fa-rotate-right"></i>
+      </button>
+    </div>
+  </div>
+  <div class="feature-body-single">
+    <div class="section-card" style="display:flex; flex-direction:column; min-height:550px;">
+      <!-- Quick Questions Pills -->
+      <div style="margin-bottom:0.75rem;">
+        <div style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:0.35rem;">
+          <i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i> Quick Questions:
+        </div>
+        <div class="quick-pills">
+          <button class="qpill qpill-green" onclick="sendQuickAiQuery('How to increase rice yield?')">Rice Yield</button>
+          <button class="qpill qpill-orange" onclick="sendQuickAiQuery('Which fertilizer is best for cotton?')">Cotton Fertilizer</button>
+          <button class="qpill qpill-blue" onclick="sendQuickAiQuery('How to treat acidic soil?')">Acidic Soil</button>
+          <button class="qpill qpill-teal" onclick="sendQuickAiQuery('Best crop for low water in kharif?')">Low Water Crop</button>
+        </div>
+      </div>
+
+      <!-- Chat Stream -->
+      <div id="aiChatStream" style="flex:1; max-height:380px; overflow-y:auto; padding:0.5rem; display:flex; flex-direction:column; gap:0.75rem; border:1px solid var(--border-subtle); border-radius:12px; background:#f8fafc; margin-bottom:0.85rem;">
+        <!-- Initial Bot Greeting -->
+        <div style="align-self:flex-start; max-width:85%; background:#ffffff; border:1.5px solid var(--border-subtle); border-radius:14px; padding:0.75rem 0.9rem; font-size:0.88rem; box-shadow:var(--shadow-sm);">
+          <div style="font-weight:700; color:var(--primary); font-size:0.75rem; margin-bottom:3px;">
+            <i class="fa-solid fa-robot"></i> CropAI Assistant
+          </div>
+          <div>Hello Farmer! Ask me anything about crops, fertilizer dosage, weather risks, or pest control in English, Telugu, or Hindi.</div>
+          <div class="te-sub" style="font-size:0.78rem; color:var(--primary-med); margin-top:4px;">నమస్కారం రైతు సోదరా! పంటలు, ఎరువులు మరియు తెగుళ్ల నివారణ గురించి ఏమైనా అడగండి.</div>
+        </div>
+      </div>
+
+      <!-- Input Bar -->
+      <div style="display:flex; gap:0.5rem; align-items:center;">
+        <input type="text" id="aiChatInput" class="input-farmer" placeholder="Type your farming question here..." onkeypress="if(event.key==='Enter') sendAiMessage()" style="flex:1;">
+        <button class="btn-voice-small" id="btnMicSpeechInput" onclick="toggleVoiceSpeechInput()" title="Speak your question">
+          <i class="fa-solid fa-microphone"></i>
+        </button>
+        <button class="btn-gps" onclick="sendAiMessage()" style="background:var(--primary); padding:0.75rem 1.1rem;">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 12 — PROFILE
+═══════════════════════════════════════════════ -->
+<div id="screen-profile" class="screen feature-screen">
+  <div class="feature-topbar">
+    <button class="btn-back" onclick="showScreen('screen-home')"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="feature-topbar-title">
+      <i class="fa-solid fa-user feature-screen-icon"></i>
+      <div>
+        <div data-i18n="profile">Profile</div>
+        <div class="feature-topbar-sub te-sub" data-i18n-te="profile_te">ప్రొఫైల్</div>
+      </div>
+    </div>
+    <div></div>
+  </div>
+  <div class="feature-body-single">
+    <div class="section-card">
+      <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem; border-bottom:1px solid var(--border-subtle); padding-bottom:1rem;">
+        <div style="width:68px; height:68px; border-radius:50%; background:linear-gradient(135deg, #1b4332, #40916c); display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.8rem; box-shadow:var(--shadow-sm);">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div>
+          <h3 style="font-size:1.2rem; font-weight:800; color:var(--text-primary);" id="profileFarmerName">Farmer User</h3>
+          <div style="font-size:0.85rem; color:var(--text-muted);" id="profileFarmerPhone">+91 98765 43210 &middot; Andhra Pradesh</div>
+          <span class="risk-badge badge-success" style="font-size:0.68rem; margin-top:3px;"><i class="fa-solid fa-check"></i> Registered Farmer</span>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <i class="fa-solid fa-pen-to-square" style="color:var(--primary-med);"></i>
+        <span>Farmer &amp; Land Profile</span>
+        <span class="te-sub section-head-te">రైతు &amp; భూమి వివరాలు</span>
+      </div>
+
+      <div class="two-col-inputs">
+        <div class="input-group-farmer">
+          <label class="input-label-farmer"><i class="fa-solid fa-user"></i> Full Name</label>
+          <input type="text" class="input-farmer" id="profNameInput" value="Ramesh Kumar">
+        </div>
+        <div class="input-group-farmer">
+          <label class="input-label-farmer"><i class="fa-solid fa-phone"></i> Mobile Number</label>
+          <input type="tel" class="input-farmer" id="profPhoneInput" value="9876543210">
+        </div>
+        <div class="input-group-farmer">
+          <label class="input-label-farmer"><i class="fa-solid fa-location-dot"></i> Primary District</label>
+          <select class="select-farmer" id="profDistrictSelect">
+            {% for key, dist in districts.items() %}
+              <option value="{{ key }}" {% if key == 'guntur' %}selected{% endif %}>{{ dist.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="input-group-farmer">
+          <label class="input-label-farmer"><i class="fa-solid fa-ruler-combined"></i> Total Land Size (Acres)</label>
+          <input type="number" step="0.5" class="input-farmer" id="profLandSizeInput" value="3.5">
+        </div>
+        <div class="input-group-farmer">
+          <label class="input-label-farmer"><i class="fa-solid fa-wheat-awn"></i> Primary Crop</label>
+          <select class="select-farmer" id="profPrimaryCrop">
+            <option value="Rice" selected>Rice (వరి)</option>
+            <option value="Wheat">Wheat (గోధుమ)</option>
+            <option value="Cotton">Cotton (పత్తి)</option>
+            <option value="Maize">Maize (మొక్కజొన్న)</option>
+          </select>
+        </div>
+        <div class="input-group-farmer">
+          <label class="input-label-farmer"><i class="fa-solid fa-language"></i> Preferred Language</label>
+          <select class="select-farmer" id="profLangSelect" onchange="selectLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="te" selected>Telugu (తెలుగు)</option>
+            <option value="hi">Hindi (हिन्दी)</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-predict-big" onclick="saveFarmerProfile()" style="margin-top:1rem;">
+        <i class="fa-solid fa-floppy-disk" style="font-size:1.3rem;"></i>
+        <span>Save Profile</span>
+        <span class="te-sub btn-predict-te">ప్రొఫైల్ సేవ్ చేయండి</span>
+      </button>
+
+      <button class="btn-guest" onclick="showScreen('screen-login')" style="margin-top:0.75rem;">
+        <i class="fa-solid fa-arrow-right-from-bracket" style="color:#dc2626;"></i> Logout / Change User
+      </button>
+    </div>
+  </div>
+</div>
+<!-- ═══════════════════════════════════════════════
+     COMING SOON OVERLAY
+═══════════════════════════════════════════════ -->
+<div class="coming-soon-overlay" id="comingSoonOverlay" onclick="hideComingSoon()">
+  <div class="coming-soon-card">
+    <div class="coming-soon-icon">
+      <i class="fa-solid fa-rocket"></i>
+    </div>
+    <h3 id="comingSoonTitle">Coming Soon!</h3>
+    <p>This feature will be available in the next version.</p>
+    <p class="te-sub">ఈ ఫీచర్ త్వరలో అందుబాటులోకి వస్తుంది.</p>
+    <button class="btn-predict-big" onclick="hideComingSoon()"
+            style="margin-top:1rem;font-size:1rem;padding:0.75rem 2rem;">
+      <i class="fa-solid fa-check"></i> OK
+    </button>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{
+    "best_model": "Random Forest",
+    "model_comparison": {
+        "Random Forest": {
+            "r2_score": 0.9957,
+            "mae": 0.393,
+            "rmse": 0.8657,
+            "cv_r2_mean": 0.9943,
+            "cv_r2_std": 0.0007
+        },
+        "Gradient Boosting": {
+            "r2_score": 0.9948,
+            "mae": 0.3786,
+            "rmse": 0.9497,
+            "cv_r2_mean": 0.9952,
+            "cv_r2_std": 0.0006
+        },
+        "Decision Tree": {
+            "r2_score": 0.9914,
+            "mae": 0.4887,
+            "rmse": 1.2226,
+            "cv_r2_mean": 0.9895,
+            "cv_r2_std": 0.0017
+        },
+        "Linear Regression": {
+            "r2_score": 0.9714,
+            "mae": 1.2787,
+            "rmse": 2.2301,
+            "cv_r2_mean": 0.971,
+            "cv_r2_std": 0.0028
+        }
+    },
+    "feature_importance": {
+        "Crop_Sugarcane": 0.8047,
+        "Potassium": 0.1137,
+        "Crop_Tomato": 0.0367,
+        "Irrigation_Rainfed": 0.022,
+        "Crop_Potato": 0.0063,
+        "Irrigation_Flood": 0.0042,
+        "Rainfall": 0.003,
+        "Nitrogen": 0.0019,
+        "Humidity": 0.0018,
+        "Irrigation_Sprinkler": 0.0013,
+        "pH": 0.0012,
+        "Phosphorus": 0.001,
+        "Temperature": 0.0009,
+        "Crop_Cotton": 0.0003,
+        "Crop_Mustard": 0.0003,
+        "Crop_Maize": 0.0002,
+        "Crop_Rice": 0.0001,
+        "Crop_Soybean": 0.0001,
+        "Crop_Wheat": 0.0001,
+        "Crop_Groundnut": 0.0,
+        "Crop_Kidney Beans": 0.0
+    },
+    "total_samples": 3600,
+    "crops_available": [
+        "Chickpea",
+        "Cotton",
+        "Groundnut",
+        "Kidney Beans",
+        "Maize",
+        "Mustard",
+        "Potato",
+        "Rice",
+        "Soybean",
+        "Sugarcane",
+        "Tomato",
+        "Wheat"
+    ],
+    "irrigation_types": [
+        "Drip",
+        "Flood",
+        "Rainfed",
+        "Sprinkler"
+    ]
+}
