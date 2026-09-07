@@ -30,18 +30,108 @@ if os.path.exists(METRICS_PATH):
 
 # Major Indian Agricultural Districts with GPS Coordinates for Live Weather
 INDIAN_AGRI_DISTRICTS = {
-    'ludhiana': {'name': 'Ludhiana (Punjab)', 'lat': 30.9010, 'lon': 75.8573, 'annual_rain_mult': 680},
-    'karnal': {'name': 'Karnal (Haryana)', 'lat': 29.6857, 'lon': 76.9905, 'annual_rain_mult': 720},
+    # ── Andhra Pradesh ──
     'guntur': {'name': 'Guntur (Andhra Pradesh)', 'lat': 16.3067, 'lon': 80.4365, 'annual_rain_mult': 950},
+    'krishna': {'name': 'Krishna / Vijayawada (Andhra Pradesh)', 'lat': 16.5062, 'lon': 80.6480, 'annual_rain_mult': 1000},
+    'east_godavari': {'name': 'East Godavari / Kakinada (Andhra Pradesh)', 'lat': 16.9891, 'lon': 82.2475, 'annual_rain_mult': 1150},
+    'west_godavari': {'name': 'West Godavari / Eluru (Andhra Pradesh)', 'lat': 16.7107, 'lon': 81.0952, 'annual_rain_mult': 1100},
+    'visakhapatnam': {'name': 'Visakhapatnam (Andhra Pradesh)', 'lat': 17.6868, 'lon': 83.2185, 'annual_rain_mult': 1050},
+    'kurnool': {'name': 'Kurnool (Andhra Pradesh)', 'lat': 15.8281, 'lon': 78.0373, 'annual_rain_mult': 670},
+    'anantapur': {'name': 'Anantapur (Andhra Pradesh)', 'lat': 14.6819, 'lon': 77.6006, 'annual_rain_mult': 550},
+    'chittoor': {'name': 'Chittoor / Tirupati (Andhra Pradesh)', 'lat': 13.2172, 'lon': 79.1003, 'annual_rain_mult': 880},
+    'prakasam': {'name': 'Prakasam / Ongole (Andhra Pradesh)', 'lat': 15.5057, 'lon': 80.0499, 'annual_rain_mult': 820},
+    'nellore': {'name': 'Nellore (Andhra Pradesh)', 'lat': 14.4426, 'lon': 79.9865, 'annual_rain_mult': 1050},
+    'kadapa': {'name': 'YSR Kadapa (Andhra Pradesh)', 'lat': 14.4673, 'lon': 78.8242, 'annual_rain_mult': 700},
+    'srikakulam': {'name': 'Srikakulam (Andhra Pradesh)', 'lat': 18.2949, 'lon': 83.8938, 'annual_rain_mult': 1100},
+    'vizianagaram': {'name': 'Vizianagaram (Andhra Pradesh)', 'lat': 18.1067, 'lon': 83.3956, 'annual_rain_mult': 1080},
+
+    # ── Telangana ──
+    'hyderabad': {'name': 'Hyderabad (Telangana)', 'lat': 17.3850, 'lon': 78.4867, 'annual_rain_mult': 820},
+    'warangal': {'name': 'Warangal (Telangana)', 'lat': 17.9689, 'lon': 79.5941, 'annual_rain_mult': 980},
+    'karimnagar': {'name': 'Karimnagar (Telangana)', 'lat': 18.4386, 'lon': 79.1288, 'annual_rain_mult': 950},
+    'khammam': {'name': 'Khammam (Telangana)', 'lat': 17.2473, 'lon': 80.1514, 'annual_rain_mult': 1050},
+    'nizamabad': {'name': 'Nizamabad (Telangana)', 'lat': 18.6725, 'lon': 78.0941, 'annual_rain_mult': 960},
+    'nalgonda': {'name': 'Nalgonda (Telangana)', 'lat': 17.0577, 'lon': 79.2684, 'annual_rain_mult': 750},
+    'mahabubnagar': {'name': 'Mahabubnagar (Telangana)', 'lat': 16.7488, 'lon': 77.9856, 'annual_rain_mult': 700},
+
+    # ── Punjab & Haryana ──
+    'ludhiana': {'name': 'Ludhiana (Punjab)', 'lat': 30.9010, 'lon': 75.8573, 'annual_rain_mult': 680},
+    'amritsar': {'name': 'Amritsar (Punjab)', 'lat': 31.6340, 'lon': 74.8723, 'annual_rain_mult': 700},
+    'bathinda': {'name': 'Bathinda (Punjab)', 'lat': 30.2110, 'lon': 74.9455, 'annual_rain_mult': 420},
+    'jalandhar': {'name': 'Jalandhar (Punjab)', 'lat': 31.3260, 'lon': 75.5762, 'annual_rain_mult': 710},
+    'patiala': {'name': 'Patiala (Punjab)', 'lat': 30.3398, 'lon': 76.3869, 'annual_rain_mult': 690},
+    'karnal': {'name': 'Karnal (Haryana)', 'lat': 29.6857, 'lon': 76.9905, 'annual_rain_mult': 720},
+    'hisar': {'name': 'Hisar (Haryana)', 'lat': 29.1492, 'lon': 75.7217, 'annual_rain_mult': 450},
+    'ambala': {'name': 'Ambala (Haryana)', 'lat': 30.3782, 'lon': 76.7767, 'annual_rain_mult': 850},
+    'sirsa': {'name': 'Sirsa (Haryana)', 'lat': 29.5349, 'lon': 75.0290, 'annual_rain_mult': 350},
+
+    # ── Maharashtra ──
     'nashik': {'name': 'Nashik (Maharashtra)', 'lat': 19.9975, 'lon': 73.7898, 'annual_rain_mult': 850},
+    'pune': {'name': 'Pune (Maharashtra)', 'lat': 18.5204, 'lon': 73.8567, 'annual_rain_mult': 750},
+    'nagpur': {'name': 'Nagpur (Maharashtra)', 'lat': 21.1458, 'lon': 79.0882, 'annual_rain_mult': 1100},
+    'aurangabad': {'name': 'Chhatrapati Sambhajinagar / Aurangabad (Maharashtra)', 'lat': 19.8762, 'lon': 75.3433, 'annual_rain_mult': 720},
+    'kolhapur': {'name': 'Kolhapur (Maharashtra)', 'lat': 16.7050, 'lon': 74.2433, 'annual_rain_mult': 1050},
+    'solapur': {'name': 'Solapur (Maharashtra)', 'lat': 17.6599, 'lon': 75.9064, 'annual_rain_mult': 580},
+    'amravati': {'name': 'Amravati (Maharashtra)', 'lat': 20.9320, 'lon': 77.7523, 'annual_rain_mult': 880},
+
+    # ── Gujarat ──
     'rajkot': {'name': 'Rajkot (Gujarat)', 'lat': 22.3039, 'lon': 70.8022, 'annual_rain_mult': 600},
+    'ahmedabad': {'name': 'Ahmedabad (Gujarat)', 'lat': 23.0225, 'lon': 72.5714, 'annual_rain_mult': 780},
+    'surat': {'name': 'Surat (Gujarat)', 'lat': 21.1702, 'lon': 72.8311, 'annual_rain_mult': 1200},
+    'vadodara': {'name': 'Vadodara (Gujarat)', 'lat': 22.3072, 'lon': 73.1812, 'annual_rain_mult': 850},
+    'anand': {'name': 'Anand (Gujarat)', 'lat': 22.5645, 'lon': 72.9289, 'annual_rain_mult': 820},
+    'junagadh': {'name': 'Junagadh (Gujarat)', 'lat': 21.5222, 'lon': 70.4579, 'annual_rain_mult': 750},
+
+    # ── Uttar Pradesh & Bihar ──
     'varanasi': {'name': 'Varanasi (Uttar Pradesh)', 'lat': 25.3176, 'lon': 82.9739, 'annual_rain_mult': 1050},
-    'bhopal': {'name': 'Bhopal (Madhya Pradesh)', 'lat': 23.2599, 'lon': 77.4126, 'annual_rain_mult': 1120},
-    'coimbatore': {'name': 'Coimbatore (Tamil Nadu)', 'lat': 11.0168, 'lon': 76.9558, 'annual_rain_mult': 700},
-    'dharwad': {'name': 'Dharwad (Karnataka)', 'lat': 15.4589, 'lon': 75.0078, 'annual_rain_mult': 820},
+    'lucknow': {'name': 'Lucknow (Uttar Pradesh)', 'lat': 26.8467, 'lon': 80.9462, 'annual_rain_mult': 980},
+    'kanpur': {'name': 'Kanpur (Uttar Pradesh)', 'lat': 26.4499, 'lon': 80.3319, 'annual_rain_mult': 880},
+    'agra': {'name': 'Agra (Uttar Pradesh)', 'lat': 27.1767, 'lon': 78.0081, 'annual_rain_mult': 680},
+    'prayagraj': {'name': 'Prayagraj / Allahabad (Uttar Pradesh)', 'lat': 25.4358, 'lon': 81.8463, 'annual_rain_mult': 950},
+    'gorakhpur': {'name': 'Gorakhpur (Uttar Pradesh)', 'lat': 26.7606, 'lon': 83.3732, 'annual_rain_mult': 1250},
+    'meerut': {'name': 'Meerut (Uttar Pradesh)', 'lat': 28.9845, 'lon': 77.7064, 'annual_rain_mult': 820},
     'patna': {'name': 'Patna (Bihar)', 'lat': 25.5941, 'lon': 85.1376, 'annual_rain_mult': 1150},
-    'bardhaman': {'name': 'Bardhaman (West Bengal)', 'lat': 23.2324, 'lon': 87.8615, 'annual_rain_mult': 1400},
-    'jaipur': {'name': 'Jaipur (Rajasthan)', 'lat': 26.9124, 'lon': 75.7873, 'annual_rain_mult': 550}
+    'muzaffarpur': {'name': 'Muzaffarpur (Bihar)', 'lat': 26.1209, 'lon': 85.3647, 'annual_rain_mult': 1200},
+    'gaya': {'name': 'Gaya (Bihar)', 'lat': 24.7955, 'lon': 85.0002, 'annual_rain_mult': 1050},
+    'bhagalpur': {'name': 'Bhagalpur (Bihar)', 'lat': 25.2425, 'lon': 86.9842, 'annual_rain_mult': 1200},
+
+    # ── Madhya Pradesh ──
+    'bhopal': {'name': 'Bhopal (Madhya Pradesh)', 'lat': 23.2599, 'lon': 77.4126, 'annual_rain_mult': 1120},
+    'indore': {'name': 'Indore (Madhya Pradesh)', 'lat': 22.7196, 'lon': 75.8577, 'annual_rain_mult': 950},
+    'jabalpur': {'name': 'Jabalpur (Madhya Pradesh)', 'lat': 23.1815, 'lon': 79.9864, 'annual_rain_mult': 1250},
+    'ujjain': {'name': 'Ujjain (Madhya Pradesh)', 'lat': 23.1765, 'lon': 75.7885, 'annual_rain_mult': 900},
+    'gwalior': {'name': 'Gwalior (Madhya Pradesh)', 'lat': 26.2183, 'lon': 78.1828, 'annual_rain_mult': 750},
+
+    # ── Tamil Nadu & Kerala ──
+    'coimbatore': {'name': 'Coimbatore (Tamil Nadu)', 'lat': 11.0168, 'lon': 76.9558, 'annual_rain_mult': 700},
+    'thanjavur': {'name': 'Thanjavur (Tamil Nadu)', 'lat': 10.7870, 'lon': 79.1378, 'annual_rain_mult': 1000},
+    'madurai': {'name': 'Madurai (Tamil Nadu)', 'lat': 9.9252, 'lon': 78.1198, 'annual_rain_mult': 850},
+    'tiruchirappalli': {'name': 'Tiruchirappalli (Tamil Nadu)', 'lat': 10.7905, 'lon': 78.7047, 'annual_rain_mult': 880},
+    'salem': {'name': 'Salem (Tamil Nadu)', 'lat': 11.6643, 'lon': 78.1460, 'annual_rain_mult': 920},
+    'palakkad': {'name': 'Palakkad (Kerala)', 'lat': 10.7867, 'lon': 76.6548, 'annual_rain_mult': 2100},
+    'wayanad': {'name': 'Wayanad (Kerala)', 'lat': 11.6854, 'lon': 76.1320, 'annual_rain_mult': 2500},
+
+    # ── Karnataka ──
+    'dharwad': {'name': 'Dharwad (Karnataka)', 'lat': 15.4589, 'lon': 75.0078, 'annual_rain_mult': 820},
+    'belagavi': {'name': 'Belagavi (Karnataka)', 'lat': 15.8497, 'lon': 74.4977, 'annual_rain_mult': 1150},
+    'mysuru': {'name': 'Mysuru (Karnataka)', 'lat': 12.2958, 'lon': 76.6394, 'annual_rain_mult': 800},
+    'mandya': {'name': 'Mandya (Karnataka)', 'lat': 12.5218, 'lon': 76.8951, 'annual_rain_mult': 750},
+    'shivamogga': {'name': 'Shivamogga (Karnataka)', 'lat': 13.9299, 'lon': 75.5681, 'annual_rain_mult': 1800},
+    'bellary': {'name': 'Ballari (Karnataka)', 'lat': 15.1394, 'lon': 76.9214, 'annual_rain_mult': 580},
+
+    # ── Rajasthan ──
+    'jaipur': {'name': 'Jaipur (Rajasthan)', 'lat': 26.9124, 'lon': 75.7873, 'annual_rain_mult': 550},
+    'jodhpur': {'name': 'Jodhpur (Rajasthan)', 'lat': 26.2389, 'lon': 73.0243, 'annual_rain_mult': 360},
+    'kota': {'name': 'Kota (Rajasthan)', 'lat': 25.2138, 'lon': 75.8648, 'annual_rain_mult': 750},
+    'bikaner': {'name': 'Bikaner (Rajasthan)', 'lat': 28.0229, 'lon': 73.3119, 'annual_rain_mult': 260},
+    'sri_ganganagar': {'name': 'Sri Ganganagar (Rajasthan)', 'lat': 29.9094, 'lon': 73.8799, 'annual_rain_mult': 300},
+
+    # ── West Bengal & Odisha ──
+    'bardhaman': {'name': 'Purba Bardhaman (West Bengal)', 'lat': 23.2324, 'lon': 87.8615, 'annual_rain_mult': 1400},
+    'hooghly': {'name': 'Hooghly (West Bengal)', 'lat': 22.9034, 'lon': 88.3968, 'annual_rain_mult': 1450},
+    'murshidabad': {'name': 'Murshidabad (West Bengal)', 'lat': 24.1759, 'lon': 88.2802, 'annual_rain_mult': 1350},
+    'cuttack': {'name': 'Cuttack (Odisha)', 'lat': 20.4625, 'lon': 85.8828, 'annual_rain_mult': 1450},
+    'sambalpur': {'name': 'Sambalpur (Odisha)', 'lat': 21.4669, 'lon': 83.9812, 'annual_rain_mult': 1380}
 }
 
 # Expo Demo presets
