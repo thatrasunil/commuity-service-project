@@ -48,6 +48,35 @@ const I18N = {
     poor_soil: 'Depleted Soil (Needs Treatment)',
     fertilizer_plan: 'Prescribed Fertilizer Plan',
     best_crops: 'Best Crops for This Soil',
+    soil_presets_title: 'Select Soil Type',
+    soil_basics_title: 'Soil Basics',
+    farm_size_acres: 'Farm Size (Acres)',
+    irrigation_lbl: 'Irrigation',
+    get_soil_recommendation: 'Get Full Fertilizer & Crop Recommendation',
+    choose_district_prompt: '📍 Choose District...',
+    temperature_lbl: 'Temperature',
+    humidity_lbl: 'Humidity',
+    rainfall_lbl: 'Rainfall',
+    forecast_7day_title: '7-Day Forecast',
+    farmer_tips_title: 'Farmer Tips',
+    weather_tip_1: 'Check forecast before spraying pesticides',
+    weather_tip_2: 'Irrigate in the evening to reduce evaporation',
+    weather_tip_3: 'Delay fertilizer application before heavy rain days',
+    weather_tip_4: 'On high temperature days, add an extra watering round',
+    farm_conditions_title: 'Your Farm Conditions',
+    soil_type_lbl: 'Soil Type',
+    season_lbl: 'Season',
+    water_avail_lbl: 'Water Availability',
+    get_recommendation_btn: 'Get Recommendation',
+    best_crop_trophy: 'Best Crop',
+    good_alternatives_title: 'Also Good Alternatives',
+    avoid_crops_title: 'Avoid These Crops',
+    pest_diagnosis_title: 'Pest & Disease Diagnosis',
+    symptoms_observed_lbl: 'Symptoms Observed',
+    upload_leaf_photo: 'Upload Crop Leaf Photo',
+    diagnose_pest_btn: 'Diagnose Pest & Get Remedy',
+    recommended_pesticide_title: 'Recommended Treatment & Pesticide Spray',
+    preventive_measures_title: 'Cultural & Preventive Measures',
     report_season_head: 'Crop Season Performance & Advisory Report',
     report_audit_title: 'Current Season Audit',
     season_2025_26: 'Season 2025-26',
@@ -72,13 +101,25 @@ const I18N = {
     th_est_rev: 'Est. Revenue',
     th_action: 'Action Taken',
     btn_listen_report: 'Listen to Summary',
-    btn_download_report: 'Download / Print Full Report'
+    btn_download_report: 'Download / Print Full Report',
+    quick_questions_title: 'Quick Questions:',
+    ai_bot_greeting: 'Hello Farmer! Ask me anything about crops, fertilizer dosage, weather risks, or pest control in English, Telugu, or Hindi.',
+    chat_placeholder: 'Type your farming question here...',
+    registered_farmer: 'Registered Farmer',
+    farmer_land_profile: 'Farmer & Land Profile',
+    full_name_lbl: 'Full Name',
+    primary_district_lbl: 'Primary District',
+    total_land_size_lbl: 'Total Land Size (Acres)',
+    primary_crop_lbl: 'Primary Crop',
+    preferred_language_lbl: 'Preferred Language',
+    save_profile_btn: 'Save Profile',
+    logout_btn: 'Logout / Change User'
   },
   te: {
     tagline: 'ముందే అంచనా వేయండి. దిగుబడి పెంచండి.',
     login_title: 'రైతుకు స్వాగతం!',
-    mobile_number: 'మొబైల్ నంబర్',
-    otp_label: 'OTP',
+    mobile_number: 'మొబైల్ సంఖ్య',
+    otp_label: 'OTP సంఖ్య',
     send_otp: 'OTP పంపండి',
     login_btn: 'లాగిన్',
     or_text: 'లేదా',
@@ -110,6 +151,35 @@ const I18N = {
     poor_soil: 'క్షీణించిన నేల (చికిత్స అవసరం)',
     fertilizer_plan: 'సిఫారసు చేసిన ఎరువుల ప్రణాళిక',
     best_crops: 'ఈ నేలకు అనువైన ఉత్తమ పంటలు',
+    soil_presets_title: 'నేల రకాన్ని ఎంచుకోండి',
+    soil_basics_title: 'నేల ప్రాథమిక వివరాలు',
+    farm_size_acres: 'పొలం విస్తీర్ణం (ఎకరాలు)',
+    irrigation_lbl: 'నీటి పారుదల (Irrigation)',
+    get_soil_recommendation: 'పూర్తి ఎరువుల ప్రణాళిక మరియు పంట సిఫారసు పొందండి',
+    choose_district_prompt: '📍 మీ జిల్లాను ఎంచుకోండి...',
+    temperature_lbl: 'ఉష్ణోగ్రత',
+    humidity_lbl: 'తేమ',
+    rainfall_lbl: 'వర్షపాతం',
+    forecast_7day_title: '7 రోజుల వాతావరణ అంచనా',
+    farmer_tips_title: 'రైతులకు సలహాలు',
+    weather_tip_1: 'పురుగుమందు పిచికారీ చేసే ముందు వాతావరణ అంచనా తనిఖీ చేయండి',
+    weather_tip_2: 'నీరు ఆవిరి కాకుండా సాయంత్రం వేళ నీటి పారుదల చేయండి',
+    weather_tip_3: 'భారీ వర్ష సూచన ఉన్న రోజులలో ఎరువులు వేయడం వాయిదా వేయండి',
+    weather_tip_4: 'అధిక ఉష్ణోగ్రత ఉన్న రోజుల్లో పైరుకు అదనంగా ఒకసారి నీరు అందించండి',
+    farm_conditions_title: 'మీ పొలం పరిస్థితులు',
+    soil_type_lbl: 'నేల రకం',
+    season_lbl: 'సీజన్',
+    water_avail_lbl: 'నీటి లభ్యత',
+    get_recommendation_btn: 'సిఫారసు పొందండి',
+    best_crop_trophy: 'ఉత్తమ పంట',
+    good_alternatives_title: 'ఇతర అనువైన ప్రత్యామ్నాయ పంటలు',
+    avoid_crops_title: 'ఈ పంటలను వేయకండి (నష్టం కలిగించేవి)',
+    pest_diagnosis_title: 'తెగులు & వ్యాధి నిర్ధారణ',
+    symptoms_observed_lbl: 'గమనించిన లక్షణాలు',
+    upload_leaf_photo: 'ఆకు లేదా మొక్క ఫోటోను అప్‌లోడ్ చేయండి',
+    diagnose_pest_btn: 'తెగులును గుర్తించి నివారణ మందులను పొందండి',
+    recommended_pesticide_title: 'సిఫారసు చేసిన క్రిమిసంహారక మందుల స్ప్రే',
+    preventive_measures_title: 'ముందస్తు నివారణ & జాగ్రత్తలు',
     report_season_head: 'పంట సీజన్ పనితీరు & సలహా నివేదిక',
     report_audit_title: 'ప్రస్తుత సీజన్ తనిఖీ',
     season_2025_26: 'సీజన్ 2025-26',
@@ -134,13 +204,25 @@ const I18N = {
     th_est_rev: 'అంచనా రాబడి',
     th_action: 'తీసుకున్న చర్య',
     btn_listen_report: 'వివరణ వినండి (Voice)',
-    btn_download_report: 'రిపోర్ట్ ప్రింట్ / సేవ్ చేయండి'
+    btn_download_report: 'రిపోర్ట్ ప్రింట్ / సేవ్ చేయండి',
+    quick_questions_title: 'త్వరిత ప్రశ్నలు:',
+    ai_bot_greeting: 'నమస్కారం రైతు సోదరా! పంటలు, ఎరువులు, వాతావరణం మరియు తెగుళ్ల నివారణ గురించి ఏమైనా అడగండి.',
+    chat_placeholder: 'మీ వ్యవసాయ ప్రశ్నను ఇక్కడ టైప్ చేయండి...',
+    registered_farmer: 'నమోదిత రైతు',
+    farmer_land_profile: 'రైతు & భూమి వివరాలు',
+    full_name_lbl: 'పూర్తి పేరు',
+    primary_district_lbl: 'జిల్లా',
+    total_land_size_lbl: 'మొత్తం భూమి విస్తీర్ణం (ఎకరాలు)',
+    primary_crop_lbl: 'ప్రధాన పంట',
+    preferred_language_lbl: 'ఎంచుకున్న భాష',
+    save_profile_btn: 'ప్రొఫైల్ సేవ్ చేయండి',
+    logout_btn: 'లాగౌట్ / వినియోగదారుని మార్చండి'
   },
   hi: {
     tagline: 'जल्दी भविष्यवाणी करें। उपज बढ़ाएं।',
     login_title: 'किसान, आपका स्वागत है!',
     mobile_number: 'मोबाइल नंबर',
-    otp_label: 'OTP',
+    otp_label: 'OTP कोड',
     send_otp: 'OTP भेजें',
     login_btn: 'लॉगिन',
     or_text: 'या',
@@ -172,6 +254,35 @@ const I18N = {
     poor_soil: 'कमजोर मिट्टी (उपचार आवश्यक)',
     fertilizer_plan: 'अनुशंसित उर्वरक खुराक',
     best_crops: 'इस मिट्टी के लिए सर्वोत्तम फसलें',
+    soil_presets_title: 'मिट्टी का प्रकार चुनें',
+    soil_basics_title: 'मिट्टी की बुनियादी जानकारी',
+    farm_size_acres: 'खेत का आकार (एकड़)',
+    irrigation_lbl: 'सिंचाई (Irrigation)',
+    get_soil_recommendation: 'पूर्ण उर्वरक योजना और फसल सिफारिश प्राप्त करें',
+    choose_district_prompt: '📍 अपना जिला चुनें...',
+    temperature_lbl: 'तापमान',
+    humidity_lbl: 'नमी (आर्द्रता)',
+    rainfall_lbl: 'वर्षा',
+    forecast_7day_title: '7 दिनों का मौसम पूर्वानुमान',
+    farmer_tips_title: 'किसानों के लिए सलाह',
+    weather_tip_1: 'कीटनाशक का छिड़काव करने से पहले मौसम पूर्वानुमान की जांच करें',
+    weather_tip_2: 'वाष्पीकरण कम करने के लिए शाम के समय सिंचाई करें',
+    weather_tip_3: 'भारी बारिश की संभावना होने पर उर्वरक प्रयोग स्थगित करें',
+    weather_tip_4: 'अधिक तापमान वाले दिनों में फसल को अतिरिक्त पानी दें',
+    farm_conditions_title: 'आपके खेत की स्थितियां',
+    soil_type_lbl: 'मिट्टी का प्रकार',
+    season_lbl: 'सीजन',
+    water_avail_lbl: 'पानी की उपलब्धता',
+    get_recommendation_btn: 'सिफारिश प्राप्त करें',
+    best_crop_trophy: 'सर्वोत्तम फसल',
+    good_alternatives_title: 'अन्य अच्छे विकल्प',
+    avoid_crops_title: 'इन फसलों से बचें (हानिकारक)',
+    pest_diagnosis_title: 'कीट एवं रोग पहचान',
+    symptoms_observed_lbl: 'देखे गए लक्षण',
+    upload_leaf_photo: 'पौधे के पत्ते की फोटो अपलोड करें',
+    diagnose_pest_btn: 'कीट पहचानें और उपचार प्राप्त करें',
+    recommended_pesticide_title: 'अनुशंसित कीटनाशक छिड़काव',
+    preventive_measures_title: 'सुरक्षात्मक एवं रोकथाम उपाय',
     report_season_head: 'फसल सीजन प्रदर्शन एवं परामर्श रिपोर्ट',
     report_audit_title: 'वर्तमान सीजन ऑडिट',
     season_2025_26: 'सीजन 2025-26',
@@ -196,7 +307,19 @@ const I18N = {
     th_est_rev: 'अनुमानित आय',
     th_action: 'की गई कार्रवाई',
     btn_listen_report: 'रिपोर्ट सुनें (Voice)',
-    btn_download_report: 'रिपोर्ट प्रिंट / डाउनलोड करें'
+    btn_download_report: 'रिपोर्ट प्रिंट / डाउनलोड करें',
+    quick_questions_title: 'त्वरित प्रश्न:',
+    ai_bot_greeting: 'नमस्ते किसान भाइयों! फसल, खाद, मौसम और कीट नियंत्रण के बारे में कुछ भी पूछें।',
+    chat_placeholder: 'अपना सवाल यहाँ टाइप करें...',
+    registered_farmer: 'पंजीकृत किसान',
+    farmer_land_profile: 'किसान और भूमि प्रोफाइल',
+    full_name_lbl: 'पूरा नाम',
+    primary_district_lbl: 'जिला',
+    total_land_size_lbl: 'कुल भूमि (एकड़)',
+    primary_crop_lbl: 'मुख्य फसल',
+    preferred_language_lbl: 'पसंदीदा भाषा',
+    save_profile_btn: 'प्रोफाइल सेव करें',
+    logout_btn: 'लॉगआउट / उपयोगकर्ता बदलें'
   }
 };
 
@@ -263,20 +386,40 @@ function updateLabels() {
   const labels = I18N[currentLang] || I18N.en;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (labels[key]) el.textContent = labels[key];
+    if (labels[key]) {
+      const icon = el.querySelector('i');
+      if (icon) {
+        // Preserve icon and update remaining text
+        const iconHtml = icon.outerHTML;
+        el.innerHTML = iconHtml + ' ' + labels[key];
+      } else {
+        el.textContent = labels[key];
+      }
+    }
   });
 
-  // Sync active status on lang pills
+  // Update input placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (labels[key]) el.setAttribute('placeholder', labels[key]);
+  });
+
+  // Sync active status on all lang pills
   document.querySelectorAll('.lang-pill').forEach(btn => {
     if (btn.getAttribute('data-lang') === currentLang) btn.classList.add('active');
     else btn.classList.remove('active');
   });
 
-  // Telugu subtitles: in Telugu mode hide to avoid repetition with Telugu title
-  // in English mode, show helpful Telugu subtitle
+  // Manage subtitles
   document.querySelectorAll('.te-sub').forEach(el => {
     if (currentLang === 'te') {
-      el.style.display = 'none';
+      // In Telugu mode, hide if redundant with main title
+      const parent = el.parentElement;
+      if (parent && parent.querySelector('[data-i18n]')) {
+        el.style.display = 'none';
+      } else {
+        el.style.display = 'none';
+      }
     } else if (currentLang === 'hi') {
       el.style.display = 'none';
     } else {
@@ -285,10 +428,12 @@ function updateLabels() {
   });
 
   document.querySelectorAll('.hi-sub').forEach(el => {
-    el.style.display = 'none';
+    if (currentLang === 'hi') el.style.display = '';
+    else el.style.display = 'none';
   });
 
-  updateFarmReportsScreen();
+  if (typeof updateGreeting === 'function') updateGreeting();
+  if (typeof updateFarmReportsScreen === 'function') updateFarmReportsScreen();
 }
 
 function updateFarmReportsScreen() {

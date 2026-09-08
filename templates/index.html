@@ -560,12 +560,12 @@
     <div class="section-card">
       <div class="section-head">
         <i class="fa-solid fa-location-dot" style="color:#0284c7;"></i>
-        <span>Select Your District</span>
+        <span data-i18n="choose_district_prompt">Select Your District</span>
         <span class="te-sub section-head-te">మీ జిల్లా ఎంచుకోండి</span>
       </div>
       <div class="weather-fetch-row">
         <select class="select-farmer" id="weatherDistrictSelectW" style="flex:1;">
-          <option value="">📍 Choose District...</option>
+          <option value="" data-i18n="choose_district_prompt">📍 Choose District...</option>
           {% if districts_by_state %}
             {% for state, d_list in districts_by_state.items() %}
               <optgroup label="{{ state }}">
@@ -588,30 +588,30 @@
       <div class="weather-big-row">
         <div class="weather-big-box weather-bg-temp">
           <div class="weather-big-lbl">
-            <i class="fa-solid fa-temperature-half"></i> Temperature
+            <i class="fa-solid fa-temperature-half"></i> <span data-i18n="temperature_lbl">Temperature</span>
           </div>
           <div class="weather-big-val" id="wTempBig">—</div>
-          <div class="te-sub" style="font-size:0.8rem;">ఉష్ణోగ్రత</div>
+          <div class="te-sub" style="font-size:0.8rem;" data-i18n="temperature_lbl">ఉష్ణోగ్రత</div>
         </div>
         <div class="weather-big-box weather-bg-humid">
           <div class="weather-big-lbl">
-            <i class="fa-solid fa-droplet"></i> Humidity
+            <i class="fa-solid fa-droplet"></i> <span data-i18n="humidity_lbl">Humidity</span>
           </div>
           <div class="weather-big-val" id="wHumidBig">—</div>
-          <div class="te-sub" style="font-size:0.8rem;">తేమ</div>
+          <div class="te-sub" style="font-size:0.8rem;" data-i18n="humidity_lbl">తేమ</div>
         </div>
         <div class="weather-big-box weather-bg-rain">
           <div class="weather-big-lbl">
-            <i class="fa-solid fa-cloud-showers-heavy"></i> Rainfall
+            <i class="fa-solid fa-cloud-showers-heavy"></i> <span data-i18n="rainfall_lbl">Rainfall</span>
           </div>
           <div class="weather-big-val" id="wRainBig">—</div>
-          <div class="te-sub" style="font-size:0.8rem;">వర్షపాతం</div>
+          <div class="te-sub" style="font-size:0.8rem;" data-i18n="rainfall_lbl">వర్షపాతం</div>
         </div>
       </div>
 
       <div class="section-head" style="margin-top:1.2rem;">
         <i class="fa-solid fa-calendar-days" style="color:#0284c7;"></i>
-        <span>7-Day Forecast</span>
+        <span data-i18n="forecast_7day_title">7-Day Forecast</span>
         <span class="te-sub section-head-te">7 రోజుల అంచనా</span>
       </div>
       <div class="forecast-grid" id="forecastGrid">
@@ -627,13 +627,13 @@
 
       <div class="weather-tips-box">
         <div class="section-head">
-          <i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i> Farmer Tips
+          <i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i> <span data-i18n="farmer_tips_title">Farmer Tips</span>
         </div>
         <ul class="weather-tips-list" id="weatherTipsList">
-          <li><i class="fa-solid fa-cloud-sun" style="color:#f59e0b;"></i> Check forecast before spraying pesticides</li>
-          <li><i class="fa-solid fa-droplet" style="color:#0284c7;"></i> Irrigate in the evening to reduce evaporation</li>
-          <li><i class="fa-solid fa-cloud-showers-heavy" style="color:#3b82f6;"></i> Delay fertilizer before heavy rain days</li>
-          <li><i class="fa-solid fa-temperature-high" style="color:#ef4444;"></i> High temp days: add extra watering round</li>
+          <li><i class="fa-solid fa-cloud-sun" style="color:#f59e0b;"></i> <span data-i18n="weather_tip_1">Check forecast before spraying pesticides</span></li>
+          <li><i class="fa-solid fa-droplet" style="color:#0284c7;"></i> <span data-i18n="weather_tip_2">Irrigate in the evening to reduce evaporation</span></li>
+          <li><i class="fa-solid fa-cloud-showers-heavy" style="color:#3b82f6;"></i> <span data-i18n="weather_tip_3">Delay fertilizer application before heavy rain days</span></li>
+          <li><i class="fa-solid fa-temperature-high" style="color:#ef4444;"></i> <span data-i18n="weather_tip_4">On high temperature days, add an extra watering round</span></li>
         </ul>
       </div>
     </div>
@@ -1300,7 +1300,7 @@
       <!-- Quick Questions Pills -->
       <div style="margin-bottom:0.75rem;">
         <div style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:0.35rem;">
-          <i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i> Quick Questions:
+          <i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i> <span data-i18n="quick_questions_title">Quick Questions:</span>
         </div>
         <div class="quick-pills">
           <button class="qpill qpill-green" onclick="sendQuickAiQuery('How to increase rice yield?')">Rice Yield</button>
@@ -1317,14 +1317,14 @@
           <div style="font-weight:700; color:var(--primary); font-size:0.75rem; margin-bottom:3px;">
             <i class="fa-solid fa-robot"></i> CropAI Assistant
           </div>
-          <div>Hello Farmer! Ask me anything about crops, fertilizer dosage, weather risks, or pest control in English, Telugu, or Hindi.</div>
+          <div data-i18n="ai_bot_greeting">Hello Farmer! Ask me anything about crops, fertilizer dosage, weather risks, or pest control in English, Telugu, or Hindi.</div>
           <div class="te-sub" style="font-size:0.78rem; color:var(--primary-med); margin-top:4px;">నమస్కారం రైతు సోదరా! పంటలు, ఎరువులు మరియు తెగుళ్ల నివారణ గురించి ఏమైనా అడగండి.</div>
         </div>
       </div>
 
       <!-- Input Bar -->
       <div style="display:flex; gap:0.5rem; align-items:center;">
-        <input type="text" id="aiChatInput" class="input-farmer" placeholder="Type your farming question here..." onkeypress="if(event.key==='Enter') sendAiMessage()" style="flex:1;">
+        <input type="text" id="aiChatInput" class="input-farmer" placeholder="Type your farming question here..." data-i18n-placeholder="chat_placeholder" onkeypress="if(event.key==='Enter') sendAiMessage()" style="flex:1;">
         <button class="btn-voice-small" id="btnMicSpeechInput" onclick="toggleVoiceSpeechInput()" title="Speak your question">
           <i class="fa-solid fa-microphone"></i>
         </button>
@@ -1369,27 +1369,27 @@
         <div>
           <h3 style="font-size:1.2rem; font-weight:800; color:var(--text-primary);" id="profileFarmerName">Farmer User</h3>
           <div style="font-size:0.85rem; color:var(--text-muted);" id="profileFarmerPhone">+91 98765 43210 &middot; Andhra Pradesh</div>
-          <span class="risk-badge badge-success" style="font-size:0.68rem; margin-top:3px;"><i class="fa-solid fa-check"></i> Registered Farmer</span>
+          <span class="risk-badge badge-success" style="font-size:0.68rem; margin-top:3px;"><i class="fa-solid fa-check"></i> <span data-i18n="registered_farmer">Registered Farmer</span></span>
         </div>
       </div>
 
       <div class="section-head">
         <i class="fa-solid fa-pen-to-square" style="color:var(--primary-med);"></i>
-        <span>Farmer &amp; Land Profile</span>
+        <span data-i18n="farmer_land_profile">Farmer &amp; Land Profile</span>
         <span class="te-sub section-head-te">రైతు &amp; భూమి వివరాలు</span>
       </div>
 
       <div class="two-col-inputs">
         <div class="input-group-farmer">
-          <label class="input-label-farmer"><i class="fa-solid fa-user"></i> Full Name</label>
+          <label class="input-label-farmer"><i class="fa-solid fa-user"></i> <span data-i18n="full_name_lbl">Full Name</span></label>
           <input type="text" class="input-farmer" id="profNameInput" value="Ramesh Kumar">
         </div>
         <div class="input-group-farmer">
-          <label class="input-label-farmer"><i class="fa-solid fa-phone"></i> Mobile Number</label>
+          <label class="input-label-farmer"><i class="fa-solid fa-phone"></i> <span data-i18n="mobile_number">Mobile Number</span></label>
           <input type="tel" class="input-farmer" id="profPhoneInput" value="9876543210">
         </div>
         <div class="input-group-farmer">
-          <label class="input-label-farmer"><i class="fa-solid fa-location-dot"></i> Primary District</label>
+          <label class="input-label-farmer"><i class="fa-solid fa-location-dot"></i> <span data-i18n="primary_district_lbl">Primary District</span></label>
           <select class="select-farmer" id="profDistrictSelect">
             {% if districts_by_state %}
               {% for state, d_list in districts_by_state.items() %}
@@ -1407,11 +1407,11 @@
           </select>
         </div>
         <div class="input-group-farmer">
-          <label class="input-label-farmer"><i class="fa-solid fa-ruler-combined"></i> Total Land Size (Acres)</label>
+          <label class="input-label-farmer"><i class="fa-solid fa-ruler-combined"></i> <span data-i18n="total_land_size_lbl">Total Land Size (Acres)</span></label>
           <input type="number" step="0.5" class="input-farmer" id="profLandSizeInput" value="3.5">
         </div>
         <div class="input-group-farmer">
-          <label class="input-label-farmer"><i class="fa-solid fa-wheat-awn"></i> Primary Crop</label>
+          <label class="input-label-farmer"><i class="fa-solid fa-wheat-awn"></i> <span data-i18n="primary_crop_lbl">Primary Crop</span></label>
           <select class="select-farmer" id="profPrimaryCrop">
             <option value="Rice" selected>Rice (వరి)</option>
             <option value="Wheat">Wheat (గోధుమ)</option>
@@ -1420,23 +1420,23 @@
           </select>
         </div>
         <div class="input-group-farmer">
-          <label class="input-label-farmer"><i class="fa-solid fa-language"></i> Preferred Language</label>
+          <label class="input-label-farmer"><i class="fa-solid fa-language"></i> <span data-i18n="preferred_language_lbl">Preferred Language</span></label>
           <select class="select-farmer" id="profLangSelect" onchange="selectLanguage(this.value)">
             <option value="en">English</option>
             <option value="te" selected>Telugu (తెలుగు)</option>
-            <option value="hi">Hindi (हिन्दी)</option>
+            <option value="hi">Hindi (హిन्दी)</option>
           </select>
         </div>
       </div>
 
       <button class="btn-predict-big" onclick="saveFarmerProfile()" style="margin-top:1rem;">
         <i class="fa-solid fa-floppy-disk" style="font-size:1.3rem;"></i>
-        <span>Save Profile</span>
+        <span data-i18n="save_profile_btn">Save Profile</span>
         <span class="te-sub btn-predict-te">ప్రొఫైల్ సేవ్ చేయండి</span>
       </button>
 
       <button class="btn-guest" onclick="showScreen('screen-login')" style="margin-top:0.75rem;">
-        <i class="fa-solid fa-arrow-right-from-bracket" style="color:#dc2626;"></i> Logout / Change User
+        <i class="fa-solid fa-arrow-right-from-bracket" style="color:#dc2626;"></i> <span data-i18n="logout_btn">Logout / Change User</span>
       </button>
     </div>
   </div>
