@@ -789,21 +789,21 @@
       </button>
     </div>
   </div>
-  <div class="feature-body-single">
-    <div class="section-card">
-      <!-- Pest Visual Farmer Banner -->
-      <div class="farmer-visual-banner" style="background:linear-gradient(135deg, #fee2e2 0%, #ffedd5 100%); border-color:#fca5a5;">
-        <img src="{{ url_for('static', filename='images/farmer_pitchfork.png') }}" alt="Pest Doctor" class="farmer-banner-img">
-        <div>
-          <div class="farmer-banner-title">Pest &amp; Disease Doctor (తెగులు నివారణ వైద్యుడు)</div>
-          <div class="farmer-banner-sub">Upload leaf photo or choose symptoms to identify plant diseases &amp; get instant spray remedies.</div>
-        </div>
+  <div class="feature-body-single" style="padding-top:0.75rem;">
+    <!-- Pest Visual Farmer Banner -->
+    <div class="farmer-visual-banner" style="background:linear-gradient(135deg, #fee2e2 0%, #ffedd5 100%); border-color:#fca5a5; margin:0 0 1rem 0;">
+      <img src="{{ url_for('static', filename='images/farmer_pitchfork.png') }}" alt="Pest Doctor" class="farmer-banner-img">
+      <div>
+        <div class="farmer-banner-title">Pest &amp; Disease Doctor (తెగులు నివారణ వైద్యుడు)</div>
+        <div class="farmer-banner-sub">Upload leaf photo or choose symptoms to identify plant diseases &amp; get instant spray remedies.</div>
       </div>
+    </div>
 
+    <div class="section-card">
       <div class="section-head">
         <i class="fa-solid fa-camera" style="color:#dc2626;"></i>
         <span data-i18n="pest_diagnosis_title">Pest &amp; Disease Diagnosis</span>
-        <span class="te-sub section-head-te">తెగులు నిర్ధారణ</span>
+        <span class="te-sub section-head-te" data-i18n-te="pest_diagnosis_title_te">తెగులు నిర్ధారణ</span>
       </div>
 
       <div class="two-col-inputs">
@@ -812,12 +812,12 @@
             <i class="fa-solid fa-wheat-awn" style="color:#2d6a4f;"></i> <span data-i18n="th_crop">Crop</span>
           </label>
           <select class="select-farmer" id="pestCropSelect">
-            <option value="Rice">Rice (వరి / चावल)</option>
-            <option value="Wheat">Wheat (గోధుమ / गेहूं)</option>
-            <option value="Cotton" selected>Cotton (పత్తి / कपास)</option>
-            <option value="Maize">Maize (మొక్కజొన్న / मक्का)</option>
-            <option value="Tomato">Tomato (టమాట / टमाटर)</option>
-            <option value="Groundnut">Groundnut (వేరుశనగ / మూంగఫలీ)</option>
+            <option value="Rice" data-i18n="opt_crop_rice">Rice (వరి / चावल)</option>
+            <option value="Wheat" data-i18n="opt_crop_wheat">Wheat (గోధుమ / गेहूं)</option>
+            <option value="Cotton" selected data-i18n="opt_crop_cotton">Cotton (పత్తి / कपास)</option>
+            <option value="Maize" data-i18n="opt_crop_maize">Maize (మొక్కజొన్న / मक्का)</option>
+            <option value="Tomato" data-i18n="opt_crop_tomato">Tomato (టమాట / टमाटर)</option>
+            <option value="Groundnut" data-i18n="opt_crop_groundnut">Groundnut (వేరుశనగ / मूंगफली)</option>
           </select>
         </div>
         <div class="input-group-farmer">
@@ -825,11 +825,11 @@
             <i class="fa-solid fa-circle-exclamation" style="color:#dc2626;"></i> <span data-i18n="symptoms_observed_lbl">Symptoms Observed</span>
           </label>
           <select class="select-farmer" id="pestSymptomSelect">
-            <option value="bollworm">Holes in bolls / chewed leaves (పురుగు కన్నాలు / छिद्र)</option>
-            <option value="blast">Diamond-shaped lesions on leaves (ఆకు మచ్చలు / धब्बे)</option>
-            <option value="aphids">Curled leaves &amp; sticky dew (ముడుచుకున్న ఆకులు / मुड़ी पत्तियां)</option>
-            <option value="rust">Brown / orange rust pustules (తుప్పు మచ్చలు / रतुआ)</option>
-            <option value="stem_borer">Dead heart / dried central shoot (కాండం తొలుచు పురుగు)</option>
+            <option value="bollworm" data-i18n="opt_sym_bollworm">Holes in bolls / chewed leaves (పురుగు కన్నాలు)</option>
+            <option value="blast" data-i18n="opt_sym_blast">Diamond-shaped lesions on leaves (ఆకు మచ్చలు)</option>
+            <option value="aphids" data-i18n="opt_sym_aphids">Curled leaves &amp; sticky dew (ముడుచుకున్న ఆకులు)</option>
+            <option value="rust" data-i18n="opt_sym_rust">Brown / orange rust pustules (తుప్పు మచ్చలు)</option>
+            <option value="stem_borer" data-i18n="opt_sym_stem_borer">Dead heart / dried central shoot (కాండం తొలుచు పురుగు)</option>
           </select>
         </div>
       </div>
@@ -852,11 +852,11 @@
         <div id="pestUploadPrompt">
           <i class="fa-solid fa-cloud-arrow-up" style="font-size:2.4rem; color:var(--primary-med); margin-bottom:0.4rem; display:block;"></i>
           <div style="font-weight:700; font-size:1rem;" data-i18n="upload_leaf_photo">Upload Crop Leaf Photo</div>
-          <div class="te-sub" style="font-size:0.82rem; color:var(--text-muted);">ఆకు లేదా మొక్క ఫోటోను ఇక్కడ వేయండి లేదా ఎంచుకోండి</div>
+          <div class="te-sub" style="font-size:0.82rem; color:var(--text-muted);" data-i18n-te="upload_leaf_sub_te">ఆకు లేదా మొక్క ఫోటోను ఇక్కడ వేయండి లేదా ఎంచుకోండి</div>
           <div style="font-size:0.75rem; color:#64748b; margin-top:4px;" data-i18n="upload_subtext">Supports JPG, PNG, WEBP · Camera capture or Drag &amp; Drop</div>
           <div class="pest-upload-actions">
-            <span class="btn-upload-choice"><i class="fa-solid fa-camera" style="color:#dc2626;"></i> Take Photo</span>
-            <span class="btn-upload-choice"><i class="fa-solid fa-image" style="color:#2563eb;"></i> Select Image</span>
+            <button type="button" class="btn-upload-choice" onclick="triggerPestImageUpload(event)"><i class="fa-solid fa-camera" style="color:#dc2626;"></i> <span data-i18n="btn_take_photo">Take Photo</span></button>
+            <button type="button" class="btn-upload-choice" onclick="triggerPestImageUpload(event)"><i class="fa-solid fa-image" style="color:#2563eb;"></i> <span data-i18n="btn_select_image">Select Image</span></button>
           </div>
         </div>
 
