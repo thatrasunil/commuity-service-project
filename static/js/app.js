@@ -11,6 +11,53 @@
 
 let currentLang = localStorage.getItem('cropai_lang') || 'en';
 
+function showScreen(screenId, updateHistory = true) {
+  if (!screenId) return;
+  const screens = document.querySelectorAll('.screen');
+  screens.forEach(s => s.classList.remove('active'));
+
+  const target = document.getElementById(screenId);
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const splash = document.getElementById('screen-splash');
+    if (splash && screenId !== 'screen-splash') {
+      splash.style.display = 'none';
+    }
+  }
+
+  const screenToPath = {
+    'screen-home': '/',
+    'screen-predict': '/predict-yield',
+    'screen-recommend': '/recommend',
+    'screen-weather': '/weather',
+    'screen-soil': '/soil-health',
+    'screen-pest': '/pest-detection',
+    'screen-reports': '/farm-reports',
+    'screen-talk': '/talk-with-ai',
+    'screen-profile': '/profile'
+  };
+
+  if (updateHistory && window.history && screenToPath[screenId]) {
+    try {
+      window.history.pushState({ screen: screenId }, '', screenToPath[screenId]);
+    } catch (e) {
+      console.log('History state error', e);
+    }
+  }
+
+  if (screenId === 'screen-reports' && typeof updateFarmReportsScreen === 'function') {
+    updateFarmReportsScreen();
+  }
+}
+
+window.addEventListener('popstate', (e) => {
+  if (e.state && e.state.screen) {
+    showScreen(e.state.screen, false);
+  }
+});
+
 const I18N = {
   en: {
     tagline: 'Predict Early. Improve Yield.',
