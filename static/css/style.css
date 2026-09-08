@@ -914,8 +914,9 @@ body {
 }
 
 .feature-body-single {
-  padding: 1rem;
-  max-width: 700px;
+  padding: 1.25rem 1rem 2.5rem;
+  max-width: 860px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -2536,7 +2537,33 @@ body.high-contrast {
 
   /* Feature body full padding */
   .feature-col-left, .feature-col-right { padding: 0.75rem; }
-  .feature-body-single { padding: 0.75rem; }
+  .feature-body-single { padding: 0.5rem; }
+
+  /* Soil Presets Grid on mobile */
+  .soil-presets-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .soil-card-box {
+    padding: 0.85rem;
+    border-radius: 12px;
+  }
+  .slider-row {
+    flex-direction: flex;
+    gap: 0.5rem;
+  }
+  .slider-val-box {
+    min-width: 68px;
+    height: 34px;
+    font-size: 0.82rem;
+  }
+  .segmented-control {
+    flex-wrap: wrap;
+  }
+  .seg-btn {
+    font-size: 0.75rem;
+    padding: 6px 4px;
+  }
 }
 
 /* ─── LARGE DESKTOP (1400px+) ─────────────────────── */
