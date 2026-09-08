@@ -36,6 +36,18 @@ const I18N = {
     predict_btn: 'Predict Yield',
     expected_yield: 'Expected Yield',
     analyzing: 'Analyzing Your Field...',
+    soil_analysis: 'Soil Health Analysis',
+    nitrogen: 'Nitrogen (N)',
+    phosphorus: 'Phosphorus (P)',
+    potassium: 'Potassium (K)',
+    soil_ph: 'Soil pH',
+    moisture: 'Moisture',
+    organic_matter: 'Organic Matter',
+    healthy_soil: 'Healthy & Fertile Soil',
+    moderate_soil: 'Mild Deficit Soil',
+    poor_soil: 'Depleted Soil (Needs Treatment)',
+    fertilizer_plan: 'Prescribed Fertilizer Plan',
+    best_crops: 'Best Crops for This Soil'
   },
   te: {
     tagline: 'ముందే అంచనా వేయండి. దిగుబడి పెంచండి.',
@@ -61,6 +73,18 @@ const I18N = {
     predict_btn: 'దిగుబడి అంచనా వేయండి',
     expected_yield: 'అంచనా దిగుబడి',
     analyzing: 'మీ పొలాన్ని విశ్లేషిస్తున్నాము...',
+    soil_analysis: 'నేల ఆరోగ్య విశ్లేషణ',
+    nitrogen: 'నత్రజని (N)',
+    phosphorus: 'భాస్వరం (P)',
+    potassium: 'పొటాష్ (K)',
+    soil_ph: 'నేల pH',
+    moisture: 'తేమ శాతం',
+    organic_matter: 'సేంద్రీయ పదార్థం',
+    healthy_soil: 'సారవంతమైన ఆరోగ్య నేల',
+    moderate_soil: 'మధ్యస్థ పోషకాల నేల',
+    poor_soil: 'క్షీణించిన నేల (చికిత్స అవసరం)',
+    fertilizer_plan: 'సిఫారసు చేసిన ఎరువుల ప్రణాళిక',
+    best_crops: 'ఈ నేలకు అనువైన ఉత్తమ పంటలు'
   },
   hi: {
     tagline: 'जल्दी भविष्यवाणी करें। उपज बढ़ाएं।',
@@ -86,80 +110,73 @@ const I18N = {
     predict_btn: 'उपज का अनुमान लगाएं',
     expected_yield: 'अनुमानित उपज',
     analyzing: 'आपके खेत का विश्लेषण हो रहा है...',
+    soil_analysis: 'मिट्टी स्वास्थ्य विश्लेषण',
+    nitrogen: 'नाइट्रोजन (N)',
+    phosphorus: 'फास्फोरस (P)',
+    potassium: 'पोटाश (K)',
+    soil_ph: 'मिट्टी का पीएच',
+    moisture: 'नमी प्रतिशत',
+    organic_matter: 'जैविक पदार्थ',
+    healthy_soil: 'उपजाऊ व स्वस्थ मिट्टी',
+    moderate_soil: 'मध्यम पोषक मिट्टी',
+    poor_soil: 'कमजोर मिट्टी (उपचार आवश्यक)',
+    fertilizer_plan: 'अनुशंसित उर्वरक खुराक',
+    best_crops: 'इस मिट्टी के लिए सर्वोत्तम फसलें'
   }
 };
 
-const SCREEN_ROUTES = {
-  'screen-predict': '/predict-yield',
-  'screen-recommend': '/recommend',
-  'screen-weather': '/weather',
-  'screen-soil': '/soil-health',
-  'screen-pest': '/pest-detection',
-  'screen-reports': '/farm-reports',
-  'screen-talk': '/talk-with-ai',
-  'screen-profile': '/profile',
-  'screen-home': '/'
-};
-
-function showScreen(id, pushHistory = true) {
-  document.querySelectorAll('.screen').forEach(s => {
-    s.classList.remove('active');
-  });
-  const target = document.getElementById(id);
-  if (target) {
-    target.classList.add('active');
-    window.scrollTo(0, 0);
-
-    // Update browser URL so back button works and URL reflects current page
-    if (pushHistory && SCREEN_ROUTES[id] && window.history.pushState) {
-      window.history.pushState({ screen: id }, '', SCREEN_ROUTES[id]);
-    }
-
-    // Auto-fetch/render on screen open
-    if (id === 'screen-weather') {
-      const wTemp = document.getElementById('wTempBig');
-      if (wTemp && (wTemp.textContent === '—' || !wTemp.textContent.trim())) {
-        fetchWeatherForScreen();
-      }
-    } else if (id === 'screen-recommend') {
-      const rcResult = document.getElementById('rcResult');
-      if (rcResult && rcResult.style.display === 'none') {
-        getCropRecommendation();
-      }
-    } else if (id === 'screen-soil') {
-      if (typeof analyzeSoil === 'function') {
-        analyzeSoil();
-      }
-    }
+function showToast(message, icon = 'fa-circle-check', duration = 2600) {
+  let toast = document.getElementById('appToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'appToast';
+    toast.className = 'app-toast';
+    document.body.appendChild(toast);
   }
+  toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+  toast.classList.add('show');
+  clearTimeout(window._toastTimeout);
+  window._toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, duration);
 }
-
-function openInNewTab(routePath) {
-  window.open(routePath, '_blank');
-}
-
-window.addEventListener('popstate', (e) => {
-  if (e.state && e.state.screen) {
-    showScreen(e.state.screen, false);
-  } else {
-    showScreen('screen-home', false);
-  }
-});
 
 function selectLanguage(lang) {
   currentLang = lang;
   localStorage.setItem('cropai_lang', lang);
   updateLabels();
 
-  // Update voice lang dropdown in predict screen
+  // Sync voice lang dropdowns
   const voiceLangSelect = document.getElementById('voiceLangSelect');
-  if (voiceLangSelect) {
-    if (lang === 'te') voiceLangSelect.value = 'te';
-    else if (lang === 'hi') voiceLangSelect.value = 'hi';
-    else voiceLangSelect.value = 'en';
+  if (voiceLangSelect) voiceLangSelect.value = lang;
+
+  const profLangSelect = document.getElementById('profLangSelect');
+  if (profLangSelect) profLangSelect.value = lang;
+
+  // Sync active class on all lang pills
+  document.querySelectorAll('.lang-pill').forEach(btn => {
+    if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+    else btn.classList.remove('active');
+  });
+
+  const langNames = {
+    en: 'English',
+    te: 'తెలుగు (Telugu)',
+    hi: 'हिन्दी (Hindi)'
+  };
+  showToast(`Language: ${langNames[lang] || lang}`, 'fa-globe');
+
+  // If user is on the welcome language screen, advance to home
+  const activeScreen = document.querySelector('.screen.active');
+  if (activeScreen && activeScreen.id === 'screen-language') {
+    showScreen('screen-home');
   }
 
-  showScreen('screen-login');
+  // If on Soil Health screen and results are showing, re-run analysis to refresh language
+  const soilRes = document.getElementById('soilResult');
+  if (soilRes && soilRes.style.display !== 'none' && typeof analyzeSoil === 'function') {
+    analyzeSoil();
+  }
 }
 
 function updateLabels() {
@@ -169,19 +186,27 @@ function updateLabels() {
     if (labels[key]) el.textContent = labels[key];
   });
 
-  // Telugu subs: show only when lang is te, else show English sub for te, hi for hi
-  document.querySelectorAll('.te-sub').forEach(el => {
-    el.style.display = (currentLang === 'te') ? '' : (currentLang === 'en' ? 'none' : 'none');
-  });
-  document.querySelectorAll('.hi-sub').forEach(el => {
-    el.style.display = (currentLang === 'hi') ? '' : 'none';
+  // Sync active status on lang pills
+  document.querySelectorAll('.lang-pill').forEach(btn => {
+    if (btn.getAttribute('data-lang') === currentLang) btn.classList.add('active');
+    else btn.classList.remove('active');
   });
 
-  // Always show Telugu script in buttons (just dimmed if not selected lang)
-  if (currentLang === 'en') {
-    document.querySelectorAll('.te-sub').forEach(el => el.style.display = '');
-    document.querySelectorAll('.hi-sub').forEach(el => el.style.display = '');
-  }
+  // Telugu subtitles: in Telugu mode hide to avoid repetition with Telugu title
+  // in English mode, show helpful Telugu subtitle
+  document.querySelectorAll('.te-sub').forEach(el => {
+    if (currentLang === 'te') {
+      el.style.display = 'none';
+    } else if (currentLang === 'hi') {
+      el.style.display = 'none';
+    } else {
+      el.style.display = '';
+    }
+  });
+
+  document.querySelectorAll('.hi-sub').forEach(el => {
+    el.style.display = 'none';
+  });
 }
 
 function sendOtp() {
@@ -386,105 +411,438 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ──────────────────────────────────────────────
-// 4. SOIL HEALTH SCREEN
+// 4. SOIL HEALTH SCREEN & ENGINE
 // ──────────────────────────────────────────────
 
+function applySoilPreset(presetKey) {
+  const presets = {
+    fertile: { n: 125, p: 55, k: 50, ph: 6.8, moisture: 70, om: 'high', labelEn: 'Fertile Loam', labelTe: 'సారవంతమైన నేల', labelHi: 'उपजाऊ दोमट मिट्टी' },
+    red:     { n: 60,  p: 30, k: 35, ph: 6.2, moisture: 45, om: 'medium', labelEn: 'Red / Sandy Soil', labelTe: 'ఎర్ర / ఇసుక నేల', labelHi: 'लाल / बलुई मिट्टी' },
+    black:   { n: 95,  p: 45, k: 60, ph: 7.6, moisture: 60, om: 'medium', labelEn: 'Black Cotton Soil', labelTe: 'నల్లరేగడి నేల', labelHi: 'काली कपास मिट्टी' },
+    saline:  { n: 45,  p: 20, k: 30, ph: 8.4, moisture: 50, om: 'low', labelEn: 'Alkaline / Saline Soil', labelTe: 'క్షార / చవుడు నేల', labelHi: 'क्षारीय मिट्टी' },
+    acidic:  { n: 70,  p: 18, k: 28, ph: 4.8, moisture: 65, om: 'medium', labelEn: 'Acidic Soil', labelTe: 'ఆమ్ల నేల', labelHi: 'अम्लीय मिट्टी' }
+  };
+
+  const p = presets[presetKey] || presets.fertile;
+  if (document.getElementById('soilN')) document.getElementById('soilN').value = p.n;
+  if (document.getElementById('soilP')) document.getElementById('soilP').value = p.p;
+  if (document.getElementById('soilK')) document.getElementById('soilK').value = p.k;
+  if (document.getElementById('soilPH')) document.getElementById('soilPH').value = p.ph;
+  if (document.getElementById('soilMoisture')) document.getElementById('soilMoisture').value = p.moisture;
+  if (document.getElementById('soilOM')) document.getElementById('soilOM').value = p.om;
+
+  const currentName = (currentLang === 'te') ? p.labelTe : (currentLang === 'hi' ? p.labelHi : p.labelEn);
+  showToast(`Preset: ${currentName}`, 'fa-wand-magic-sparkles');
+  analyzeSoil();
+}
+
 function analyzeSoil() {
-  const n  = parseFloat(document.getElementById('soilN')?.value || 90);
-  const p  = parseFloat(document.getElementById('soilP')?.value || 45);
-  const k  = parseFloat(document.getElementById('soilK')?.value || 40);
+  const n = parseFloat(document.getElementById('soilN')?.value || 90);
+  const p = parseFloat(document.getElementById('soilP')?.value || 45);
+  const k = parseFloat(document.getElementById('soilK')?.value || 40);
   const ph = parseFloat(document.getElementById('soilPH')?.value || 6.5);
   const moisture = parseFloat(document.getElementById('soilMoisture')?.value || 65);
   const om = document.getElementById('soilOM')?.value || 'medium';
+  const acres = parseFloat(document.getElementById('soilFarmAcres')?.value || 2.5);
 
-  // Simple scoring algorithm
   let score = 100;
+  const meters = [];
   const issues = [];
-  const recommendations = [];
+  let ureaBags = 0;
+  let dapBags = 0;
+  let mopBags = 0;
+  let limeOrGypsum = null;
+  let compostBags = 0;
 
-  // Nitrogen scoring
-  if (n < 40)        { score -= 20; issues.push({ label: '<i class="fa-solid fa-leaf"></i> Nitrogen (N)', status: 'Very Low', desc: 'Severe nitrogen deficiency. Crops will show yellow leaves.', cls: 'high-priority' }); recommendations.push('Apply 3 bags of Urea (46-0-0) per acre immediately.'); }
-  else if (n < 70)   { score -= 10; issues.push({ label: '<i class="fa-solid fa-leaf"></i> Nitrogen (N)', status: 'Low', desc: 'Nitrogen is below optimal. Plant growth will be slow.', cls: 'medium-priority' }); recommendations.push('Apply 1-2 bags of Urea per acre before sowing.'); }
-  else if (n > 160)  { score -= 5;  issues.push({ label: '<i class="fa-solid fa-leaf"></i> Nitrogen (N)', status: 'Excess', desc: 'Too much nitrogen causes soft stems and pest vulnerability.', cls: '' }); }
+  // 1. Nitrogen Evaluation
+  let nStatus = 'opt';
+  let nBadgeEn = 'Optimal', nBadgeTe = 'సరైనది', nBadgeHi = 'संतुलित';
+  let nBarColor = '#16a34a';
+  let nPercent = Math.min(100, Math.round((n / 140) * 100));
+  if (n < 40) {
+    score -= 22; nStatus = 'low';
+    nBadgeEn = 'Severe Deficit'; nBadgeTe = 'తీవ్ర కొరత'; nBadgeHi = 'गंभीर कमी';
+    nBarColor = '#dc2626';
+    ureaBags = Math.ceil(1.5 * acres);
+    issues.push({
+      en: 'Severe Nitrogen Deficiency — Stunted plant growth and yellow leaves.',
+      te: 'తీవ్ర నత్రజని లోపం — మొక్కలు ఎదగవు, ఆకులు పసుపు రంగులోకి మారుతాయి.',
+      hi: 'गंभीर नाइट्रोजन की कमी — पौधों का विकास रुकेगा और पत्तियां पीली पड़ेंगी।'
+    });
+  } else if (n < 75) {
+    score -= 10; nStatus = 'mod';
+    nBadgeEn = 'Mild Deficit'; nBadgeTe = 'తక్కువ'; nBadgeHi = 'मध्यम कमी';
+    nBarColor = '#d97706';
+    ureaBags = Math.ceil(0.8 * acres);
+    issues.push({
+      en: 'Mild Nitrogen Deficit — Add top-dressing nitrogen for peak biomass.',
+      te: 'నత్రజని స్వల్ప లోపం — పైపాటుగా యూరియా వాడి పంట ఎదుగుదలను పెంచండి.',
+      hi: 'मध्यम नाइट्रोजन कमी — अच्छी बढ़वार के लिए टॉप-ड्रेसिंग करें।'
+    });
+  } else if (n > 160) {
+    score -= 6; nStatus = 'high';
+    nBadgeEn = 'Excess'; nBadgeTe = 'అధికం'; nBadgeHi = 'अत्यधिक';
+    nBarColor = '#0284c7';
+    issues.push({
+      en: 'Excess Nitrogen — Soft stems and high risk of sucking pests.',
+      te: 'నత్రజని అధికం — కాండం మెత్తబడి రసం పీల్చే పురుగుల బెడద పెరుగుతుంది.',
+      hi: 'नाइट्रोजन की अधिकता — तने कमजोर होंगे और कीटों का खतरा बढ़ेगा।'
+    });
+  }
+  meters.push({
+    icon: 'fa-leaf',
+    color: '#16a34a',
+    name: (currentLang === 'te') ? 'నత్రజని (Nitrogen - N)' : (currentLang === 'hi' ? 'नाइट्रोजन (Nitrogen - N)' : 'Nitrogen (N)'),
+    val: `${n} kg/ha`,
+    ideal: '100–140 kg/ha',
+    badge: (currentLang === 'te') ? nBadgeTe : (currentLang === 'hi' ? nBadgeHi : nBadgeEn),
+    badgeBg: (nStatus === 'opt') ? '#dcfce7' : (nStatus === 'mod' ? '#fef3c7' : '#fee2e2'),
+    badgeColor: (nStatus === 'opt') ? '#166534' : (nStatus === 'mod' ? '#92400e' : '#991b1b'),
+    barColor: nBarColor,
+    percent: Math.min(100, Math.max(15, nPercent))
+  });
 
-  // Phosphorus scoring
-  if (p < 25)        { score -= 15; issues.push({ label: '<i class="fa-solid fa-seedling"></i> Phosphorus (P)', status: 'Low', desc: 'Weak root system. Poor flowering and fruiting expected.', cls: 'high-priority' }); recommendations.push('Apply DAP (18-46-0) fertilizer — 1 bag per acre.'); }
-  else if (p > 100)  { score -= 3;  issues.push({ label: '<i class="fa-solid fa-seedling"></i> Phosphorus (P)', status: 'Excess', desc: 'High phosphorus blocks zinc uptake. Balanced soil.', cls: '' }); }
+  // 2. Phosphorus Evaluation
+  let pStatus = 'opt';
+  let pBadgeEn = 'Optimal', pBadgeTe = 'సరైనది', pBadgeHi = 'संतुलित';
+  let pBarColor = '#16a34a';
+  let pPercent = Math.min(100, Math.round((p / 60) * 100));
+  if (p < 25) {
+    score -= 18; pStatus = 'low';
+    pBadgeEn = 'Deficit'; pBadgeTe = 'లోపం'; pBadgeHi = 'कमी';
+    pBarColor = '#dc2626';
+    dapBags = Math.ceil(1.0 * acres);
+    issues.push({
+      en: 'Low Phosphorus — Poor root growth and weak flowering.',
+      te: 'భాస్వరం లోపం — వేరు వ్యవస్థ బలహీనపడి, పూత తక్కువగా వస్తుంది.',
+      hi: 'फास्फोरस की कमी — जड़ें कमजोर होंगी और फूल कम आएंगे।'
+    });
+  } else if (p > 90) {
+    score -= 4; pStatus = 'high';
+    pBadgeEn = 'High'; pBadgeTe = 'అధికం'; pBadgeHi = 'अधिक';
+    pBarColor = '#0284c7';
+  }
+  meters.push({
+    icon: 'fa-seedling',
+    color: '#059669',
+    name: (currentLang === 'te') ? 'భాస్వరం (Phosphorus - P)' : (currentLang === 'hi' ? 'फास्फोरस (Phosphorus - P)' : 'Phosphorus (P)'),
+    val: `${p} kg/ha`,
+    ideal: '40–60 kg/ha',
+    badge: (currentLang === 'te') ? pBadgeTe : (currentLang === 'hi' ? pBadgeHi : pBadgeEn),
+    badgeBg: (pStatus === 'opt') ? '#dcfce7' : '#fee2e2',
+    badgeColor: (pStatus === 'opt') ? '#166534' : '#991b1b',
+    barColor: pBarColor,
+    percent: Math.min(100, Math.max(15, pPercent))
+  });
 
-  // Potassium scoring
-  if (k < 25)        { score -= 12; issues.push({ label: '<i class="fa-solid fa-shield-halved"></i> Potassium (K)', status: 'Low', desc: 'Crop immunity is weak. Risk of drought and pest damage.', cls: 'high-priority' }); recommendations.push('Apply MOP (0-0-60) — 1 bag per acre for disease resistance.'); }
+  // 3. Potassium Evaluation
+  let kStatus = 'opt';
+  let kBadgeEn = 'Optimal', kBadgeTe = 'సరైనది', kBadgeHi = 'संतुलित';
+  let kBarColor = '#16a34a';
+  let kPercent = Math.min(100, Math.round((k / 55) * 100));
+  if (k < 25) {
+    score -= 14; kStatus = 'low';
+    kBadgeEn = 'Deficit'; kBadgeTe = 'లోపం'; kBadgeHi = 'कमी';
+    kBarColor = '#dc2626';
+    mopBags = Math.ceil(0.8 * acres);
+    issues.push({
+      en: 'Potassium Deficit — Low disease resistance and drought vulnerability.',
+      te: 'పొటాష్ లోపం — రోగనిరోధక శక్తి తగ్గి, పంట తెగుళ్లు మరియు బెట్టకు గురవుతుంది.',
+      hi: 'पोटाश की कमी — रोगों और सूखे से लड़ने की क्षमता घटेगी।'
+    });
+  }
+  meters.push({
+    icon: 'fa-shield-halved',
+    color: '#7c3aed',
+    name: (currentLang === 'te') ? 'పొటాష్ (Potassium - K)' : (currentLang === 'hi' ? 'पोटाश (Potassium - K)' : 'Potassium (K)'),
+    val: `${k} kg/ha`,
+    ideal: '35–55 kg/ha',
+    badge: (currentLang === 'te') ? kBadgeTe : (currentLang === 'hi' ? kBadgeHi : kBadgeEn),
+    badgeBg: (kStatus === 'opt') ? '#dcfce7' : '#fee2e2',
+    badgeColor: (kStatus === 'opt') ? '#166534' : '#991b1b',
+    barColor: kBarColor,
+    percent: Math.min(100, Math.max(15, kPercent))
+  });
 
-  // pH scoring
-  if (ph < 5.5)      { score -= 18; issues.push({ label: '<i class="fa-solid fa-flask"></i> Soil pH', status: 'Very Acidic', desc: `pH ${ph} blocks nutrient absorption. Fertilizers become useless.`, cls: 'high-priority' }); recommendations.push('Apply Agricultural Lime (2-3 bags/acre) and wait 3 weeks before sowing.'); }
-  else if (ph < 6.0) { score -= 8;  issues.push({ label: '<i class="fa-solid fa-flask"></i> Soil pH', status: 'Slightly Acidic', desc: `pH ${ph} — apply light lime to bring to 6.5.`, cls: 'medium-priority' }); recommendations.push('Apply 1 bag Agricultural Lime per acre to improve pH.'); }
-  else if (ph > 8.0) { score -= 10; issues.push({ label: '<i class="fa-solid fa-flask"></i> Soil pH', status: 'Alkaline', desc: `pH ${ph} — salty/alkaline soil. Gypsum treatment needed.`, cls: 'medium-priority' }); recommendations.push('Apply Gypsum (2-3 bags/acre) and add green manure to reduce alkalinity.'); }
+  // 4. pH Balance
+  let phBadgeEn = 'Balanced Neutral', phBadgeTe = 'సమతుల్య pH', phBadgeHi = 'संतुलित';
+  let phBarColor = '#16a34a';
+  if (ph < 5.5) {
+    score -= 20;
+    phBadgeEn = 'Acidic Soil'; phBadgeTe = 'తీవ్ర ఆమ్ల నేల'; phBadgeHi = 'अम्लीय मिट्टी';
+    phBarColor = '#dc2626';
+    limeOrGypsum = {
+      type: 'lime',
+      bags: Math.ceil(2.0 * acres),
+      en: 'Apply Agricultural Lime (సున్నం) 2-3 weeks before sowing.',
+      te: 'విత్తడానికి 2-3 వారాల ముందు వ్యవసాయ సున్నం వేయండి.',
+      hi: 'बुवाई से 2-3 सप्ताह पहले कृषि चूना (लाइम) डालें।'
+    };
+    issues.push({
+      en: `Acidic pH (${ph}) locks soil nutrients and stunts root hairs.`,
+      te: `ఆమ్ల నేల (${ph}) వల్ల ఎరువులు మొక్కలకు అందవు.`,
+      hi: `अम्लीय पीएच (${ph}) पोषक तत्वों का अवशोषण रोकता है।`
+    });
+  } else if (ph > 7.9) {
+    score -= 16;
+    phBadgeEn = 'Alkaline / Saline'; phBadgeTe = 'క్షార నేల (సౌడు)'; phBadgeHi = 'क्षारीय मिट्टी';
+    phBarColor = '#ea580c';
+    limeOrGypsum = {
+      type: 'gypsum',
+      bags: Math.ceil(2.5 * acres),
+      en: 'Apply Gypsum (జిప్సం) + Green Manure (జీలుగు) to leach excess salts.',
+      te: 'ఉప్పు శాతాన్ని తగ్గించడానికి జిప్సం మరియు పచ్చిరొట్ట ఎరువులు (జీలుగు) వేయండి.',
+      hi: 'लवण कम करने के लिए जिप्सम और हरी खाद का उपयोग करें।'
+    };
+    issues.push({
+      en: `Alkaline/Salty pH (${ph}) causes zinc deficiency and hardpan soil.`,
+      te: `క్షార గుణం (${ph}) వల్ల జింక్ లోపం వస్తుంది మరియు భూమి గట్టిపడుతుంది.`,
+      hi: `क्षारीयता (${ph}) से जिंक की कमी और जमीन सख्त होती है।`
+    });
+  }
+  meters.push({
+    icon: 'fa-flask',
+    color: '#d97706',
+    name: (currentLang === 'te') ? 'నేల pH (Acidity/Alkalinity)' : (currentLang === 'hi' ? 'मिट्टी का pH मान' : 'Soil pH Reaction'),
+    val: `pH ${ph}`,
+    ideal: '6.2–7.5 (Neutral)',
+    badge: (currentLang === 'te') ? phBadgeTe : (currentLang === 'hi' ? phBadgeHi : phBadgeEn),
+    badgeBg: (ph >= 6.0 && ph <= 7.8) ? '#dcfce7' : '#fee2e2',
+    badgeColor: (ph >= 6.0 && ph <= 7.8) ? '#166534' : '#991b1b',
+    barColor: phBarColor,
+    percent: Math.min(100, Math.max(10, Math.round((ph / 10) * 100)))
+  });
 
-  // Moisture
-  if (moisture < 30) { score -= 8; issues.push({ label: '<i class="fa-solid fa-water"></i> Soil Moisture', status: 'Dry', desc: 'Soil moisture is critically low. Irrigate before sowing.', cls: 'high-priority' }); recommendations.push('Irrigate field before sowing. Add mulch to retain moisture.'); }
-  else if (moisture > 85) { score -= 5; issues.push({ label: '<i class="fa-solid fa-water"></i> Soil Moisture', status: 'Waterlogged', desc: 'Excess moisture causes root rot. Ensure proper drainage.', cls: 'medium-priority' }); recommendations.push('Open drainage channels to prevent waterlogging and root rot.'); }
-
-  // Organic matter
-  if (om === 'low')  { score -= 10; issues.push({ label: '<i class="fa-solid fa-spa"></i> Organic Matter', status: 'Low', desc: 'Poor soil structure. Crops will not hold moisture well.', cls: 'medium-priority' }); recommendations.push('Add 2-3 tonnes of Farmyard Manure (FYM) or compost per acre.'); }
-
-  score = Math.max(0, Math.min(100, score));
-
-  // Determine status
-  let statusText, statusTe, heroBg;
-  if (score >= 80) {
-    statusText = '<i class="fa-solid fa-circle-check"></i> Healthy Soil'; statusTe = 'ఆరోగ్యకరమైన నేల'; heroBg = 'linear-gradient(135deg, #166534, #16a34a)';
-  } else if (score >= 55) {
-    statusText = '<i class="fa-solid fa-triangle-exclamation"></i> Moderate Soil'; statusTe = 'మధ్యస్థ నేల'; heroBg = 'linear-gradient(135deg, #92400e, #d97706)';
-  } else {
-    statusText = '<i class="fa-solid fa-circle-xmark"></i> Poor Soil — Needs Treatment'; statusTe = 'నేలకు చికిత్స అవసరం'; heroBg = 'linear-gradient(135deg, #991b1b, #dc2626)';
+  // 5. Moisture & Organic Matter
+  if (moisture < 35) score -= 8;
+  if (om === 'low') {
+    score -= 10;
+    compostBags = Math.ceil(3 * acres);
+    issues.push({
+      en: 'Low Organic Carbon — Soil has low water retention and poor microbes.',
+      te: 'సేంద్రీయ కర్బనం తక్కువ — భూమిలో తేమ నిల్వ సామర్థ్యం మరియు సూక్ష్మజీవులు తక్కువ.',
+      hi: 'कम जैविक कार्बन — मिट्टी में नमी रोकने और जीवाणुओं की कमी है।'
+    });
   }
 
-  // Render
+  score = Math.max(15, Math.min(100, score));
+
+  // Render Hero
   const hero = document.getElementById('soilResultHero');
-  const scoreEl = document.getElementById('soilResultScore');
   const statusEl = document.getElementById('soilResultStatus');
   const statusTeEl = document.getElementById('soilResultStatusTe');
-  if (hero) hero.style.background = heroBg;
-  if (statusEl) statusEl.innerHTML = statusText;
-  if (statusTeEl) statusTeEl.textContent = statusTe;
-  if (scoreEl) scoreEl.textContent = `Soil Health Score: ${score}/100`;
+  const scoreEl = document.getElementById('soilResultScore');
 
+  let gradeEn, gradeTe, gradeHi, heroGrad;
+  if (score >= 82) {
+    gradeEn = '<i class="fa-solid fa-circle-check"></i> Fertile & Healthy Soil';
+    gradeTe = 'సారవంతమైన ఆరోగ్యకరమైన నేల';
+    gradeHi = 'उत्कृष्ट व उपजाऊ मिट्टी';
+    heroGrad = 'linear-gradient(135deg, #14532d, #16a34a)';
+  } else if (score >= 58) {
+    gradeEn = '<i class="fa-solid fa-triangle-exclamation"></i> Moderate Quality Soil';
+    gradeTe = 'మధ్యస్థ సారవంతమైన నేల — ఎరువుల అవసరం';
+    gradeHi = 'मध्यम गुणवत्ता मिट्टी — खाद जरूरी';
+    heroGrad = 'linear-gradient(135deg, #78350f, #d97706)';
+  } else {
+    gradeEn = '<i class="fa-solid fa-triangle-exclamation"></i> Depleted Soil — High Risk';
+    gradeTe = 'క్షీణించిన నేల — ప్రత్యేక చికిత్స అవసరం';
+    gradeHi = 'कमजोर मिट्टी — उपचार आवश्यक';
+    heroGrad = 'linear-gradient(135deg, #7f1d1d, #dc2626)';
+  }
+
+  if (hero) hero.style.background = heroGrad;
+  if (statusEl) statusEl.innerHTML = (currentLang === 'te') ? `<i class="fa-solid fa-seedling"></i> ${gradeTe}` : (currentLang === 'hi' ? `<i class="fa-solid fa-seedling"></i> ${gradeHi}` : gradeEn);
+  if (statusTeEl) statusTeEl.textContent = (currentLang === 'te') ? `మొత్తం స్కోర్: ${score}/100` : (currentLang === 'hi' ? `कुल स्वास्थ्य स्कोर: ${score}/100` : `Quality Score: ${score}/100`);
+  if (scoreEl) scoreEl.textContent = `Field Health Rating: ${score}/100`;
+
+  // Render Meters Grid
+  const metersGrid = document.getElementById('soilMetersGrid');
+  if (metersGrid) {
+    metersGrid.innerHTML = meters.map(m => `
+      <div class="soil-meter-card">
+        <div class="soil-meter-head">
+          <span class="soil-meter-name"><i class="fa-solid ${m.icon}" style="color:${m.color};"></i> ${m.name}</span>
+          <span class="soil-meter-badge" style="background:${m.badgeBg}; color:${m.badgeColor};">${m.badge}</span>
+        </div>
+        <div class="soil-meter-val">${m.val}</div>
+        <div class="soil-meter-bar">
+          <div class="soil-meter-fill" style="width:${m.percent}%; background:${m.barColor};"></div>
+        </div>
+        <div class="soil-meter-sub">${(currentLang === 'te') ? 'సిఫారసు చేసిన పరిధి:' : (currentLang === 'hi' ? 'आदर्श स्तर:' : 'Target Range:')} ${m.ideal}</div>
+      </div>
+    `).join('');
+  }
+
+  // Render Fertilizer Plan
+  const fertCard = document.getElementById('soilFertDosageCard');
+  if (fertCard) {
+    let fertHtml = '';
+    const items = [];
+    if (ureaBags > 0) items.push({ icon: 'fa-cubes-stacked', color: '#16a34a', nameEn: 'Urea (46% N)', nameTe: 'యూరియా (నత్రజని)', nameHi: 'यूरिया', bags: `${ureaBags} Bags (50kg)` });
+    if (dapBags > 0)  items.push({ icon: 'fa-shield-halved', color: '#059669', nameEn: 'DAP / Single Super Phosphate', nameTe: 'డి.ఎ.పి (భాస్వరం)', nameHi: 'डीएपी / सुपर फास्फेट', bags: `${dapBags} Bags (50kg)` });
+    if (mopBags > 0)  items.push({ icon: 'fa-circle-dot', color: '#7c3aed', nameEn: 'MOP Potash (0-0-60)', nameTe: 'పొటాష్ ఎరువు (ఎం.ఓ.పి)', nameHi: 'म्यूरेट ऑफ पोटाश', bags: `${mopBags} Bags (50kg)` });
+    if (limeOrGypsum) items.push({ icon: 'fa-mountain', color: '#d97706', nameEn: (limeOrGypsum.type === 'lime' ? 'Agricultural Lime (సున్నం)' : 'Gypsum (జిప్సం)'), nameTe: (limeOrGypsum.type === 'lime' ? 'వ్యవసాయ సున్నం' : 'జిప్సం ఖనిజం'), nameHi: (limeOrGypsum.type === 'lime' ? 'कृषि चूना' : 'जिप्सम'), bags: `${limeOrGypsum.bags} Bags (50kg)` });
+    if (compostBags > 0) items.push({ icon: 'fa-spa', color: '#65a30d', nameEn: 'Farmyard Manure / Compost', nameTe: 'పశువుల ఎరువు / కంపోస్ట్', nameHi: 'गोबर की खाद / कम्पोस्ट', bags: `${compostBags} Tractor Trolley / Bags` });
+
+    if (items.length === 0) {
+      fertHtml = `
+        <div style="text-align:center; padding:0.5rem; color:#166534; font-weight:700;">
+          <i class="fa-solid fa-circle-check" style="font-size:1.4rem; display:block; margin-bottom:4px;"></i>
+          ${(currentLang === 'te') ? 'మీ నేలలో ప్రధాన పోషకాలు సమతుల్యంగా ఉన్నాయి! అదనపు రసాయన ఎరువులు అవసరం లేదు.' : (currentLang === 'hi' ? 'आपकी मिट्टी में मुख्य पोषक तत्व संतुलित हैं! अतिरिक्त रासायनिक खाद की जरूरत नहीं।' : 'Your soil nutrients are well balanced! No extra chemical fertilizer bags required.')}
+        </div>
+      `;
+    } else {
+      fertHtml = items.map(it => `
+        <div class="soil-fert-row">
+          <span class="soil-fert-name">
+            <i class="fa-solid ${it.icon}" style="color:${it.color};"></i>
+            ${(currentLang === 'te') ? it.nameTe : (currentLang === 'hi' ? it.nameHi : it.nameEn)}
+          </span>
+          <span class="soil-fert-bags">${it.bags}</span>
+        </div>
+      `).join('');
+    }
+    fertCard.innerHTML = fertHtml;
+  }
+
+  // Render Best Crops
+  const cropsGrid = document.getElementById('soilCropsGrid');
+  if (cropsGrid) {
+    let cropPicks = [
+      { name: 'Rice', nameTe: 'వరి', icon: 'fa-wheat-awn', match: '96%' },
+      { name: 'Maize', nameTe: 'మొక్కజొన్న', icon: 'fa-cubes-stacked', match: '92%' },
+      { name: 'Groundnut', nameTe: 'వేరుశనగ', icon: 'fa-bowl-food', match: '88%' }
+    ];
+    if (ph > 7.5 || n < 70) {
+      cropPicks = [
+        { name: 'Cotton', nameTe: 'పత్తి', icon: 'fa-feather-pointed', match: '94%' },
+        { name: 'Wheat', nameTe: 'గోధుమ', icon: 'fa-seedling', match: '90%' },
+        { name: 'Chickpea', nameTe: 'శనగలు', icon: 'fa-circle-dot', match: '87%' }
+      ];
+    } else if (ph < 5.8) {
+      cropPicks = [
+        { name: 'Potato', nameTe: 'బంగాళాదుంప', icon: 'fa-egg', match: '95%' },
+        { name: 'Tomato', nameTe: 'టమాట', icon: 'fa-apple-whole', match: '89%' },
+        { name: 'Maize', nameTe: 'మొక్కజొన్న', icon: 'fa-cubes-stacked', match: '84%' }
+      ];
+    }
+
+    cropsGrid.innerHTML = cropPicks.map(c => `
+      <div class="soil-crop-item">
+        <i class="fa-solid ${c.icon} soil-crop-icon"></i>
+        <div class="soil-crop-name">${(currentLang === 'te') ? c.nameTe : c.name}</div>
+        <span class="soil-crop-match">${c.match} Match</span>
+        <button type="button" class="btn-crop-link" onclick="useSoilForPrediction('${c.name}')">
+          <span>Predict</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    `).join('');
+  }
+
+  // Render Issues & Advice
   const list = document.getElementById('soilResultList');
   if (list) {
     list.innerHTML = '';
-
-    // Issues
-    issues.forEach(issue => {
-      const card = document.createElement('div');
-      card.className = `advisory-card ${issue.cls}`;
-      card.innerHTML = `<div class="advisory-title"><span>${issue.label}</span><span>[${issue.status}]</span></div><div class="advisory-desc">${issue.desc}</div>`;
-      list.appendChild(card);
-    });
-
-    // If all good
     if (issues.length === 0) {
       const card = document.createElement('div');
       card.className = 'advisory-card';
-      card.innerHTML = `<div class="advisory-title"><span><i class="fa-solid fa-circle-check" style="color:#16a34a;"></i> All Parameters</span><span>[Optimal]</span></div><div class="advisory-desc">Your soil is in excellent condition! Maintain organic matter and regular soil testing.</div>`;
+      const msg = (currentLang === 'te')
+        ? 'మీ నేల అద్భుతమైన స్థితిలో ఉంది! పంట మార్పిడి పద్ధతులు మరియు సేంద్రీయ ఎరువులతో నేల సారవంతాన్ని నిరంతరం కాపాడుకోండి.'
+        : (currentLang === 'hi'
+          ? 'आपकी मिट्टी उत्कृष्ट स्थिति में है! फसल चक्र और जैविक खाद के साथ उर्वरता बनाए रखें।'
+          : 'Your soil is in top agronomic condition! Continue balanced crop rotation and organic manure.');
+      card.innerHTML = `<div class="advisory-title"><span><i class="fa-solid fa-circle-check" style="color:#16a34a;"></i> Optimal Field Condition</span></div><div class="advisory-desc">${msg}</div>`;
       list.appendChild(card);
-    }
-
-    // Recommendations
-    if (recommendations.length > 0) {
-      const recHeader = document.createElement('div');
-      recHeader.className = 'section-sub-head';
-      recHeader.innerHTML = '<i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i> Recommendations';
-      list.appendChild(recHeader);
-      recommendations.forEach(r => {
-        const el = document.createElement('div');
-        el.className = 'advisory-card';
-        el.innerHTML = `<div class="advisory-desc"><i class="fa-solid fa-check" style="color:#16a34a;margin-right:5px;"></i>${r}</div>`;
-        list.appendChild(el);
+    } else {
+      issues.forEach(iss => {
+        const card = document.createElement('div');
+        card.className = 'advisory-card high-priority';
+        const txt = (currentLang === 'te') ? iss.te : (currentLang === 'hi' ? iss.hi : iss.en);
+        card.innerHTML = `<div class="advisory-desc"><i class="fa-solid fa-circle-exclamation" style="color:#dc2626; margin-right:6px;"></i>${txt}</div>`;
+        list.appendChild(card);
       });
     }
   }
 
+  // Setup Speech Texts
+  window.lastSoilSpeechEn = `Soil analysis complete. Overall score is ${score} out of 100. ${ureaBags > 0 ? `Apply ${ureaBags} bags of Urea` : 'Nitrogen is optimal'}. ${limeOrGypsum ? limeOrGypsum.en : 'Soil pH is balanced'}.`;
+  window.lastSoilSpeechTe = `నేల విశ్లేషణ పూర్తయింది. నేల ఆరోగ్య స్కోరు 100 కి ${score}. ${ureaBags > 0 ? `${ureaBags} బస్తాల యూరియా వేయండి.` : 'నత్రజని సరిపడా ఉంది.'} ${limeOrGypsum ? limeOrGypsum.te : 'నేల పి హెచ్ సమతుల్యంగా ఉంది.'}`;
+  window.lastSoilSpeechHi = `मिट्टी विश्लेषण पूरा हुआ। स्वास्थ्य स्कोर 100 में से ${score} है। ${ureaBags > 0 ? `${ureaBags} बोरी यूरिया डालें।` : 'नाइट्रोजन पर्याप्त है।'}`;
+
   document.getElementById('soilResult').style.display = 'block';
   document.getElementById('soilResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function speakSoilDiagnosis() {
+  if (!('speechSynthesis' in window)) {
+    showToast('Voice speech not supported on this browser', 'fa-triangle-exclamation');
+    return;
+  }
+  const btn = document.getElementById('soilVoiceBtn');
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    if (btn) {
+      btn.classList.remove('speaking');
+      btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> <span>Listen (వినండి)</span>';
+    }
+    return;
+  }
+
+  let text = window.lastSoilSpeechEn || 'Soil analysis ready.';
+  let langCode = 'en-IN';
+  if (currentLang === 'te' && window.lastSoilSpeechTe) { text = window.lastSoilSpeechTe; langCode = 'te-IN'; }
+  else if (currentLang === 'hi' && window.lastSoilSpeechHi) { text = window.lastSoilSpeechHi; langCode = 'hi-IN'; }
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = langCode;
+  utterance.rate = 0.92;
+  utterance.onstart = () => {
+    if (btn) {
+      btn.classList.add('speaking');
+      btn.innerHTML = '<i class="fa-solid fa-stop"></i> <span>Stop (ఆపండి)</span>';
+    }
+  };
+  utterance.onend = () => {
+    if (btn) {
+      btn.classList.remove('speaking');
+      btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> <span>Listen (వినండి)</span>';
+    }
+  };
+  utterance.onerror = () => {
+    if (btn) {
+      btn.classList.remove('speaking');
+      btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> <span>Listen (వినండి)</span>';
+    }
+  };
+  window.speechSynthesis.speak(utterance);
+}
+
+function useSoilForPrediction(cropName) {
+  const n  = document.getElementById('soilN')?.value || 90;
+  const p  = document.getElementById('soilP')?.value || 45;
+  const k  = document.getElementById('soilK')?.value || 40;
+  const ph = document.getElementById('soilPH')?.value || 6.5;
+
+  // Set hidden soil values in prediction form
+  if (document.getElementById('nitrogenInput'))   document.getElementById('nitrogenInput').value = n;
+  if (document.getElementById('phosphorusInput')) document.getElementById('phosphorusInput').value = p;
+  if (document.getElementById('potassiumInput'))  document.getElementById('potassiumInput').value = k;
+  if (document.getElementById('phInput'))         document.getElementById('phInput').value = ph;
+
+  // Set selected crop in visual grid
+  const cropInput = document.getElementById('cropSelect');
+  if (cropInput) cropInput.value = cropName;
+  document.querySelectorAll('.crop-card-choice').forEach(card => {
+    if (card.getAttribute('data-crop') === cropName) card.classList.add('selected');
+    else card.classList.remove('selected');
+  });
+
+  showToast(`Loaded ${cropName} with Soil Data`, 'fa-wheat-awn');
+  showScreen('screen-predict');
+  if (typeof submitPredictionForm === 'function') {
+    submitPredictionForm(true);
+  }
 }
 
 // ──────────────────────────────────────────────
@@ -1059,11 +1417,14 @@ function saveFarmerProfile() {
   if (document.getElementById('profileFarmerName')) document.getElementById('profileFarmerName').textContent = name;
   if (document.getElementById('profileFarmerPhone')) document.getElementById('profileFarmerPhone').textContent = `+91 ${phone} · ${district}`;
 
-  // Sync farm size input in predict screen
+  // Sync farm size input in predict and soil screens
   const farmSizeInput = document.getElementById('farmSizeInput');
   if (farmSizeInput) farmSizeInput.value = landSize;
+  const soilFarmAcres = document.getElementById('soilFarmAcres');
+  if (soilFarmAcres) soilFarmAcres.value = landSize;
 
-  alert('Profile updated successfully! వివరాలు సేవ్ చేయబడ్డాయి.');
+  const toastMsg = (currentLang === 'te') ? 'రైతు ప్రొఫైల్ సేవ్ చేయబడింది!' : (currentLang === 'hi' ? 'किसान प्रोफाइल सुरक्षित हो गया!' : 'Farmer profile saved successfully!');
+  showToast(toastMsg, 'fa-floppy-disk');
 }
 
 function escapeHtml(str) {
@@ -1637,7 +1998,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (printBtn) printBtn.addEventListener('click', () => window.print());
 
   // 13. Initial run
+  updateLabels();
   updateNutrientHints();
   loadFarmerProfile();
   submitPredictionForm(false);
+  if (typeof analyzeSoil === 'function') {
+    analyzeSoil();
+  }
 });

@@ -132,9 +132,11 @@
       </div>
     </div>
     <div class="home-topbar-actions">
-      <button class="btn-icon-round" onclick="showScreen('screen-language')" title="Change Language">
-        <i class="fa-solid fa-globe"></i>
-      </button>
+      <div class="lang-switch-pills">
+        <button type="button" class="lang-pill" data-lang="en" onclick="selectLanguage('en')">EN</button>
+        <button type="button" class="lang-pill" data-lang="te" onclick="selectLanguage('te')">తెలుగు</button>
+        <button type="button" class="lang-pill" data-lang="hi" onclick="selectLanguage('hi')">हिन्दी</button>
+      </div>
       <button class="btn-icon-round" onclick="toggleHighContrast()" title="High Contrast">
         <i class="fa-solid fa-circle-half-stroke"></i>
       </button>
@@ -233,6 +235,11 @@
       </div>
     </div>
     <div class="feature-topbar-actions">
+      <div class="lang-switch-pills">
+        <button type="button" class="lang-pill" data-lang="en" onclick="selectLanguage('en')">EN</button>
+        <button type="button" class="lang-pill" data-lang="te" onclick="selectLanguage('te')">తెలుగు</button>
+        <button type="button" class="lang-pill" data-lang="hi" onclick="selectLanguage('hi')">हिन्दी</button>
+      </div>
       <select class="lang-pill-select" id="voiceLangSelect" title="Audio language">
         <option value="en">EN</option>
         <option value="te">TE</option>
@@ -334,10 +341,20 @@
           </div>
           <div class="weather-fetch-row">
             <select class="select-farmer" id="weatherDistrictSelect" style="flex:1;">
-              <option value=""><i class="fa-solid fa-location-dot"></i> Choose District...</option>
-              {% for key, dist in districts.items() %}
-                <option value="{{ key }}">{{ dist.name }}</option>
-              {% endfor %}
+              <option value="">📍 Choose District...</option>
+              {% if districts_by_state %}
+                {% for state, d_list in districts_by_state.items() %}
+                  <optgroup label="{{ state }}">
+                    {% for d in d_list %}
+                      <option value="{{ d.code }}">{{ d.label }}</option>
+                    {% endfor %}
+                  </optgroup>
+                {% endfor %}
+              {% else %}
+                {% for key, dist in districts.items() %}
+                  <option value="{{ key }}">{{ dist.name }}</option>
+                {% endfor %}
+              {% endif %}
             </select>
             <button type="button" class="btn-gps" id="btnDetectGpsWeather">
               <i class="fa-solid fa-location-crosshairs"></i> GPS
@@ -529,6 +546,11 @@
       </div>
     </div>
     <div class="feature-topbar-actions">
+      <div class="lang-switch-pills">
+        <button type="button" class="lang-pill" data-lang="en" onclick="selectLanguage('en')">EN</button>
+        <button type="button" class="lang-pill" data-lang="te" onclick="selectLanguage('te')">తెలుగు</button>
+        <button type="button" class="lang-pill" data-lang="hi" onclick="selectLanguage('hi')">हिन्दी</button>
+      </div>
       <button class="btn-icon-round" onclick="fetchWeatherForScreen()" title="Refresh Weather">
         <i class="fa-solid fa-rotate-right"></i>
       </button>
@@ -543,10 +565,20 @@
       </div>
       <div class="weather-fetch-row">
         <select class="select-farmer" id="weatherDistrictSelectW" style="flex:1;">
-          <option value="">Choose District...</option>
-          {% for key, dist in districts.items() %}
-            <option value="{{ key }}">{{ dist.name }}</option>
-          {% endfor %}
+          <option value="">📍 Choose District...</option>
+          {% if districts_by_state %}
+            {% for state, d_list in districts_by_state.items() %}
+              <optgroup label="{{ state }}">
+                {% for d in d_list %}
+                  <option value="{{ d.code }}">{{ d.label }}</option>
+                {% endfor %}
+              </optgroup>
+            {% endfor %}
+          {% else %}
+            {% for key, dist in districts.items() %}
+              <option value="{{ key }}">{{ dist.name }}</option>
+            {% endfor %}
+          {% endif %}
         </select>
         <button type="button" class="btn-gps" onclick="fetchWeatherForScreen()">
           <i class="fa-solid fa-location-crosshairs"></i> GPS
@@ -622,6 +654,11 @@
       </div>
     </div>
     <div class="feature-topbar-actions">
+      <div class="lang-switch-pills">
+        <button type="button" class="lang-pill" data-lang="en" onclick="selectLanguage('en')">EN</button>
+        <button type="button" class="lang-pill" data-lang="te" onclick="selectLanguage('te')">తెలుగు</button>
+        <button type="button" class="lang-pill" data-lang="hi" onclick="selectLanguage('hi')">हिन्दी</button>
+      </div>
       <button class="btn-icon-round" onclick="analyzeSoil()" title="Analyze Soil">
         <i class="fa-solid fa-magnifying-glass-chart"></i>
       </button>
@@ -629,10 +666,54 @@
   </div>
   <div class="feature-body-single">
     <div class="section-card">
-      <div class="section-head">
+      <!-- Quick Soil Type Presets -->
+      <div class="soil-presets-bar">
+        <div class="soil-presets-label">
+          <i class="fa-solid fa-wand-magic-sparkles" style="color:#10b981;"></i>
+          <span>Quick Soil Presets (త్వరిత ఎంపిక):</span>
+        </div>
+        <div class="quick-pills">
+          <button type="button" class="qpill qpill-green" onclick="applySoilPreset('fertile')">
+            <i class="fa-solid fa-circle-check"></i> Fertile Loam (సారవంతమైనది)
+          </button>
+          <button type="button" class="qpill qpill-orange" onclick="applySoilPreset('red')">
+            <i class="fa-solid fa-mountain"></i> Red / Sandy (ఎర్ర నేల)
+          </button>
+          <button type="button" class="qpill qpill-teal" onclick="applySoilPreset('black')">
+            <i class="fa-solid fa-layer-group"></i> Black Cotton (నల్లరేగడి)
+          </button>
+          <button type="button" class="qpill qpill-red" onclick="applySoilPreset('saline')">
+            <i class="fa-solid fa-triangle-exclamation"></i> Saline / Alkali (క్షార నేల)
+          </button>
+          <button type="button" class="qpill qpill-blue" onclick="applySoilPreset('acidic')">
+            <i class="fa-solid fa-flask"></i> Acidic (ఆమ్ల నేల)
+          </button>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:1rem;">
         <i class="fa-solid fa-vial" style="color:#2d6a4f;"></i>
         <span>Enter Soil Test Values</span>
         <span class="te-sub section-head-te">మీ నేల విలువలు నమోదు చేయండి</span>
+      </div>
+
+      <div class="two-col-inputs" style="margin-bottom:0.75rem;">
+        <div class="input-group-farmer">
+          <label class="input-label-farmer">
+            <i class="fa-solid fa-ruler-combined" style="color:#2d6a4f;"></i> Farm Size (Acres)
+          </label>
+          <input type="number" step="0.5" min="0.5" max="100" class="input-farmer" id="soilFarmAcres" value="2.5">
+        </div>
+        <div class="input-group-farmer">
+          <label class="input-label-farmer">
+            <i class="fa-solid fa-spa" style="color:#65a30d;"></i> Organic Matter
+          </label>
+          <select class="select-farmer" id="soilOM">
+            <option value="high">High (&gt; 3% - చాలా బాగుంది)</option>
+            <option value="medium" selected>Medium (1–3% - మధ్యస్థం)</option>
+            <option value="low">Low (&lt; 1% - తక్కువ)</option>
+          </select>
+        </div>
       </div>
 
       <div class="soil-inputs-grid">
@@ -641,62 +722,86 @@
             <i class="fa-solid fa-leaf" style="color:#16a34a;"></i> Nitrogen (N)
           </label>
           <input type="number" class="input-farmer" id="soilN" value="90" min="0" max="300">
-          <div class="soil-input-unit">kg/ha</div>
+          <div class="soil-input-unit">kg/ha · Ideal: 100–140</div>
         </div>
         <div class="soil-input-box">
           <label class="soil-input-label">
             <i class="fa-solid fa-seedling" style="color:#059669;"></i> Phosphorus (P)
           </label>
           <input type="number" class="input-farmer" id="soilP" value="45" min="0" max="200">
-          <div class="soil-input-unit">kg/ha</div>
+          <div class="soil-input-unit">kg/ha · Ideal: 40–60</div>
         </div>
         <div class="soil-input-box">
           <label class="soil-input-label">
             <i class="fa-solid fa-shield-halved" style="color:#7c3aed;"></i> Potassium (K)
           </label>
           <input type="number" class="input-farmer" id="soilK" value="40" min="0" max="200">
-          <div class="soil-input-unit">kg/ha</div>
+          <div class="soil-input-unit">kg/ha · Ideal: 35–55</div>
         </div>
         <div class="soil-input-box">
           <label class="soil-input-label">
             <i class="fa-solid fa-flask" style="color:#d97706;"></i> Soil pH
           </label>
           <input type="number" class="input-farmer" id="soilPH" value="6.5" min="4.0" max="9.5" step="0.1">
-          <div class="soil-input-unit">pH</div>
+          <div class="soil-input-unit">pH · Ideal: 6.2–7.5</div>
         </div>
         <div class="soil-input-box">
           <label class="soil-input-label">
             <i class="fa-solid fa-water" style="color:#0284c7;"></i> Moisture %
           </label>
           <input type="number" class="input-farmer" id="soilMoisture" value="65" min="10" max="100">
-          <div class="soil-input-unit">%</div>
-        </div>
-        <div class="soil-input-box">
-          <label class="soil-input-label">
-            <i class="fa-solid fa-spa" style="color:#65a30d;"></i> Organic Matter
-          </label>
-          <select class="select-farmer" id="soilOM">
-            <option value="high">High (&gt; 3%)</option>
-            <option value="medium" selected>Medium (1–3%)</option>
-            <option value="low">Low (&lt; 1%)</option>
-          </select>
+          <div class="soil-input-unit">% · Ideal: 60–80%</div>
         </div>
       </div>
 
       <button class="btn-predict-big" onclick="analyzeSoil()" style="margin-top:1rem;">
         <i class="fa-solid fa-magnifying-glass-chart" style="font-size:1.4rem;"></i>
-        <span>Analyze Soil</span>
+        <span>Analyze Soil Health</span>
         <span class="te-sub btn-predict-te">నేలను విశ్లేషించండి</span>
       </button>
 
       <!-- Soil Result -->
       <div id="soilResult" style="display:none; margin-top:1.5rem;">
         <div class="soil-result-hero" id="soilResultHero">
-          <div class="soil-result-status" id="soilResultStatus">
-            <i class="fa-solid fa-circle-check"></i> Healthy Soil
+          <div class="soil-result-hero-content">
+            <div class="soil-result-status" id="soilResultStatus">
+              <i class="fa-solid fa-circle-check"></i> Healthy Soil
+            </div>
+            <div class="te-sub" id="soilResultStatusTe" style="font-size:0.95rem; opacity:0.95;">ఆరోగ్యకరమైన నేల</div>
+            <div class="soil-result-score" id="soilResultScore">Score: 87/100</div>
           </div>
-          <div class="soil-result-score" id="soilResultScore">Score: 87/100</div>
-          <div class="te-sub" id="soilResultStatusTe">ఆరోగ్యకరమైన నేల</div>
+          <div class="soil-hero-actions">
+            <button type="button" class="btn-soil-voice" id="soilVoiceBtn" onclick="speakSoilDiagnosis()" title="Listen to advisory">
+              <i class="fa-solid fa-volume-high"></i> <span>Listen (వినండి)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Nutrient Parameter Health Meters -->
+        <div class="section-sub-head" style="margin-top:1.2rem;">
+          <i class="fa-solid fa-chart-simple" style="color:var(--primary-med);"></i>
+          <span>Nutrient &amp; Parameter Status (పోషకాల స్థితి)</span>
+        </div>
+        <div class="soil-meters-grid" id="soilMetersGrid"></div>
+
+        <!-- Prescribed Fertilizer Dosage for Field -->
+        <div class="section-sub-head" style="margin-top:1.2rem;">
+          <i class="fa-solid fa-prescription-bottle-medical" style="color:#059669;"></i>
+          <span>Prescribed Fertilizer Plan for Your Plot (ఎరువుల మోతాదు)</span>
+        </div>
+        <div class="soil-fert-dosage-card" id="soilFertDosageCard"></div>
+
+        <!-- Best Suited Crops -->
+        <div class="section-sub-head" style="margin-top:1.2rem;">
+          <i class="fa-solid fa-seedling" style="color:#16a34a;"></i>
+          <span>Best Crops for This Soil (ఈ నేలకు అనువైన పంటలు)</span>
+        </div>
+        <div class="soil-crops-grid" id="soilCropsGrid"></div>
+
+        <!-- Actionable Soil Treatment & Issues -->
+        <div class="section-sub-head" style="margin-top:1.2rem;">
+          <i class="fa-solid fa-list-check" style="color:#2563eb;"></i>
+          <span>Field Treatment Steps (నేల అభివృద్ధి చర్యలు)</span>
         </div>
         <div class="soil-result-list" id="soilResultList"></div>
       </div>
@@ -718,6 +823,11 @@
       </div>
     </div>
     <div class="feature-topbar-actions">
+      <div class="lang-switch-pills">
+        <button type="button" class="lang-pill" data-lang="en" onclick="selectLanguage('en')">EN</button>
+        <button type="button" class="lang-pill" data-lang="te" onclick="selectLanguage('te')">తెలుగు</button>
+        <button type="button" class="lang-pill" data-lang="hi" onclick="selectLanguage('hi')">हिन्दी</button>
+      </div>
       <button class="btn-icon-round" onclick="getCropRecommendation()" title="Recalculate">
         <i class="fa-solid fa-wand-magic-sparkles"></i>
       </button>
@@ -770,10 +880,20 @@
             <i class="fa-solid fa-location-dot" style="color:#0284c7;"></i> District
           </label>
           <select class="select-farmer" id="rcDistrict">
-            <option value="">Select District</option>
-            {% for key, dist in districts.items() %}
-              <option value="{{ key }}">{{ dist.name }}</option>
-            {% endfor %}
+            <option value="">📍 Select District</option>
+            {% if districts_by_state %}
+              {% for state, d_list in districts_by_state.items() %}
+                <optgroup label="{{ state }}">
+                  {% for d in d_list %}
+                    <option value="{{ d.code }}">{{ d.label }}</option>
+                  {% endfor %}
+                </optgroup>
+              {% endfor %}
+            {% else %}
+              {% for key, dist in districts.items() %}
+                <option value="{{ key }}">{{ dist.name }}</option>
+              {% endfor %}
+            {% endif %}
           </select>
         </div>
       </div>
@@ -822,6 +942,11 @@
       </div>
     </div>
     <div class="feature-topbar-actions">
+      <div class="lang-switch-pills">
+        <button type="button" class="lang-pill" data-lang="en" onclick="selectLanguage('en')">EN</button>
+        <button type="button" class="lang-pill" data-lang="te" onclick="selectLanguage('te')">తెలుగు</button>
+        <button type="button" class="lang-pill" data-lang="hi" onclick="selectLanguage('hi')">हिन्दी</button>
+      </div>
       <button class="btn-icon-round" onclick="diagnosePest()" title="Diagnose Pest">
         <i class="fa-solid fa-microscope"></i>
       </button>
@@ -917,6 +1042,11 @@
       </div>
     </div>
     <div class="feature-topbar-actions">
+      <div class="lang-switch-pills">
+        <button type="button" class="lang-pill" data-lang="en" onclick="selectLanguage('en')">EN</button>
+        <button type="button" class="lang-pill" data-lang="te" onclick="selectLanguage('te')">తెలుగు</button>
+        <button type="button" class="lang-pill" data-lang="hi" onclick="selectLanguage('hi')">हिन्दी</button>
+      </div>
       <button class="btn-voice-small" onclick="window.print()" title="Print / Save PDF">
         <i class="fa-solid fa-file-pdf"></i>
       </button>
@@ -1024,6 +1154,11 @@
       </div>
     </div>
     <div class="feature-topbar-actions">
+      <div class="lang-switch-pills">
+        <button type="button" class="lang-pill" data-lang="en" onclick="selectLanguage('en')">EN</button>
+        <button type="button" class="lang-pill" data-lang="te" onclick="selectLanguage('te')">తెలుగు</button>
+        <button type="button" class="lang-pill" data-lang="hi" onclick="selectLanguage('hi')">हिन्दी</button>
+      </div>
       <button class="btn-icon-round" onclick="clearAiChat()" title="Clear Chat">
         <i class="fa-solid fa-rotate-right"></i>
       </button>
@@ -1084,6 +1219,11 @@
       </div>
     </div>
     <div class="feature-topbar-actions">
+      <div class="lang-switch-pills">
+        <button type="button" class="lang-pill" data-lang="en" onclick="selectLanguage('en')">EN</button>
+        <button type="button" class="lang-pill" data-lang="te" onclick="selectLanguage('te')">తెలుగు</button>
+        <button type="button" class="lang-pill" data-lang="hi" onclick="selectLanguage('hi')">हिन्दी</button>
+      </div>
       <button class="btn-icon-round" onclick="saveFarmerProfile()" title="Save Profile">
         <i class="fa-solid fa-floppy-disk"></i>
       </button>
@@ -1120,9 +1260,19 @@
         <div class="input-group-farmer">
           <label class="input-label-farmer"><i class="fa-solid fa-location-dot"></i> Primary District</label>
           <select class="select-farmer" id="profDistrictSelect">
-            {% for key, dist in districts.items() %}
-              <option value="{{ key }}" {% if key == 'guntur' %}selected{% endif %}>{{ dist.name }}</option>
-            {% endfor %}
+            {% if districts_by_state %}
+              {% for state, d_list in districts_by_state.items() %}
+                <optgroup label="{{ state }}">
+                  {% for d in d_list %}
+                    <option value="{{ d.code }}" {% if d.code == 'guntur' %}selected{% endif %}>{{ d.label }}</option>
+                  {% endfor %}
+                </optgroup>
+              {% endfor %}
+            {% else %}
+              {% for key, dist in districts.items() %}
+                <option value="{{ key }}" {% if key == 'guntur' %}selected{% endif %}>{{ dist.name }}</option>
+              {% endfor %}
+            {% endif %}
           </select>
         </div>
         <div class="input-group-farmer">
@@ -1177,6 +1327,9 @@
     </button>
   </div>
 </div>
+
+<!-- Global Lightweight Toast Notification -->
+<div id="appToast" class="app-toast"></div>
 
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>

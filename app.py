@@ -134,6 +134,22 @@ INDIAN_AGRI_DISTRICTS = {
     'sambalpur': {'name': 'Sambalpur (Odisha)', 'lat': 21.4669, 'lon': 83.9812, 'annual_rain_mult': 1380}
 }
 
+# Group districts by state for organized <optgroup> dropdowns
+DISTRICTS_BY_STATE = {}
+for code, info in INDIAN_AGRI_DISTRICTS.items():
+    raw_name = info['name']
+    if '(' in raw_name and ')' in raw_name:
+        state = raw_name.rsplit('(', 1)[1].rstrip(')').strip()
+        label = raw_name.rsplit('(', 1)[0].strip()
+    else:
+        state = 'Other'
+        label = raw_name
+    DISTRICTS_BY_STATE.setdefault(state, []).append({
+        'code': code,
+        'name': raw_name,
+        'label': label
+    })
+
 # Expo Demo presets
 DEMO_PRESETS = {
     'optimal_rice': {
@@ -233,7 +249,7 @@ def home():
     ])
     irrigations = metrics_data.get('irrigation_types', ['Drip', 'Sprinkler', 'Flood', 'Rainfed'])
     algorithms = list(models_bundle.keys()) if models_bundle else ['Random Forest']
-    return render_template('index.html', crops=crops, irrigations=irrigations, algorithms=algorithms, presets=DEMO_PRESETS, regions=REGIONAL_PRESETS, districts=INDIAN_AGRI_DISTRICTS, initial_screen='screen-home')
+    return render_template('index.html', crops=crops, irrigations=irrigations, algorithms=algorithms, presets=DEMO_PRESETS, regions=REGIONAL_PRESETS, districts=INDIAN_AGRI_DISTRICTS, districts_by_state=DISTRICTS_BY_STATE, initial_screen='screen-home')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -518,6 +534,7 @@ def feature_page():
         presets=DEMO_PRESETS,
         regions=REGIONAL_PRESETS,
         districts=INDIAN_AGRI_DISTRICTS,
+        districts_by_state=DISTRICTS_BY_STATE,
         initial_screen=active_screen
     )
 
