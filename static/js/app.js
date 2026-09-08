@@ -427,6 +427,56 @@ function selectLanguage(lang) {
   }
 
   updateFarmReportsScreen();
+  updatePredictScreenLang();
+}
+
+function updatePredictScreenLang() {
+  const lang = currentLang || 'en';
+
+  const cropTranslations = {
+    Rice: { en: 'Rice', te: 'వరి', hi: 'चावल' },
+    Wheat: { en: 'Wheat', te: 'గోధుమ', hi: 'गेहूं' },
+    Maize: { en: 'Maize', te: 'మొక్కజొన్న', hi: 'मक्का' },
+    Cotton: { en: 'Cotton', te: 'ప్రత్తి', hi: 'कपास' },
+    Sugarcane: { en: 'Sugarcane', te: 'చెరకు', hi: 'गन्ना' },
+    Chickpea: { en: 'Chickpea', te: 'శనగలు', hi: 'चना' },
+    Potato: { en: 'Potato', te: 'బంగాళాదుంప', hi: 'आलू' },
+    Groundnut: { en: 'Groundnut', te: 'వేరుశనగ', hi: 'मूंगफली' },
+    Mustard: { en: 'Mustard', te: 'ఆవాలు', hi: 'सरसों' },
+    Tomato: { en: 'Tomato', te: 'టమాట', hi: 'टमाटर' },
+    Soybean: { en: 'Soybean', te: 'సోయాబీన్', hi: 'सोयाबीन' },
+    'Kidney Beans': { en: 'Kidney Beans', te: 'రాజ్మా', hi: 'राजमा' }
+  };
+
+  // Update Crop card choice labels
+  document.querySelectorAll('.crop-card-choice').forEach(card => {
+    const cropKey = card.getAttribute('data-crop');
+    const nameEl = card.querySelector('.crop-name');
+    if (cropKey && nameEl && cropTranslations[cropKey]) {
+      nameEl.textContent = cropTranslations[cropKey][lang] || cropTranslations[cropKey].en;
+    }
+  });
+
+  // Update Irrigation select options
+  const irrSelect = document.getElementById('irrigationSelect');
+  if (irrSelect) {
+    const irrTranslations = {
+      Drip: { en: 'Drip Irrigation', te: 'బిందు సేద్యం (Drip)', hi: 'टपक सिंचाई (Drip)' },
+      Sprinkler: { en: 'Sprinkler', te: 'స్ప్రింక్లర్ (Sprinkler)', hi: 'फव्वारा (Sprinkler)' },
+      Surface: { en: 'Surface Flood', te: 'కాలువ పారకం (Flood)', hi: 'सतही सिंचाई (Flood)' },
+      Rainfed: { en: 'Rainfed (Non-irrigated)', te: 'వర్షాధారం (Rainfed)', hi: 'वर्षा आधारित (Rainfed)' }
+    };
+    Array.from(irrSelect.options).forEach(opt => {
+      if (irrTranslations[opt.value]) {
+        opt.textContent = irrTranslations[opt.value][lang] || irrTranslations[opt.value].en;
+      }
+    });
+  }
+
+  // Re-render Key Takeaways if prediction data is stored
+  if (window.lastPredictionData && typeof window.renderKeyTakeaways === 'function') {
+    window.renderKeyTakeaways(window.lastPredictionData);
+  }
 }
 
 function updateLabels() {
@@ -481,6 +531,7 @@ function updateLabels() {
 
   if (typeof updateGreeting === 'function') updateGreeting();
   if (typeof updateFarmReportsScreen === 'function') updateFarmReportsScreen();
+  if (typeof updatePredictScreenLang === 'function') updatePredictScreenLang();
 }
 
 function updateFarmReportsScreen() {
@@ -2564,6 +2615,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 3 Key Takeaways
+    window.lastPredictionData = data;
     renderKeyTakeaways(data);
 
     // Fertilizer
@@ -2648,24 +2700,56 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = '';
     const econ = data.economic_analysis;
     const isOptimal = (econ.fertilizer_costs.urea_bags === 0 && econ.fertilizer_costs.dap_bags === 0 && econ.fertilizer_costs.mop_bags === 0);
+    const lang = currentLang || 'en';
 
-    let fertText = isOptimal
-      ? `<strong>Fertilizer:</strong> <span style="color:#16a34a;font-weight:700;"><i class="fa-solid fa-circle-check"></i> Soil nutrients balanced!</span> No extra bags needed.`
-      : (() => {
-          const parts = [];
-          if (econ.fertilizer_costs.urea_bags > 0) parts.push(`<strong>${econ.fertilizer_costs.urea_bags} Bags Urea</strong>`);
-          if (econ.fertilizer_costs.dap_bags  > 0) parts.push(`<strong>${econ.fertilizer_costs.dap_bags} Bags DAP</strong>`);
-          if (econ.fertilizer_costs.mop_bags  > 0) parts.push(`<strong>${econ.fertilizer_costs.mop_bags} Bags MOP</strong>`);
-          return `<strong>Buy:</strong> ${parts.join(' + ')} (50kg bags) for your ${econ.farm_size_acres} acres.`;
-        })();
+    let fertText = '';
+    let profitText = '';
+    let harvestText = '';
 
-    let profitText = isOptimal
-      ? `<strong>Profit:</strong> Field at peak efficiency — crop value <strong>₹${econ.current_revenue_inr.toLocaleString('en-IN')}</strong>.`
-      : `<strong>Income Boost:</strong> AI plan can increase income by up to <strong>+₹${econ.estimated_income_boost_inr.toLocaleString('en-IN')}</strong>!`;
+    if (lang === 'te') {
+      harvestText = `<strong>దిగుబడి:</strong> అంచనా <strong>${data.predicted_yield} టన్నులు/హెక్టార్</strong> (${data.yield_category}) ≈ <strong>₹${econ.current_revenue_inr.toLocaleString('en-IN')}</strong>`;
+      if (isOptimal) {
+        fertText = `<strong>ఎరువులు:</strong> <span style="color:#16a34a;font-weight:700;"><i class="fa-solid fa-circle-check"></i> నేలలో పోషకాలు సమతుల్యంగా ఉన్నాయి!</span> అదనపు ఎరువుల సంచులు అవసరం లేదు.`;
+        profitText = `<strong>లాభం:</strong> మీ పొలం గరిష్ట సామర్థ్యంతో ఉంది — అంచనా రాబడి <strong>₹${econ.current_revenue_inr.toLocaleString('en-IN')}</strong>.`;
+      } else {
+        const parts = [];
+        if (econ.fertilizer_costs.urea_bags > 0) parts.push(`<strong>${econ.fertilizer_costs.urea_bags} బస్తాల యూరియా</strong>`);
+        if (econ.fertilizer_costs.dap_bags > 0) parts.push(`<strong>${econ.fertilizer_costs.dap_bags} బస్తాల DAP</strong>`);
+        if (econ.fertilizer_costs.mop_bags > 0) parts.push(`<strong>${econ.fertilizer_costs.mop_bags} బస్తాల MOP</strong>`);
+        fertText = `<strong>ఎరువుల కొనుగోలు:</strong> మీ ${econ.farm_size_acres} ఎకరాలకు ${parts.join(' + ')} (50 కిలోల బస్తాలు) అవసరం.`;
+        profitText = `<strong>అదనపు ఆదాయం:</strong> AI సలహా పాటించడం ద్వారా <strong>+₹${econ.estimated_income_boost_inr.toLocaleString('en-IN')}</strong> వరకు ఆదాయం పెరుగుతుంది!`;
+      }
+    } else if (lang === 'hi') {
+      harvestText = `<strong>उपज:</strong> अनुमानित <strong>${data.predicted_yield} टन/हेक्टेयर</strong> (${data.yield_category}) ≈ <strong>₹${econ.current_revenue_inr.toLocaleString('en-IN')}</strong>`;
+      if (isOptimal) {
+        fertText = `<strong>उर्वरक:</strong> <span style="color:#16a34a;font-weight:700;"><i class="fa-solid fa-circle-check"></i> मिट्टी में पोषक तत्व संतुलित हैं!</span> अतिरिक्त खाद बोरी की जरूरत नहीं।`;
+        profitText = `<strong>लाभ:</strong> खेत उच्चतम क्षमता पर है — अनुमानित आय <strong>₹${econ.current_revenue_inr.toLocaleString('en-IN')}</strong>.`;
+      } else {
+        const parts = [];
+        if (econ.fertilizer_costs.urea_bags > 0) parts.push(`<strong>${econ.fertilizer_costs.urea_bags} बोरी यूरिया</strong>`);
+        if (econ.fertilizer_costs.dap_bags > 0) parts.push(`<strong>${econ.fertilizer_costs.dap_bags} बोरी DAP</strong>`);
+        if (econ.fertilizer_costs.mop_bags > 0) parts.push(`<strong>${econ.fertilizer_costs.mop_bags} बोरी MOP</strong>`);
+        fertText = `<strong>खाद खरीदें:</strong> अपने ${econ.farm_size_acres} एकड़ के लिए ${parts.join(' + ')} (50 किग्रा बोरी) का प्रयोग करें।`;
+        profitText = `<strong>अतिरिक्त आय:</strong> AI योजना से <strong>+₹${econ.estimated_income_boost_inr.toLocaleString('en-IN')}</strong> तक अतिरिक्त लाभ प्राप्त करें!`;
+      }
+    } else {
+      harvestText = `<strong>Harvest:</strong> Expected <strong>${data.predicted_yield} T/ha</strong> (${data.yield_category}) ≈ <strong>₹${econ.current_revenue_inr.toLocaleString('en-IN')}</strong>`;
+      if (isOptimal) {
+        fertText = `<strong>Fertilizer:</strong> <span style="color:#16a34a;font-weight:700;"><i class="fa-solid fa-circle-check"></i> Soil nutrients balanced!</span> No extra bags needed.`;
+        profitText = `<strong>Profit:</strong> Field at peak efficiency — crop value <strong>₹${econ.current_revenue_inr.toLocaleString('en-IN')}</strong>.`;
+      } else {
+        const parts = [];
+        if (econ.fertilizer_costs.urea_bags > 0) parts.push(`<strong>${econ.fertilizer_costs.urea_bags} Bags Urea</strong>`);
+        if (econ.fertilizer_costs.dap_bags > 0) parts.push(`<strong>${econ.fertilizer_costs.dap_bags} Bags DAP</strong>`);
+        if (econ.fertilizer_costs.mop_bags > 0) parts.push(`<strong>${econ.fertilizer_costs.mop_bags} Bags MOP</strong>`);
+        fertText = `<strong>Buy:</strong> ${parts.join(' + ')} (50kg bags) for your ${econ.farm_size_acres} acres.`;
+        profitText = `<strong>Income Boost:</strong> AI plan can increase income by up to <strong>+₹${econ.estimated_income_boost_inr.toLocaleString('en-IN')}</strong>!`;
+      }
+    }
 
     const items = [
-      { icon: 'fa-wheat-awn',      text: `<strong>Harvest:</strong> Expected <strong>${data.predicted_yield} T/ha</strong> (${data.yield_category}) ≈ <strong>₹${econ.current_revenue_inr.toLocaleString('en-IN')}</strong>` },
-      { icon: 'fa-boxes-packing',  text: fertText },
+      { icon: 'fa-wheat-awn', text: harvestText },
+      { icon: 'fa-boxes-packing', text: fertText },
       { icon: 'fa-arrow-trend-up', text: profitText }
     ];
 
@@ -2676,6 +2760,8 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(div);
     });
   }
+
+  window.renderKeyTakeaways = renderKeyTakeaways;
 
   // 11. Voice
   if (voiceBtn && 'speechSynthesis' in window) {
