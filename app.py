@@ -550,6 +550,306 @@ def api_presets():
 def api_districts():
     return jsonify(INDIAN_AGRI_DISTRICTS)
 
+PEST_DIAGNOSIS_DATABASE = {
+    'Rice': {
+        'blast': {
+            'name': 'Rice Leaf Blast (Magnaporthe oryzae)',
+            'name_te': 'వరి మెడ విరుపు / అగ్గి తెగులు',
+            'name_hi': 'धान का ब्लास्ट रोग (अग्नि रोग)',
+            'severity': 'high',
+            'confidence': 95,
+            'visual_traits': 'Diamond-shaped spindle lesions with grayish centers and brown borders on leaf blades.',
+            'treatments': [
+                {'spray': 'Tricyclazole 75% WP', 'dosage': '0.6g per liter (120g/acre in 200L water)', 'stage': 'Apply at first sign of leaf spots before tillering.'},
+                {'spray': 'Kasugamycin 3% SL', 'dosage': '2.5ml per liter of water (500ml/acre)', 'stage': 'Alternate spray if infection spreads in humid weather.'},
+                {'spray': 'Urea Management', 'dosage': 'Reduce basal Nitrogen application by 25%', 'stage': 'Avoid excess urea application during overcast days.'}
+            ],
+            'prevention': [
+                'Sow blast-resistant varieties such as MTU 1010, NLR 34449, or BPT 5204.',
+                'Seed treatment with Carbendazim 50% WP @ 2g per kg seed prior to nursery preparation.',
+                'Maintain standing water depth of 2-3 cm during active tillering to suppress spore germination.'
+            ]
+        },
+        'stem_borer': {
+            'name': 'Yellow Stem Borer (Scirpophaga incertulas)',
+            'name_te': 'వరి కాండం తొలుచు పురుగు',
+            'name_hi': 'धान का तना छेदक कीट',
+            'severity': 'high',
+            'confidence': 93,
+            'visual_traits': 'Dead-heart central shoot drying and white empty panicles (chaffy heads).',
+            'treatments': [
+                {'spray': 'Chlorantraniliprole 0.4% G (Ferterra)', 'dosage': '4 kg per acre broadcast with sand', 'stage': 'Apply 20-25 days after transplanting.'},
+                {'spray': 'Cartap Hydrochloride 50% SP', 'dosage': '2.0g per liter of water (400g/acre)', 'stage': 'Foliar spray when egg masses exceed 1 per sq meter.'}
+            ],
+            'prevention': [
+                'Install 5 pheromone traps per acre for adult moth monitoring.',
+                'Clip top 2 cm of seedling leaves before transplanting to eliminate egg clusters.',
+                'Harvest crop close to ground level and burn stubbles to eliminate overwintering larvae.'
+            ]
+        },
+        'default': {
+            'name': 'Brown Plant Hopper (Nilaparvata lugens)',
+            'name_te': 'వరి సుడి దోమ తెగులు',
+            'name_hi': 'भूरा पौधा फुदका (BPH)',
+            'severity': 'high',
+            'confidence': 91,
+            'visual_traits': 'Hopper-burn circular yellow-to-brown patches at lower stem base.',
+            'treatments': [
+                {'spray': 'Pymetrozine 50% WG', 'dosage': '120g per acre in 200L water', 'stage': 'Target spray directly at the base of hill stems.'},
+                {'spray': 'Triflumezopyrim 10% SC', 'dosage': '94ml per acre', 'stage': 'Single protective spray at early hopper nymph infestation.'}
+            ],
+            'prevention': [
+                'Provide 30cm wide alleyways every 2 meters for aeration and sunlight.',
+                'Drain field water completely for 3 to 4 days to disrupt nymph survival.'
+            ]
+        }
+    },
+    'Cotton': {
+        'bollworm': {
+            'name': 'Pink Bollworm (Pectinophora gossypiella)',
+            'name_te': 'పత్తి గులాబీ రంగు కాయ తొలిచే పురుగు',
+            'name_hi': 'कपास का गुलाबी सूंडी रोग',
+            'severity': 'high',
+            'confidence': 97,
+            'visual_traits': 'Rosetted flowers, entry holes in green bolls, and internal lint staining.',
+            'treatments': [
+                {'spray': 'Emamectin Benzoate 5% SG', 'dosage': '0.5g per liter (100g/acre)', 'stage': 'Spray at 60-70 days after sowing at flowering peak.'},
+                {'spray': 'Profenofos 50% EC', 'dosage': '2.0ml per liter (400ml/acre)', 'stage': 'Alternate spray for ovicidal action against egg clusters.'}
+            ],
+            'prevention': [
+                'Install 8-10 PBW Gossyplure pheromone traps per acre.',
+                'Release Trichogramma bacterae egg parasitoids @ 60,000 per acre at weekly intervals.',
+                'Avoid extending crop season beyond December to stop pest carryover.'
+            ]
+        },
+        'aphids': {
+            'name': 'Cotton Aphids & Whiteflies (Bemisia tabaci)',
+            'name_te': 'పత్తి తామర పురుగులు మరియు తెల్లదోమ',
+            'name_hi': 'कपास का सफेद मक्खी और चेपा रोग',
+            'severity': 'medium',
+            'confidence': 92,
+            'visual_traits': 'Downward leaf curling, shiny honeydew secretion, and black sooty mold growth.',
+            'treatments': [
+                {'spray': 'Afidopyropen 50 g/L DC', 'dosage': '2.0ml per liter (400ml/acre)', 'stage': 'Foliar spray when whitefly adults exceed 5 per leaf.'},
+                {'spray': 'Flonicamid 50% WG', 'dosage': '0.4g per liter (80g/acre)', 'stage': 'Spray for systemic protection of young foliage.'}
+            ],
+            'prevention': [
+                'Erect yellow & blue sticky traps @ 20 traps per acre.',
+                'Spray Neem Seed Kernel Extract (NSKE 5%) as natural repellent.'
+            ]
+        },
+        'default': {
+            'name': 'Cotton Bacterial Leaf Blight (Xanthomonas citri pv. malvacearum)',
+            'name_te': 'పత్తి బాక్టీరియా ఆకు మచ్చ తెగులు',
+            'name_hi': 'कपास का जीवाणु अंगमारी रोग',
+            'severity': 'medium',
+            'confidence': 88,
+            'visual_traits': 'Angular water-soaked dark brown leaf lesions following leaf veins.',
+            'treatments': [
+                {'spray': 'Copper Oxychloride 50% WP + Streptocycline', 'dosage': '3g COC + 0.1g Streptocycline per liter water', 'stage': 'Spray 2-3 times at 12-day intervals.'}
+            ],
+            'prevention': [
+                'Acid delinting of seeds prior to planting.',
+                'Crop rotation with non-host crops like Maize or Sorghum.'
+            ]
+        }
+    },
+    'Wheat': {
+        'rust': {
+            'name': 'Brown Leaf Rust (Puccinia triticina)',
+            'name_te': 'గోధుమ ఆకు తుప్పు తెగులు',
+            'name_hi': 'गेहूं का भूरा रतुआ (गेरुई रोग)',
+            'severity': 'high',
+            'confidence': 96,
+            'visual_traits': 'Small round orange-brown pustules randomly scattered on leaf upper surface.',
+            'treatments': [
+                {'spray': 'Propiconazole 25% EC (Tilt)', 'dosage': '1.0ml per liter (200ml/acre in 200L water)', 'stage': 'Spray immediately at first appearance of rust spots.'},
+                {'spray': 'Tebuconazole 25.9% EC', 'dosage': '1.0ml per liter', 'stage': 'Repeat spray after 15 days if cloudy weather continues.'}
+            ],
+            'prevention': [
+                'Sow rust-resistant wheat varieties like HD-2967, DBW-187, or PBW-550.',
+                'Avoid late sowing beyond November 25th.'
+            ]
+        },
+        'default': {
+            'name': 'Wheat Loose Smut (Ustilago nuda)',
+            'name_te': 'గోధుమ కాటుక తెగులు',
+            'name_hi': 'गेहूं का कण्डवा रोग (काली बाली)',
+            'severity': 'medium',
+            'confidence': 89,
+            'visual_traits': 'Black powdery spore mass replacing grain kernels in earheads.',
+            'treatments': [
+                {'spray': 'Carboxin 75% WP (Vitavax)', 'dosage': '2.5g per kg seed treatment', 'stage': 'Treat seed prior to sowing.'}
+            ],
+            'prevention': [
+                'Solar heat seed treatment in May-June.',
+                'Use certified disease-free seed stock.'
+            ]
+        }
+    },
+    'Maize': {
+        'bollworm': {
+            'name': 'Fall Armyworm (Spodoptera frugiperda)',
+            'name_te': 'మొక్కజొన్న కత్తెర పురుగు',
+            'name_hi': 'मक्का का फॉल आर्मीवर्म कीट',
+            'severity': 'high',
+            'confidence': 97,
+            'visual_traits': 'Severe whorl damage, ragged leaf holes, and dense sawdust-like frass in central whorls.',
+            'treatments': [
+                {'spray': 'Chlorantraniliprole 18.5% SC', 'dosage': '0.4ml per liter (80ml/acre)', 'stage': 'Apply directly into central plant whorls.'},
+                {'spray': 'Emamectin Benzoate 5% SG', 'dosage': '0.4g per liter (80g/acre)', 'stage': 'Whorl drenching at early larval instars (1-3 weeks).'}
+            ],
+            'prevention': [
+                'Apply dry sand mixed with wood ash (9:1 ratio) into central whorls to suffocate larvae.',
+                'Install 5 FAW pheromone traps per acre at 10-15 days after germination.'
+            ]
+        },
+        'default': {
+            'name': 'Maize Turcicum Leaf Blight (Exserohilum turcicum)',
+            'name_te': 'మొక్కజొన్న ఆకు ఎండు తెగులు',
+            'name_hi': 'मक्का का तुर्सिकम झुलसा रोग',
+            'severity': 'medium',
+            'confidence': 90,
+            'visual_traits': 'Long elliptical gray-green to tan leaf lesions (2-15 cm length).',
+            'treatments': [
+                {'spray': 'Mancozeb 75% WP', 'dosage': '2.5g per liter of water', 'stage': 'Spray at early lesion development.'},
+                {'spray': 'Azoxystrobin 18.2% + Difenoconazole 11.4% SC', 'dosage': '1.0ml per liter', 'stage': 'Apply at tasseling stage if disease severity rises.'}
+            ],
+            'prevention': [
+                'Crop rotation with legumes (Soybean, Chickpea).',
+                'Apply balanced Potassium fertilizer to build cell wall resistance.'
+            ]
+        }
+    },
+    'Tomato': {
+        'blast': {
+            'name': 'Tomato Early Blight (Alternaria solani)',
+            'name_te': 'టమాట ముందస్తు మచ్చ తెగులు',
+            'name_hi': 'टमाटर का अगेती झुलसा रोग',
+            'severity': 'high',
+            'confidence': 95,
+            'visual_traits': 'Dark brown concentric ring target spots surrounded by yellow halos on lower leaves.',
+            'treatments': [
+                {'spray': 'Mancozeb 75% WP', 'dosage': '2.5g per liter water', 'stage': 'Spray at first lower leaf spots.'},
+                {'spray': 'Chlorothalonil 75% WP', 'dosage': '2.0g per liter water', 'stage': 'Alternate fungicide spray every 10-14 days.'}
+            ],
+            'prevention': [
+                'Mulch soil surface with straw or black plastic to reduce rain-splash spore transmission.',
+                'Prune lower 15 cm leaves touching the soil surface.'
+            ]
+        },
+        'aphids': {
+            'name': 'Tomato Leaf Curl Virus Vector & Whitefly',
+            'name_te': 'టమాట ఆకుముడత వైరస్ మరియు తెల్లదోమ',
+            'name_hi': 'टमाटर का पर्ण कुंचन रोग और सफेद मक्खी',
+            'severity': 'high',
+            'confidence': 94,
+            'visual_traits': 'Upward cupping, yellowing of leaf margins, and stunted bushy growth.',
+            'treatments': [
+                {'spray': 'Cyantraniliprole 10.26% OD', 'dosage': '1.8ml per liter (360ml/acre)', 'stage': 'Foliar spray at early vector sighting.'},
+                {'spray': 'Diafenthiuron 50% WP', 'dosage': '1.0g per liter', 'stage': 'Alternate spray for whitefly nymph knock-down.'}
+            ],
+            'prevention': [
+                'Erect 2 rows of barrier Maize or Sorghum around tomato plots.',
+                'Use 50-mesh insect-proof net in nursery beds.'
+            ]
+        },
+        'default': {
+            'name': 'Tomato Fruit Borer (Helicoverpa armigera)',
+            'name_te': 'టమాట కాయ తొలిచే పురుగు',
+            'name_hi': 'टमाटर का फल छेदक कीट',
+            'severity': 'high',
+            'confidence': 91,
+            'visual_traits': 'Circular bore-holes near fruit stem calyx with half-submerged larva.',
+            'treatments': [
+                {'spray': 'Indoxacarb 14.5% SC', 'dosage': '1.0ml per liter water', 'stage': 'Spray at flowering to fruit-set transition.'}
+            ],
+            'prevention': [
+                'Plant African Marigold as trap crop (1 row every 16 tomato rows).'
+            ]
+        }
+    },
+    'Groundnut': {
+        'rust': {
+            'name': 'Groundnut Tikka Leaf Spot & Rust',
+            'name_te': 'వేరుశనగ తిక్క ఆకు మచ్చ మరియు తుప్పు తెగులు',
+            'name_hi': 'मूंगफली का टिक्का एवं रतुआ रोग',
+            'severity': 'high',
+            'confidence': 96,
+            'visual_traits': 'Dark carbon-black spots on lower leaf surface and reddish-brown rust pustules.',
+            'treatments': [
+                {'spray': 'Hexaconazole 5% EC', 'dosage': '2.0ml per liter (400ml/acre)', 'stage': 'Spray at 40-45 days crop stage.'},
+                {'spray': 'Tebuconazole 50% + Trifloxystrobin 25% WG (Nativo)', 'dosage': '0.7g per liter (140g/acre)', 'stage': 'High-efficacy systemic spray for dual spot + rust control.'}
+            ],
+            'prevention': [
+                'Seed treatment with Trichoderma viride @ 4g per kg seed.',
+                'Avoid groundnut monoculture in consecutive seasons.'
+            ]
+        },
+        'default': {
+            'name': 'Groundnut Collar Rot (Aspergillus niger)',
+            'name_te': 'వేరుశనగ మొదలు కుళ్లు తెగులు',
+            'name_hi': 'मूंगफली का कॉलर रोट (तने का सड़न) रोग',
+            'severity': 'high',
+            'confidence': 90,
+            'visual_traits': 'Rapid seedling wilting and black fungal spore dusting at soil collar level.',
+            'treatments': [
+                {'spray': 'Carbendazim 12% + Mancozeb 63% WP (Saaf)', 'dosage': '2.0g per liter water soil drenching', 'stage': 'Drench affected hill roots immediately.'}
+            ],
+            'prevention': [
+                'Avoid deep seed placement during planting.',
+                'Maintain good field drainage.'
+            ]
+        }
+    }
+}
+
+@app.route('/api/diagnose-pest', methods=['POST'])
+def api_diagnose_pest():
+    try:
+        data = request.get_json(silent=True) or {}
+        crop = data.get('crop', 'Cotton')
+        symptom = data.get('symptom', 'bollworm')
+        has_image = bool(data.get('has_image', False))
+        
+        crop_data = PEST_DIAGNOSIS_DATABASE.get(crop, PEST_DIAGNOSIS_DATABASE.get('Cotton'))
+        diag = crop_data.get(symptom, crop_data.get('default'))
+        
+        conf = diag['confidence']
+        if has_image:
+            conf = min(99, conf + 3)
+            
+        speech_en = f"Pest diagnosis complete. {diag['name']} detected with {conf} percent confidence. High priority spray: {diag['treatments'][0]['spray']} at {diag['treatments'][0]['dosage']}."
+        speech_te = f"తెగులు నిర్ధారణ పూర్తయింది. {diag['name_te']} గుర్తించబడింది. సిఫారసు చేసిన క్రిమిసంహారక మందు: {diag['treatments'][0]['spray']}."
+        speech_hi = f"कीट पहचान पूरी हुई। {diag['name_hi']} की पुष्टि हुई है। अनुशंसित दवा: {diag['treatments'][0]['spray']}।"
+        
+        return jsonify({
+            'success': True,
+            'crop': crop,
+            'symptom_key': symptom,
+            'has_image': has_image,
+            'diagnosis': {
+                'name': diag['name'],
+                'name_te': diag['name_te'],
+                'name_hi': diag['name_hi'],
+                'severity': diag['severity'],
+                'confidence': conf,
+                'visual_traits': diag['visual_traits'],
+                'treatments': diag['treatments'],
+                'prevention': diag['prevention']
+            },
+            'speech': {
+                'en': speech_en,
+                'te': speech_te,
+                'hi': speech_hi
+            }
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 @app.route('/favicon.ico')
 def favicon():
     from flask import Response

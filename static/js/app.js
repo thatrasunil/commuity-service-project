@@ -1967,25 +1967,253 @@ const PEST_DATABASE = {
   }
 };
 
-function previewPestImage(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const previewDiv = document.getElementById('pestImagePreview');
-    const previewImg = document.getElementById('pestPreviewImg');
-    if (previewImg && previewDiv) {
-      previewImg.src = e.target.result;
-      previewDiv.style.display = 'block';
+let currentPestImageData = null;
+
+function triggerPestImageUpload(event) {
+  if (event.target.id === 'btnRemovePestImg' || event.target.closest('#btnRemovePestImg')) return;
+  const input = document.getElementById('pestImageInput');
+  if (input) input.click();
+}
+
+function removePestImage(event) {
+  if (event) event.stopPropagation();
+  currentPestImageData = null;
+  const input = document.getElementById('pestImageInput');
+  if (input) input.value = '';
+
+  const previewDiv = document.getElementById('pestImagePreview');
+  const promptDiv = document.getElementById('pestUploadPrompt');
+  const previewImg = document.getElementById('pestPreviewImg');
+
+  if (previewImg) previewImg.src = '';
+  if (previewDiv) previewDiv.style.display = 'none';
+  if (promptDiv) promptDiv.style.display = 'block';
+
+  showToast('Image removed', 'fa-trash');
+}
+
+function selectSamplePestLeaf(sampleKey) {
+  const sampleData = {
+    rice_blast: {
+      crop: 'Rice',
+      symptom: 'blast',
+      svg: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250"><rect width="400" height="250" fill="%23ecfdf5"/><path d="M50 200 Q200 40 350 200 Q200 120 50 200 Z" fill="%2322c55e" stroke="%2315803d" stroke-width="4"/><ellipse cx="160" cy="140" rx="22" ry="8" fill="%2378350f" transform="rotate(-15 160 140)"/><ellipse cx="160" cy="140" rx="14" ry="4" fill="%23d1d5db" transform="rotate(-15 160 140)"/><ellipse cx="230" cy="110" rx="28" ry="10" fill="%2378350f" transform="rotate(-20 230 110)"/><ellipse cx="230" cy="110" rx="18" ry="5" fill="%23d1d5db" transform="rotate(-20 230 110)"/><text x="200" y="235" font-family="sans-serif" font-weight="bold" font-size="14" fill="%23166534" text-anchor="middle">Sample: Rice Blast Leaf (వరి అగ్గి తెగులు)</text></svg>'
+    },
+    cotton_bollworm: {
+      crop: 'Cotton',
+      symptom: 'bollworm',
+      svg: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250"><rect width="400" height="250" fill="%23fff7ed"/><path d="M80 180 C80 80 160 30 200 30 C240 30 320 80 320 180 Z" fill="%2316a34a" stroke="%2314532d" stroke-width="4"/><circle cx="200" cy="110" r="24" fill="%23991b1b"/><circle cx="200" cy="110" r="14" fill="%237f1d1d"/><circle cx="215" cy="100" r="6" fill="%23fbbf24"/><text x="200" y="235" font-family="sans-serif" font-weight="bold" font-size="14" fill="%239a3412" text-anchor="middle">Sample: Cotton Pink Bollworm (పత్తి కాయ తొలిచే పురుగు)</text></svg>'
+    },
+    wheat_rust: {
+      crop: 'Wheat',
+      symptom: 'rust',
+      svg: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250"><rect width="400" height="250" fill="%23fefce8"/><path d="M60 210 Q200 20 340 210 Z" fill="%2384cc16" stroke="%234d7c0f" stroke-width="4"/><circle cx="140" cy="140" r="8" fill="%23ea580c"/><circle cx="170" cy="120" r="10" fill="%23ea580c"/><circle cx="210" cy="110" r="7" fill="%23ea580c"/><circle cx="250" cy="130" r="9" fill="%23ea580c"/><circle cx="190" cy="150" r="8" fill="%23c2410c"/><text x="200" y="235" font-family="sans-serif" font-weight="bold" font-size="14" fill="%23854d0e" text-anchor="middle">Sample: Wheat Rust Leaf (గోధుమ తుప్పు తెగులు)</text></svg>'
+    },
+    tomato_blight: {
+      crop: 'Tomato',
+      symptom: 'blast',
+      svg: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250"><rect width="400" height="250" fill="%23fef2f2"/><path d="M100 200 C60 120 140 40 200 40 C260 40 340 120 300 200 Z" fill="%2322c55e" stroke="%2315803d" stroke-width="4"/><circle cx="180" cy="120" r="22" fill="%23eab308"/><circle cx="180" cy="120" r="15" fill="%23451a03"/><circle cx="230" cy="150" r="18" fill="%23eab308"/><circle cx="230" cy="150" r="11" fill="%23451a03"/><text x="200" y="235" font-family="sans-serif" font-weight="bold" font-size="14" fill="%23991b1b" text-anchor="middle">Sample: Tomato Early Blight (టమాట ముందస్తు మచ్చ తెగులు)</text></svg>'
     }
   };
+
+  const sample = sampleData[sampleKey];
+  if (!sample) return;
+
+  const cropSelect = document.getElementById('pestCropSelect');
+  const symptomSelect = document.getElementById('pestSymptomSelect');
+  if (cropSelect) cropSelect.value = sample.crop;
+  if (symptomSelect) symptomSelect.value = sample.symptom;
+
+  currentPestImageData = sample.svg;
+
+  const previewDiv = document.getElementById('pestImagePreview');
+  const promptDiv = document.getElementById('pestUploadPrompt');
+  const previewImg = document.getElementById('pestPreviewImg');
+
+  if (previewImg) previewImg.src = sample.svg;
+  if (previewDiv) previewDiv.style.display = 'block';
+  if (promptDiv) promptDiv.style.display = 'none';
+
+  const badge = document.getElementById('leafScanStatsBadge');
+  if (badge) {
+    badge.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Sample Leaf Loaded &amp; Scanned';
+  }
+
+  showToast(`Loaded ${sample.crop} sample leaf`, 'fa-leaf');
+  diagnosePest();
+}
+
+function previewPestImage(event) {
+  const files = event.target.files || (event.target.dataTransfer ? event.target.dataTransfer.files : null);
+  const file = files ? files[0] : null;
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    currentPestImageData = e.target.result;
+    const previewDiv = document.getElementById('pestImagePreview');
+    const promptDiv = document.getElementById('pestUploadPrompt');
+    const previewImg = document.getElementById('pestPreviewImg');
+
+    if (previewImg) previewImg.src = e.target.result;
+    if (previewDiv) previewDiv.style.display = 'block';
+    if (promptDiv) promptDiv.style.display = 'none';
+
+    // Show scanner line effect briefly
+    const scanBar = document.getElementById('pestScanBar');
+    if (scanBar) {
+      scanBar.style.display = 'block';
+      setTimeout(() => { scanBar.style.display = 'none'; }, 2200);
+    }
+
+    const badge = document.getElementById('leafScanStatsBadge');
+    if (badge) {
+      badge.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#16a34a;"></i> ${file.name} (${(file.size / 1024).toFixed(1)} KB) Scanned`;
+    }
+
+    showToast('Leaf photo uploaded successfully!', 'fa-camera');
+  };
   reader.readAsDataURL(file);
+}
+
+function setupPestDropZone() {
+  const dropZone = document.getElementById('pestDropZone');
+  if (!dropZone) return;
+
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, false);
+  });
+
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dropZone.addEventListener(eventName, () => {
+      dropZone.style.borderColor = '#16a34a';
+      dropZone.style.background = '#f0fdf4';
+    }, false);
+  });
+
+  ['dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, () => {
+      dropZone.style.borderColor = 'var(--border-subtle)';
+      dropZone.style.background = '#f8fafc';
+    }, false);
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    const dt = e.dataTransfer;
+    const files = dt ? dt.files : null;
+    if (files && files.length > 0) {
+      const input = document.getElementById('pestImageInput');
+      if (input) {
+        try { input.files = files; } catch(err){}
+        previewPestImage({ target: { files: files } });
+      }
+    }
+  }, false);
 }
 
 function diagnosePest() {
   const crop = document.getElementById('pestCropSelect')?.value || 'Cotton';
   const symptom = document.getElementById('pestSymptomSelect')?.value || 'bollworm';
 
+  const btn = document.getElementById('btnDiagnosePest');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>AI Visual Scanning Leaf...</span>';
+  }
+
+  const payload = {
+    crop: crop,
+    symptom: symptom,
+    has_image: Boolean(currentPestImageData)
+  };
+
+  fetch('/api/diagnose-pest', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (!data.success) throw new Error(data.error || 'Diagnosis failed');
+      renderPestDiagnosisResults(data);
+    })
+    .catch(err => {
+      console.error('Pest diagnosis error:', err);
+      renderPestDiagnosisFallback(crop, symptom);
+    })
+    .finally(() => {
+      if (btn) {
+        btn.disabled = false;
+        const defaultLabel = I18N[currentLang]?.diagnose_pest_btn || 'Diagnose Pest & Get Remedy';
+        btn.innerHTML = `<i class="fa-solid fa-microscope" style="font-size:1.4rem;"></i> <span>${defaultLabel}</span> <span class="te-sub btn-predict-te">తెగులును గుర్తించి మందులను పొందండి</span>`;
+      }
+    });
+}
+
+function renderPestDiagnosisResults(res) {
+  const d = res.diagnosis;
+  const lang = currentLang || 'en';
+
+  const nameEl = document.getElementById('pestDiagnosisName');
+  const teEl = document.getElementById('pestDiagnosisTe');
+  const confEl = document.getElementById('pestConfidence');
+  const badgeEl = document.getElementById('pestSeverityBadge');
+  const traitsText = document.getElementById('pestVisualTraitsText');
+
+  const titleName = (lang === 'te') ? d.name_te : (lang === 'hi' ? d.name_hi : d.name);
+  if (nameEl) nameEl.textContent = titleName;
+  if (teEl) teEl.textContent = (lang === 'te') ? d.name : d.name_te;
+  if (confEl) confEl.textContent = `AI Confidence: ${d.confidence}%`;
+  if (traitsText) traitsText.textContent = d.visual_traits;
+
+  if (badgeEl) {
+    if (d.severity === 'high') {
+      badgeEl.className = 'risk-badge badge-danger';
+      badgeEl.innerHTML = (lang === 'te') ? '<i class="fa-solid fa-triangle-exclamation"></i> తీవ్రమైన ప్రమాదం (High)' : (lang === 'hi' ? '<i class="fa-solid fa-triangle-exclamation"></i> गंभीर जोखिम (High)' : '<i class="fa-solid fa-triangle-exclamation"></i> High Severity');
+    } else {
+      badgeEl.className = 'risk-badge badge-warning';
+      badgeEl.innerHTML = (lang === 'te') ? '<i class="fa-solid fa-triangle-exclamation"></i> మధ్యస్థ ప్రమాదం (Moderate)' : (lang === 'hi' ? '<i class="fa-solid fa-triangle-exclamation"></i> मध्यम जोखिम (Moderate)' : '<i class="fa-solid fa-circle-exclamation"></i> Moderate Severity');
+    }
+  }
+
+  // Treatment list
+  const treatList = document.getElementById('pestTreatmentList');
+  if (treatList && d.treatments) {
+    treatList.innerHTML = d.treatments.map(t => `
+      <div class="advisory-card high-priority">
+        <div class="advisory-title">
+          <span><i class="fa-solid fa-prescription-bottle-medical" style="color:#059669;margin-right:6px;"></i><strong>${t.spray}</strong></span>
+          <span style="font-size:0.78rem; font-weight:700; color:#15803d;">[${t.dosage}]</span>
+        </div>
+        <div class="advisory-desc" style="margin-top:4px;">${t.stage}</div>
+      </div>
+    `).join('');
+  }
+
+  // Prevention list
+  const prevList = document.getElementById('pestPreventionList');
+  if (prevList && d.prevention) {
+    prevList.innerHTML = d.prevention.map(p => `
+      <div class="advisory-card">
+        <div class="advisory-desc"><i class="fa-solid fa-shield-halved" style="color:#2d6a4f;margin-right:6px;"></i>${p}</div>
+      </div>
+    `).join('');
+  }
+
+  // Speech texts
+  window.lastPestSpeech = res.speech;
+
+  const resultBox = document.getElementById('pestResult');
+  if (resultBox) {
+    resultBox.style.display = 'block';
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function renderPestDiagnosisFallback(crop, symptom) {
   const cropPests = PEST_DATABASE[crop] || PEST_DATABASE['Cotton'];
   const diagnosis = cropPests[symptom] || cropPests['default'] || PEST_DATABASE['Cotton']['bollworm'];
 
@@ -2025,6 +2253,42 @@ function diagnosePest() {
     resultBox.style.display = 'block';
     resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+}
+
+function speakPestDiagnosis() {
+  if (!('speechSynthesis' in window)) {
+    showToast('Voice speech not supported on this browser', 'fa-triangle-exclamation');
+    return;
+  }
+  const btn = document.getElementById('pestVoiceBtn');
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    if (btn) btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> <span>Listen (వినండి)</span>';
+    return;
+  }
+
+  const speechObj = window.lastPestSpeech || { en: 'Pest diagnosis complete.', te: 'తెగులు నిర్ధారణ పూర్తయింది.', hi: 'कीट पहचान पूरी हुई।' };
+  let text = speechObj.en;
+  let langCode = 'en-IN';
+
+  if (currentLang === 'te' && speechObj.te) { text = speechObj.te; langCode = 'te-IN'; }
+  else if (currentLang === 'hi' && speechObj.hi) { text = speechObj.hi; langCode = 'hi-IN'; }
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = langCode;
+  utterance.rate = 0.92;
+
+  utterance.onstart = () => {
+    if (btn) btn.innerHTML = '<i class="fa-solid fa-stop"></i> <span>Stop (ఆపండి)</span>';
+  };
+  utterance.onend = () => {
+    if (btn) btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> <span>Listen (వినండి)</span>';
+  };
+  utterance.onerror = () => {
+    if (btn) btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> <span>Listen (వినండి)</span>';
+  };
+
+  window.speechSynthesis.speak(utterance);
 }
 
 // ──────────────────────────────────────────────
@@ -2805,5 +3069,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (typeof updateFarmReportsScreen === 'function') {
     updateFarmReportsScreen();
+  }
+  if (typeof setupPestDropZone === 'function') {
+    setupPestDropZone();
   }
 });
