@@ -791,6 +791,15 @@
   </div>
   <div class="feature-body-single">
     <div class="section-card">
+      <!-- Pest Visual Farmer Banner -->
+      <div class="farmer-visual-banner" style="background:linear-gradient(135deg, #fee2e2 0%, #ffedd5 100%); border-color:#fca5a5;">
+        <img src="{{ url_for('static', filename='images/farmer_pitchfork.png') }}" alt="Pest Doctor" class="farmer-banner-img">
+        <div>
+          <div class="farmer-banner-title">Pest &amp; Disease Doctor (తెగులు నివారణ వైద్యుడు)</div>
+          <div class="farmer-banner-sub">Upload leaf photo or choose symptoms to identify plant diseases &amp; get instant spray remedies.</div>
+        </div>
+      </div>
+
       <div class="section-head">
         <i class="fa-solid fa-camera" style="color:#dc2626;"></i>
         <span data-i18n="pest_diagnosis_title">Pest &amp; Disease Diagnosis</span>
@@ -808,7 +817,7 @@
             <option value="Cotton" selected>Cotton (పత్తి / कपास)</option>
             <option value="Maize">Maize (మొక్కజొన్న / मक्का)</option>
             <option value="Tomato">Tomato (టమాట / टमाटर)</option>
-            <option value="Groundnut">Groundnut (వేరుశనగ / मूंगफली)</option>
+            <option value="Groundnut">Groundnut (వేరుశనగ / మూంగఫలీ)</option>
           </select>
         </div>
         <div class="input-group-farmer">
@@ -845,6 +854,10 @@
           <div style="font-weight:700; font-size:1rem;" data-i18n="upload_leaf_photo">Upload Crop Leaf Photo</div>
           <div class="te-sub" style="font-size:0.82rem; color:var(--text-muted);">ఆకు లేదా మొక్క ఫోటోను ఇక్కడ వేయండి లేదా ఎంచుకోండి</div>
           <div style="font-size:0.75rem; color:#64748b; margin-top:4px;" data-i18n="upload_subtext">Supports JPG, PNG, WEBP · Camera capture or Drag &amp; Drop</div>
+          <div class="pest-upload-actions">
+            <span class="btn-upload-choice"><i class="fa-solid fa-camera" style="color:#dc2626;"></i> Take Photo</span>
+            <span class="btn-upload-choice"><i class="fa-solid fa-image" style="color:#2563eb;"></i> Select Image</span>
+          </div>
         </div>
 
         <input type="file" id="pestImageInput" accept="image/*" capture="environment" style="display:none;" onchange="previewPestImage(event)">
@@ -864,7 +877,7 @@
         </div>
       </div>
 
-      <button type="button" class="btn-predict-big" id="btnDiagnosePest" onclick="diagnosePest()" style="margin-top:0.5rem;">
+      <button type="button" class="btn-predict-big animate-pulse-sprout" id="btnDiagnosePest" onclick="diagnosePest()" style="margin-top:0.5rem;">
         <i class="fa-solid fa-microscope" style="font-size:1.4rem;"></i>
         <span data-i18n="diagnose_pest_btn">Diagnose Pest &amp; Get Remedy</span>
         <span class="te-sub btn-predict-te">తెగులును గుర్తించి నివారణ మందులను పొందండి</span>
