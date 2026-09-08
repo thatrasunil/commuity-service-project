@@ -1153,6 +1153,9 @@
         <button type="button" class="lang-pill" data-lang="te" onclick="selectLanguage('te')">తెలుగు</button>
         <button type="button" class="lang-pill" data-lang="hi" onclick="selectLanguage('hi')">हिन्दी</button>
       </div>
+      <button class="btn-voice-small" onclick="speakReportSummary()" id="topbarVoiceReportBtn" title="Listen to Summary">
+        <i class="fa-solid fa-volume-high"></i>
+      </button>
       <button class="btn-voice-small" onclick="window.print()" title="Print / Save PDF">
         <i class="fa-solid fa-file-pdf"></i>
       </button>
@@ -1162,15 +1165,15 @@
     <div class="section-card">
       <div class="section-head">
         <i class="fa-solid fa-file-lines" style="color:#6b21a8;"></i>
-        <span>Crop Season Performance &amp; Advisory Report</span>
+        <span data-i18n="report_season_head">Crop Season Performance &amp; Advisory Report</span>
         <span class="te-sub section-head-te">పంట సీజన్ నివేదిక</span>
       </div>
 
       <!-- Report summary banner -->
       <div style="background:linear-gradient(135deg, #3b0764, #581c87); border-radius:14px; padding:1.2rem; color:#fff; margin-bottom:1rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-          <div style="font-size:0.8rem; color:#e9d5ff; text-transform:uppercase; letter-spacing:0.5px;">Current Season Audit</div>
-          <span class="risk-badge" style="background:#16a34a; color:#fff;">Season 2025-26</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; flex-wrap:wrap; gap:0.5rem;">
+          <div style="font-size:0.8rem; color:#e9d5ff; text-transform:uppercase; letter-spacing:0.5px;" data-i18n="report_audit_title">Current Season Audit</div>
+          <span class="risk-badge" style="background:#16a34a; color:#fff;" data-i18n="season_2025_26">Season 2025-26</span>
         </div>
         <div style="font-size:1.8rem; font-weight:900;" id="reportCropSummary">Rice — Kharif Season</div>
         <div style="font-size:0.88rem; color:#d8b4fe;" id="reportFarmDetails">Plot: 2.5 Acres &middot; Drip Irrigation &middot; Model: Random Forest</div>
@@ -1179,69 +1182,91 @@
       <!-- 4-Stat Overview -->
       <div class="stat-kpi-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom:1rem;">
         <div class="stat-kpi-box">
-          <div class="lbl"><i class="fa-solid fa-wheat-awn"></i> Expected Yield</div>
+          <div class="lbl"><i class="fa-solid fa-wheat-awn"></i> <span data-i18n="expected_yield">Expected Yield</span></div>
           <div class="val" id="reportYieldVal" style="color:#15803d;">2.83 T/Ha</div>
-          <div style="font-size:0.7rem; color:var(--text-muted);">Mean Benchmark: 2.30 T/Ha</div>
+          <div style="font-size:0.72rem; color:var(--text-muted);" id="reportYieldSub" data-i18n="yield_bench_sub">Mean Benchmark: 2.30 T/Ha (+23%)</div>
         </div>
         <div class="stat-kpi-box">
-          <div class="lbl"><i class="fa-solid fa-indian-rupee-sign"></i> Projected Revenue</div>
+          <div class="lbl"><i class="fa-solid fa-indian-rupee-sign"></i> <span data-i18n="projected_revenue">Projected Revenue</span></div>
           <div class="val" id="reportRevenueVal" style="color:#047857;">&#8377;1,55,650</div>
-          <div style="font-size:0.7rem; color:var(--text-muted);">AI Target: +&#8377;26,400</div>
+          <div style="font-size:0.72rem; color:var(--text-muted);" id="reportRevenueSub" data-i18n="rev_target_sub">AI Target: +&#8377;26,400 Profit</div>
         </div>
         <div class="stat-kpi-box">
-          <div class="lbl"><i class="fa-solid fa-flask"></i> Soil Score</div>
+          <div class="lbl"><i class="fa-solid fa-flask"></i> <span data-i18n="soil_health_score">Soil Score</span></div>
           <div class="val" id="reportSoilVal" style="color:#2563eb;">85/100</div>
-          <div style="font-size:0.7rem; color:var(--text-muted);">NPK Balanced</div>
+          <div style="font-size:0.72rem; color:var(--text-muted);" id="reportSoilSub" data-i18n="soil_score_sub">Optimal NPK &amp; pH Balance</div>
         </div>
         <div class="stat-kpi-box">
-          <div class="lbl"><i class="fa-solid fa-shield-halved"></i> Risk Index</div>
+          <div class="lbl"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="risk_index">Risk Index</span></div>
           <div class="val" id="reportRiskVal" style="color:#16a34a;">Low Risk</div>
-          <div style="font-size:0.7rem; color:var(--text-muted);">Weather safe</div>
+          <div style="font-size:0.72rem; color:var(--text-muted);" id="reportRiskSub" data-i18n="risk_index_sub">Favorable Weather &amp; Pest Safe</div>
+        </div>
+      </div>
+
+      <!-- Explanatory "How This Report Helps Farmers" section -->
+      <div style="background:#f0fdf4; border:1.5px solid #bbf7d0; border-radius:14px; padding:1.1rem; margin-bottom:1.2rem;">
+        <div style="font-weight:700; font-size:1rem; color:#15803d; margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem;">
+          <i class="fa-solid fa-lightbulb" style="color:#eab308; font-size:1.2rem;"></i>
+          <span data-i18n="report_helps_title">How This Report Helps Farmers</span>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:0.8rem;">
+          <div style="background:#ffffff; border-radius:10px; padding:0.85rem; border:1px solid #dcfce7; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size:0.85rem; font-weight:700; color:#166534; margin-bottom:0.3rem; display:flex; align-items:center; gap:0.4rem;">
+              <i class="fa-solid fa-chart-line" style="color:#16a34a;"></i>
+              <span data-i18n="help_yield_title">1. Maximize Yield &amp; Revenue</span>
+            </div>
+            <div style="font-size:0.78rem; color:#374151; line-height:1.4;" data-i18n="help_yield_desc">
+              Compares your farm output with district standards and suggests exact actions to achieve higher profit per acre.
+            </div>
+          </div>
+          <div style="background:#ffffff; border-radius:10px; padding:0.85rem; border:1px solid #dcfce7; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size:0.85rem; font-weight:700; color:#166534; margin-bottom:0.3rem; display:flex; align-items:center; gap:0.4rem;">
+              <i class="fa-solid fa-building-columns" style="color:#2563eb;"></i>
+              <span data-i18n="help_loan_title">2. Bank Loans &amp; Subsidies</span>
+            </div>
+            <div style="font-size:0.78rem; color:#374151; line-height:1.4;" data-i18n="help_loan_desc">
+              Serves as an official farm record for Kisan Credit Card (KCC) loans, PMFBY crop insurance, and government fertilizer subsidies.
+            </div>
+          </div>
+          <div style="background:#ffffff; border-radius:10px; padding:0.85rem; border:1px solid #dcfce7; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size:0.85rem; font-weight:700; color:#166534; margin-bottom:0.3rem; display:flex; align-items:center; gap:0.4rem;">
+              <i class="fa-solid fa-sack-dollar" style="color:#d97706;"></i>
+              <span data-i18n="help_cost_title">3. Save Fertilizer Costs</span>
+            </div>
+            <div style="font-size:0.78rem; color:#374151; line-height:1.4;" data-i18n="help_cost_desc">
+              Avoids wasteful excess fertilizer usage, saving &#8377;3,000–&#8377;5,000 per acre while keeping soil fertile for long-term productivity.
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Historical Logs Table -->
-      <div class="section-sub-head"><i class="fa-solid fa-clock-rotate-left"></i> Farm Advisory History &amp; Inputs Log</div>
-      <div style="overflow-x:auto; margin-bottom:1rem;">
+      <div class="section-sub-head"><i class="fa-solid fa-clock-rotate-left"></i> <span data-i18n="farm_history_log">Farm Advisory History &amp; Inputs Log</span></div>
+      <div style="overflow-x:auto; margin-bottom:1.2rem;">
         <table style="width:100%; border-collapse:collapse; font-size:0.82rem; text-align:left;">
           <thead>
             <tr style="background:#f1f5f9; border-bottom:2px solid var(--border-subtle);">
-              <th style="padding:0.6rem;">Date</th>
-              <th style="padding:0.6rem;">Crop</th>
-              <th style="padding:0.6rem;">Yield Pred.</th>
-              <th style="padding:0.6rem;">Est. Revenue</th>
-              <th style="padding:0.6rem;">Action Taken</th>
+              <th style="padding:0.6rem;" data-i18n="th_date">Date</th>
+              <th style="padding:0.6rem;" data-i18n="th_crop">Crop</th>
+              <th style="padding:0.6rem;" data-i18n="th_yield_pred">Yield Pred.</th>
+              <th style="padding:0.6rem;" data-i18n="th_est_rev">Est. Revenue</th>
+              <th style="padding:0.6rem;" data-i18n="th_action">Action Taken</th>
             </tr>
           </thead>
           <tbody id="farmReportTableBody">
-            <tr style="border-bottom:1px solid var(--border-subtle);">
-              <td style="padding:0.6rem;">Today</td>
-              <td style="padding:0.6rem; font-weight:700;">Rice</td>
-              <td style="padding:0.6rem; color:#16a34a; font-weight:700;">2.83 T/Ha</td>
-              <td style="padding:0.6rem;">&#8377;1,55,650</td>
-              <td style="padding:0.6rem;"><span class="risk-badge badge-success" style="font-size:0.65rem;">Optimal Soil</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border-subtle);">
-              <td style="padding:0.6rem;">15 Aug 2025</td>
-              <td style="padding:0.6rem; font-weight:700;">Cotton</td>
-              <td style="padding:0.6rem; color:#d97706; font-weight:700;">1.85 T/Ha</td>
-              <td style="padding:0.6rem;">&#8377;1,12,000</td>
-              <td style="padding:0.6rem;"><span class="risk-badge badge-warning" style="font-size:0.65rem;">Added Urea + DAP</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border-subtle);">
-              <td style="padding:0.6rem;">10 Jan 2025</td>
-              <td style="padding:0.6rem; font-weight:700;">Wheat</td>
-              <td style="padding:0.6rem; color:#16a34a; font-weight:700;">3.40 T/Ha</td>
-              <td style="padding:0.6rem;">&#8377;1,80,200</td>
-              <td style="padding:0.6rem;"><span class="risk-badge badge-success" style="font-size:0.65rem;">Harvest Done</span></td>
-            </tr>
+            <!-- Dynamic rows rendered via updateFarmReportsScreen() -->
           </tbody>
         </table>
       </div>
 
-      <button class="btn-print" onclick="window.print()">
-        <i class="fa-solid fa-file-arrow-down"></i> Download / Print Full Farm Report
-      </button>
+      <div style="display:flex; gap:0.8rem; flex-wrap:wrap;">
+        <button class="btn-print" style="flex:1;" onclick="speakReportSummary()" id="btnVoiceListen">
+          <i class="fa-solid fa-volume-high"></i> <span data-i18n="btn_listen_report">Listen to Summary</span>
+        </button>
+        <button class="btn-print" style="flex:1; background:var(--primary-color);" onclick="window.print()">
+          <i class="fa-solid fa-file-arrow-down"></i> <span data-i18n="btn_download_report">Download / Print Full Report</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

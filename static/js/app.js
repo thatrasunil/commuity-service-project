@@ -47,7 +47,32 @@ const I18N = {
     moderate_soil: 'Mild Deficit Soil',
     poor_soil: 'Depleted Soil (Needs Treatment)',
     fertilizer_plan: 'Prescribed Fertilizer Plan',
-    best_crops: 'Best Crops for This Soil'
+    best_crops: 'Best Crops for This Soil',
+    report_season_head: 'Crop Season Performance & Advisory Report',
+    report_audit_title: 'Current Season Audit',
+    season_2025_26: 'Season 2025-26',
+    projected_revenue: 'Projected Revenue',
+    yield_bench_sub: 'Mean Benchmark: 2.30 T/Ha (+23%)',
+    rev_target_sub: 'AI Target: +₹26,400 Profit',
+    soil_health_score: 'Soil Score',
+    soil_score_sub: 'Optimal NPK & pH Balance',
+    risk_index: 'Risk Index',
+    risk_index_sub: 'Favorable Weather & Pest Safe',
+    report_helps_title: 'How This Report Helps Farmers',
+    help_yield_title: '1. Maximize Yield & Revenue',
+    help_yield_desc: 'Compares your farm output with district standards and suggests exact actions to achieve higher profit per acre.',
+    help_loan_title: '2. Bank Loans & Subsidies',
+    help_loan_desc: 'Serves as an official farm record for Kisan Credit Card (KCC) loans, PMFBY crop insurance, and government fertilizer subsidies.',
+    help_cost_title: '3. Save Fertilizer Costs',
+    help_cost_desc: 'Avoids wasteful excess fertilizer usage, saving ₹3,000–₹5,000 per acre while keeping soil fertile for long-term productivity.',
+    farm_history_log: 'Farm Advisory History & Inputs Log',
+    th_date: 'Date',
+    th_crop: 'Crop',
+    th_yield_pred: 'Yield Pred.',
+    th_est_rev: 'Est. Revenue',
+    th_action: 'Action Taken',
+    btn_listen_report: 'Listen to Summary',
+    btn_download_report: 'Download / Print Full Report'
   },
   te: {
     tagline: 'ముందే అంచనా వేయండి. దిగుబడి పెంచండి.',
@@ -84,7 +109,32 @@ const I18N = {
     moderate_soil: 'మధ్యస్థ పోషకాల నేల',
     poor_soil: 'క్షీణించిన నేల (చికిత్స అవసరం)',
     fertilizer_plan: 'సిఫారసు చేసిన ఎరువుల ప్రణాళిక',
-    best_crops: 'ఈ నేలకు అనువైన ఉత్తమ పంటలు'
+    best_crops: 'ఈ నేలకు అనువైన ఉత్తమ పంటలు',
+    report_season_head: 'పంట సీజన్ పనితీరు & సలహా నివేదిక',
+    report_audit_title: 'ప్రస్తుత సీజన్ తనిఖీ',
+    season_2025_26: 'సీజన్ 2025-26',
+    projected_revenue: 'అంచనా రాబడి',
+    yield_bench_sub: 'సగటు స్థాయి: 2.30 టన్నులు/హెక్టార్ (+23%)',
+    rev_target_sub: 'AI లక్ష్యం: +₹26,400 అదనపు లాభం',
+    soil_health_score: 'నేల స్కోర్',
+    soil_score_sub: 'ఉత్తమ NPK & pH సమతుల్యత',
+    risk_index: 'ప్రమాద సూచిక',
+    risk_index_sub: 'అనుకూల వాతావరణం & సురక్షితం',
+    report_helps_title: 'ఈ నివేదిక రైతులకు ఎలా ఉపయోగపడుతుంది',
+    help_yield_title: '1. దిగుబడి & రాబడి పెంపు',
+    help_yield_desc: 'మీ పొలం దిగుబడిని జిల్లా సగటుతో పోల్చి, ఎకరాకు ఎక్కువ లాభం పొందడానికి సరియైన చర్యలను సూచిస్తుంది.',
+    help_loan_title: '2. బ్యాంకు రుణాలు & రాయితీలు',
+    help_loan_desc: 'కిసాన్ క్రెడిట్ కార్డ్ (KCC) రుణాలు, పంట భీమా (PMFBY), మరియు ప్రభుత్వ ఎరువుల సబ్సిడీల కోసం ఇది ధృవీకరించబడిన రికార్డుగా పనిచేస్తుంది.',
+    help_cost_title: '3. ఎరువుల ఖర్చు ఆదా',
+    help_cost_desc: 'అనవసరమైన ఎరువుల వాడకాన్ని నివారించి, ఎకరాకు ₹3,000–₹5,000 వరకు ఆదా చేస్తూ నేల సారాన్ని కాపాడుతుంది.',
+    farm_history_log: 'వ్యవసాయ సలహాల చరిత్ర & నమోదుల జాబితా',
+    th_date: 'తేదీ',
+    th_crop: 'పంట',
+    th_yield_pred: 'దిగుబడి అంచనా',
+    th_est_rev: 'అంచనా రాబడి',
+    th_action: 'తీసుకున్న చర్య',
+    btn_listen_report: 'వివరణ వినండి (Voice)',
+    btn_download_report: 'రిపోర్ట్ ప్రింట్ / సేవ్ చేయండి'
   },
   hi: {
     tagline: 'जल्दी भविष्यवाणी करें। उपज बढ़ाएं।',
@@ -121,7 +171,32 @@ const I18N = {
     moderate_soil: 'मध्यम पोषक मिट्टी',
     poor_soil: 'कमजोर मिट्टी (उपचार आवश्यक)',
     fertilizer_plan: 'अनुशंसित उर्वरक खुराक',
-    best_crops: 'इस मिट्टी के लिए सर्वोत्तम फसलें'
+    best_crops: 'इस मिट्टी के लिए सर्वोत्तम फसलें',
+    report_season_head: 'फसल सीजन प्रदर्शन एवं परामर्श रिपोर्ट',
+    report_audit_title: 'वर्तमान सीजन ऑडिट',
+    season_2025_26: 'सीजन 2025-26',
+    projected_revenue: 'अनुमानित आय',
+    yield_bench_sub: 'औसत मानक: 2.30 टन/हेक्टेयर (+23%)',
+    rev_target_sub: 'AI लक्ष्य: +₹26,400 अतिरिक्त लाभ',
+    soil_health_score: 'मिट्टी स्कोर',
+    soil_score_sub: 'उत्कृष्ट NPK और pH संतुलन',
+    risk_index: 'जोखिम सूचकांक',
+    risk_index_sub: 'अनुकूल मौसम और सुरक्षित',
+    report_helps_title: 'यह रिपोर्ट किसानों के लिए कैसे उपयोगी है',
+    help_yield_title: '1. उपज और आय बढ़ाएं',
+    help_yield_desc: 'आपकी उपज की तुलना जिला मानकों से करती है और प्रति एकड़ अधिक लाभ कमाने के सटीक उपाय बताती है।',
+    help_loan_title: '2. बैंक ऋण और सब्सिडी',
+    help_loan_desc: 'किसान क्रेडिट कार्ड (KCC) लोन, फसल बीमा (PMFBY), और सरकारी उर्वरक सब्सिडी के लिए आधिकारिक रिकॉर्ड का काम करती है।',
+    help_cost_title: '3. उर्वरक खर्च में बचत',
+    help_cost_desc: 'अनावश्यक उर्वरक उपयोग को रोककर प्रति एकड़ ₹3,000–₹5,000 की बचत करती है और मिट्टी की उर्वरता बनाए रखती है।',
+    farm_history_log: 'फार्म परामर्श इतिहास और इनपुट लॉग',
+    th_date: 'तारीख',
+    th_crop: 'फसल',
+    th_yield_pred: 'उपज अनुमान',
+    th_est_rev: 'अनुमानित आय',
+    th_action: 'की गई कार्रवाई',
+    btn_listen_report: 'रिपोर्ट सुनें (Voice)',
+    btn_download_report: 'रिपोर्ट प्रिंट / डाउनलोड करें'
   }
 };
 
@@ -180,6 +255,8 @@ function selectLanguage(lang) {
   if (soilRes && soilRes.style.display !== 'none' && typeof analyzeSoil === 'function') {
     analyzeSoil(false);
   }
+
+  updateFarmReportsScreen();
 }
 
 function updateLabels() {
@@ -210,6 +287,155 @@ function updateLabels() {
   document.querySelectorAll('.hi-sub').forEach(el => {
     el.style.display = 'none';
   });
+
+  updateFarmReportsScreen();
+}
+
+function updateFarmReportsScreen() {
+  const tbody = document.getElementById('farmReportTableBody');
+  if (!tbody) return;
+
+  const lang = currentLang || 'en';
+
+  const cropNames = {
+    Rice: { en: 'Rice', te: 'వరి', hi: 'चावल' },
+    Cotton: { en: 'Cotton', te: 'ప్రత్తి', hi: 'कपास' },
+    Wheat: { en: 'Wheat', te: 'గోధుమ', hi: 'गेहूं' }
+  };
+
+  const dates = {
+    today: { en: 'Today', te: 'ఈరోజు', hi: 'आज' },
+    d15aug: { en: '15 Aug 2025', te: '15 ఆగస్టు 2025', hi: '15 अगस्त 2025' },
+    d10jan: { en: '10 Jan 2025', te: '10 జనవరి 2025', hi: '10 जनवरी 2025' }
+  };
+
+  const badges = {
+    optimal: {
+      en: '<span class="risk-badge badge-success" style="font-size:0.65rem;">Optimal Soil</span>',
+      te: '<span class="risk-badge badge-success" style="font-size:0.65rem;">సారవంతమైన నేల</span>',
+      hi: '<span class="risk-badge badge-success" style="font-size:0.65rem;">उत्कृष्ट मिट्टी</span>'
+    },
+    fertilizer: {
+      en: '<span class="risk-badge badge-warning" style="font-size:0.65rem;">Added Urea + DAP</span>',
+      te: '<span class="risk-badge badge-warning" style="font-size:0.65rem;">యూరియా + DAP వాడారు</span>',
+      hi: '<span class="risk-badge badge-warning" style="font-size:0.65rem;">यूरिया + डीएपी जोड़ा</span>'
+    },
+    harvest: {
+      en: '<span class="risk-badge badge-success" style="font-size:0.65rem;">Harvest Done</span>',
+      te: '<span class="risk-badge badge-success" style="font-size:0.65rem;">కోత పూర్తయింది</span>',
+      hi: '<span class="risk-badge badge-success" style="font-size:0.65rem;">कटाई संपन्न</span>'
+    }
+  };
+
+  tbody.innerHTML = `
+    <tr style="border-bottom:1px solid var(--border-subtle);">
+      <td style="padding:0.6rem;">${dates.today[lang] || dates.today.en}</td>
+      <td style="padding:0.6rem; font-weight:700;">${cropNames.Rice[lang] || cropNames.Rice.en}</td>
+      <td style="padding:0.6rem; color:#16a34a; font-weight:700;">2.83 T/Ha</td>
+      <td style="padding:0.6rem;">₹1,55,650</td>
+      <td style="padding:0.6rem;">${badges.optimal[lang] || badges.optimal.en}</td>
+    </tr>
+    <tr style="border-bottom:1px solid var(--border-subtle);">
+      <td style="padding:0.6rem;">${dates.d15aug[lang] || dates.d15aug.en}</td>
+      <td style="padding:0.6rem; font-weight:700;">${cropNames.Cotton[lang] || cropNames.Cotton.en}</td>
+      <td style="padding:0.6rem; color:#d97706; font-weight:700;">1.85 T/Ha</td>
+      <td style="padding:0.6rem;">₹1,12,000</td>
+      <td style="padding:0.6rem;">${badges.fertilizer[lang] || badges.fertilizer.en}</td>
+    </tr>
+    <tr style="border-bottom:1px solid var(--border-subtle);">
+      <td style="padding:0.6rem;">${dates.d10jan[lang] || dates.d10jan.en}</td>
+      <td style="padding:0.6rem; font-weight:700;">${cropNames.Wheat[lang] || cropNames.Wheat.en}</td>
+      <td style="padding:0.6rem; color:#16a34a; font-weight:700;">3.40 T/Ha</td>
+      <td style="padding:0.6rem;">₹1,80,200</td>
+      <td style="padding:0.6rem;">${badges.harvest[lang] || badges.harvest.en}</td>
+    </tr>
+  `;
+
+  // Update Summary Banner titles per language
+  const repCrop = document.getElementById('reportCropSummary');
+  if (repCrop) {
+    const banners = {
+      en: 'Rice — Kharif Season',
+      te: 'వరి — ఖరీఫ్ సీజన్',
+      hi: 'चावल — खरीफ सीजन'
+    };
+    repCrop.textContent = banners[lang] || banners.en;
+  }
+
+  const repFarm = document.getElementById('reportFarmDetails');
+  if (repFarm) {
+    const details = {
+      en: 'Plot: 2.5 Acres · Drip Irrigation · Model: Random Forest',
+      te: 'పొలం: 2.5 ఎకరాలు · బిందు సేద్యం (Drip) · మోడల్: AI Random Forest',
+      hi: 'खेत: 2.5 एकड़ · टपक सिंचाई (Drip) · मॉडल: AI Random Forest'
+    };
+    repFarm.textContent = details[lang] || details.en;
+  }
+
+  const repRisk = document.getElementById('reportRiskVal');
+  if (repRisk) {
+    const riskLabels = {
+      en: 'Low Risk',
+      te: 'తక్కువ ప్రమాదం',
+      hi: 'कम जोखिम'
+    };
+    repRisk.textContent = riskLabels[lang] || riskLabels.en;
+  }
+}
+
+function speakReportSummary() {
+  if (!('speechSynthesis' in window)) {
+    showToast('Voice synthesis not supported in this browser.', 'fa-circle-exclamation');
+    return;
+  }
+
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    const btn1 = document.getElementById('btnVoiceListen');
+    const btn2 = document.getElementById('topbarVoiceReportBtn');
+    const defaultLabel = I18N[currentLang]?.btn_listen_report || 'Listen to Summary';
+    if (btn1) btn1.innerHTML = `<i class="fa-solid fa-volume-high"></i> <span>${defaultLabel}</span>`;
+    if (btn2) btn2.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+    showToast('Voice paused', 'fa-pause');
+    return;
+  }
+
+  const summaries = {
+    te: 'రైతు నివేదిక సారాంశం: మీ వరి పంట అంచనా దిగుబడి హెక్టారుకు 2.83 టన్నులు, అంచనా ఆదాయం లక్షా 55 వేల రూపాయలు. నేల ఆరోగ్య స్కోర్ 85 శాతం పొంది ఉత్తమంగా ఉంది. ఈ నివేదికను కిసాన్ క్రెడిట్ కార్డ్ రుణాలు మరియు పంట భీమా కోసం ఉపయోగించవచ్చు.',
+    hi: 'किसान रिपोर्ट सारांश: आपकी चावल की फसल का अनुमानित उत्पादन 2.83 टन प्रति हेक्टेयर है, और अनुमानित आय ₹1,55,650 है। मिट्टी का स्वास्थ्य 85% के साथ उत्कृष्ट है। यह रिपोर्ट किसान क्रेडिट कार्ड लोन और फसल बीमा के लिए मान्य है।',
+    en: 'Farm Report Summary: Your Rice crop estimated yield is 2.83 tonnes per hectare, with projected revenue of rupees 1,55,650. Soil health score is 85 out of 100 which is optimal. This report can be submitted for Kisan Credit Card loans and government crop insurance.'
+  };
+
+  const langCodeMap = { te: 'te-IN', hi: 'hi-IN', en: 'en-IN' };
+  const textToSpeak = summaries[currentLang] || summaries.en;
+  const langCode = langCodeMap[currentLang] || 'en-IN';
+
+  const utterance = new SpeechSynthesisUtterance(textToSpeak);
+  utterance.lang = langCode;
+  utterance.rate = 0.92;
+
+  const btn1 = document.getElementById('btnVoiceListen');
+  const btn2 = document.getElementById('topbarVoiceReportBtn');
+
+  utterance.onstart = () => {
+    if (btn1) btn1.innerHTML = '<i class="fa-solid fa-stop"></i> <span>Stop Voice</span>';
+    if (btn2) btn2.innerHTML = '<i class="fa-solid fa-stop"></i>';
+    showToast('Playing voice report...', 'fa-volume-high');
+  };
+
+  utterance.onend = () => {
+    const defaultLabel = I18N[currentLang]?.btn_listen_report || 'Listen to Summary';
+    if (btn1) btn1.innerHTML = `<i class="fa-solid fa-volume-high"></i> <span>${defaultLabel}</span>`;
+    if (btn2) btn2.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+  };
+
+  utterance.onerror = () => {
+    const defaultLabel = I18N[currentLang]?.btn_listen_report || 'Listen to Summary';
+    if (btn1) btn1.innerHTML = `<i class="fa-solid fa-volume-high"></i> <span>${defaultLabel}</span>`;
+    if (btn2) btn2.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+  };
+
+  window.speechSynthesis.speak(utterance);
 }
 
 function sendOtp() {
@@ -2298,5 +2524,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (typeof analyzeSoil === 'function') {
     analyzeSoil(false);
+  }
+  if (typeof updateFarmReportsScreen === 'function') {
+    updateFarmReportsScreen();
   }
 });
