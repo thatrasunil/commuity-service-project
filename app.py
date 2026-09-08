@@ -502,7 +502,6 @@ def expo():
 @app.route('/predict-yield')
 @app.route('/recommend')
 @app.route('/weather')
-@app.route('/soil-health')
 @app.route('/pest-detection')
 @app.route('/farm-reports')
 @app.route('/talk-with-ai')
@@ -512,7 +511,6 @@ def feature_page():
         'predict-yield': 'screen-predict',
         'recommend': 'screen-recommend',
         'weather': 'screen-weather',
-        'soil-health': 'screen-soil',
         'pest-detection': 'screen-pest',
         'farm-reports': 'screen-reports',
         'talk-with-ai': 'screen-talk',

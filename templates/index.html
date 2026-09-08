@@ -172,12 +172,6 @@
       <span class="home-card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
     </a>
 
-    <a href="/soil-health" class="home-card home-card-orange">
-      <div class="home-card-icon"><i class="fa-solid fa-flask-vial"></i></div>
-      <div class="home-card-label" data-i18n="soil_health">Soil Health</div>
-      <span class="home-card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
-    </a>
-
     <a href="/pest-detection" class="home-card home-card-red">
       <div class="home-card-icon"><i class="fa-solid fa-bug"></i></div>
       <div class="home-card-label" data-i18n="pest_detect">Pest Detection</div>
@@ -360,15 +354,12 @@
           </div>
 
           <!-- Soil Condition -->
-          <div class="section-head" style="margin-top:1rem; justify-content:space-between;">
+          <div class="section-head" style="margin-top:1rem;">
             <div>
               <i class="fa-solid fa-vial-circle-check" style="color:#2d6a4f;"></i>
               <span data-i18n="soil_condition">Soil Condition</span>
               <span class="te-sub section-head-te" data-i18n-te="soil_condition_te">నేల స్థితి</span>
             </div>
-            <a href="/soil-health" class="compact-screen-link" title="Open full soil health page">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> <span data-i18n="soil_health_lab_link">Soil Health Lab</span>
-            </a>
           </div>
           <div class="soil-condition-matrix">
             <div class="soil-condition-card active" data-soil-preset="fertile">
@@ -476,13 +467,6 @@
               <div>
                 <div class="service-jump-name" data-i18n="service_weather_name">7-Day Weather</div>
                 <div class="service-jump-desc" data-i18n="service_weather_desc">Rain &amp; moisture forecast &rarr;</div>
-              </div>
-            </a>
-            <a href="/soil-health" class="service-jump-card">
-              <div class="service-jump-icon" style="color:#d97706;"><i class="fa-solid fa-flask-vial"></i></div>
-              <div>
-                <div class="service-jump-name" data-i18n="service_soil_name">Soil Health Lab</div>
-                <div class="service-jump-desc" data-i18n="service_soil_desc">NPK nutrient testing &rarr;</div>
               </div>
             </a>
             <a href="/recommend" class="service-jump-card">
@@ -630,279 +614,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SCREEN 7 — SOIL HEALTH
-═══════════════════════════════════════════════ -->
-<div id="screen-soil" class="screen {% if initial_screen == 'screen-soil' %}active{% endif %} feature-screen">
-  <div class="feature-topbar">
-    <a href="/" class="btn-back" title="Home"><i class="fa-solid fa-arrow-left"></i></a>
-    <div class="feature-topbar-title">
-      <i class="fa-solid fa-flask-vial feature-screen-icon"></i>
-      <div>
-        <div data-i18n="soil_health">Soil Health</div>
-      </div>
-    </div>
-    <div class="feature-topbar-actions">
-      <div class="lang-switch-pills">
-        <button type="button" class="lang-pill" data-lang="en" onclick="selectLanguage('en')">EN</button>
-        <button type="button" class="lang-pill" data-lang="te" onclick="selectLanguage('te')">తెలుగు</button>
-        <button type="button" class="lang-pill" data-lang="hi" onclick="selectLanguage('hi')">हिन्दी</button>
-      </div>
-      <button class="btn-icon-round" onclick="analyzeSoil()" title="Analyze Soil">
-        <i class="fa-solid fa-magnifying-glass-chart"></i>
-      </button>
-    </div>
-  </div>
-  <div class="feature-body-single">
-    <div class="soil-main-container">
 
-      <!-- 1. PROMINENT SOIL TYPE PRESETS -->
-      <div class="soil-card-box">
-        <div class="soil-card-header">
-          <i class="fa-solid fa-wand-magic-sparkles" style="color:#10b981;"></i>
-          <div>
-            <div class="soil-card-title">Select Soil Type (నేల రకం)</div>
-            <div class="soil-card-sub te-sub">త్వరిత ఎంపిక కోసం ఒక రకాన్ని తాకండి</div>
-          </div>
-        </div>
-        <div class="soil-presets-grid">
-          <button type="button" class="soil-preset-card active" data-preset="fertile" onclick="applySoilPreset('fertile')">
-            <span class="soil-preset-icon" style="background:#dcfce7;color:#166534;"><i class="fa-solid fa-seedling"></i></span>
-            <div class="soil-preset-text">
-              <span class="preset-name">Fertile Loam</span>
-              <span class="preset-sub">సారవంతమైనది · Optimal</span>
-            </div>
-            <i class="fa-solid fa-circle-check preset-check"></i>
-          </button>
-          <button type="button" class="soil-preset-card" data-preset="red" onclick="applySoilPreset('red')">
-            <span class="soil-preset-icon" style="background:#fee2e2;color:#991b1b;"><i class="fa-solid fa-mountain"></i></span>
-            <div class="soil-preset-text">
-              <span class="preset-name">Red Sandy</span>
-              <span class="preset-sub">ఎర్ర / ఇసుక నేల · Porous</span>
-            </div>
-            <i class="fa-solid fa-circle-check preset-check"></i>
-          </button>
-          <button type="button" class="soil-preset-card" data-preset="black" onclick="applySoilPreset('black')">
-            <span class="soil-preset-icon" style="background:#f1f5f9;color:#0f172a;"><i class="fa-solid fa-layer-group"></i></span>
-            <div class="soil-preset-text">
-              <span class="preset-name">Black Cotton</span>
-              <span class="preset-sub">నల్లరేగడి నేల · Deep Clay</span>
-            </div>
-            <i class="fa-solid fa-circle-check preset-check"></i>
-          </button>
-          <button type="button" class="soil-preset-card" data-preset="saline" onclick="applySoilPreset('saline')">
-            <span class="soil-preset-icon" style="background:#fef3c7;color:#92400e;"><i class="fa-solid fa-triangle-exclamation"></i></span>
-            <div class="soil-preset-text">
-              <span class="preset-name">Saline / Alkali</span>
-              <span class="preset-sub">క్షార / సౌడు నేల · High Salts</span>
-            </div>
-            <i class="fa-solid fa-circle-check preset-check"></i>
-          </button>
-          <button type="button" class="soil-preset-card" data-preset="acidic" onclick="applySoilPreset('acidic')">
-            <span class="soil-preset-icon" style="background:#e0f2fe;color:#0369a1;"><i class="fa-solid fa-flask"></i></span>
-            <div class="soil-preset-text">
-              <span class="preset-name">Acidic Soil</span>
-              <span class="preset-sub">ఆమ్ల నేల · Low pH</span>
-            </div>
-            <i class="fa-solid fa-circle-check preset-check"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- 2. SOIL BASICS -->
-      <div class="soil-card-box">
-        <div class="soil-card-header">
-          <i class="fa-solid fa-earth-asia" style="color:#2d6a4f;"></i>
-          <div>
-            <div class="soil-card-title">🌱 Soil Basics (నేల ప్రాథమిక వివరాలు)</div>
-            <div class="soil-card-sub te-sub">భూమి విస్తీర్ణం, తేమ మరియు pH స్థాయి</div>
-          </div>
-        </div>
-
-        <div class="soil-fields-stack">
-          <!-- Farm Size -->
-          <div class="soil-field-item">
-            <div class="soil-field-top">
-              <label class="soil-field-lbl"><i class="fa-solid fa-ruler-combined" style="color:var(--primary-med);"></i> Farm Size</label>
-              <span class="soil-badge badge-neutral" id="acresBadge">2.5 Acres</span>
-            </div>
-            <div class="stepper-wrap">
-              <button type="button" class="btn-step" onclick="stepVal('soilFarmAcres', -0.5, 0.5)">−</button>
-              <input type="number" step="0.5" min="0.5" max="100" class="input-step-val" id="soilFarmAcres" value="2.5" oninput="onSoilChange()">
-              <button type="button" class="btn-step" onclick="stepVal('soilFarmAcres', 0.5, 100)">+</button>
-            </div>
-          </div>
-
-          <!-- Organic Matter -->
-          <div class="soil-field-item">
-            <div class="soil-field-top">
-              <label class="soil-field-lbl"><i class="fa-solid fa-spa" style="color:#65a30d;"></i> Organic Matter (సేంద్రీయ కర్బనం)</label>
-              <span class="soil-badge" id="omStatusBadge" style="background:#dcfce7;color:#166534;">Medium</span>
-            </div>
-            <div class="segmented-control" id="omSegmentControl">
-              <button type="button" class="seg-btn" data-om="low" onclick="setOM('low')">Low (&lt;1%)</button>
-              <button type="button" class="seg-btn active" data-om="medium" onclick="setOM('medium')">Medium (1–3%)</button>
-              <button type="button" class="seg-btn" data-om="high" onclick="setOM('high')">High (&gt;3%)</button>
-            </div>
-            <input type="hidden" id="soilOM" value="medium">
-          </div>
-
-          <!-- Moisture -->
-          <div class="soil-field-item">
-            <div class="soil-field-top">
-              <label class="soil-field-lbl"><i class="fa-solid fa-water" style="color:#0284c7;"></i> Soil Moisture (తేమ)</label>
-              <span class="soil-badge" id="moistureStatusBadge" style="background:#dcfce7;color:#166534;">✓ Good (65%)</span>
-            </div>
-            <div class="slider-row">
-              <input type="range" class="soil-slider" id="soilMoistureSlider" min="10" max="100" step="1" value="65" oninput="syncSliderVal('soilMoistureSlider', 'soilMoisture', '%', onSoilChange)">
-              <div class="slider-val-box"><span id="soilMoistureVal">65</span>%</div>
-            </div>
-            <input type="hidden" id="soilMoisture" value="65">
-          </div>
-
-          <!-- Soil pH -->
-          <div class="soil-field-item">
-            <div class="soil-field-top">
-              <label class="soil-field-lbl"><i class="fa-solid fa-flask" style="color:#d97706;"></i> Soil pH (ఆమ్ల/క్షార గుణం)</label>
-              <span class="soil-badge" id="phStatusBadge" style="background:#dcfce7;color:#166534;">✓ Optimal (6.5)</span>
-            </div>
-            <div class="slider-row">
-              <input type="range" class="soil-slider slider-ph" id="soilPHSlider" min="4.0" max="9.5" step="0.1" value="6.5" oninput="syncSliderVal('soilPHSlider', 'soilPH', '', onSoilChange)">
-              <div class="slider-val-box">pH <span id="soilPHVal">6.5</span></div>
-            </div>
-            <div class="spectrum-bar">
-              <span>Acidic (&lt;6.0)</span>
-              <span>Optimal (6.2–7.5)</span>
-              <span>Alkaline (&gt;7.8)</span>
-            </div>
-            <input type="hidden" id="soilPH" value="6.5">
-          </div>
-        </div>
-      </div>
-
-      <!-- 3. NUTRIENTS (NPK) -->
-      <div class="soil-card-box">
-        <div class="soil-card-header">
-          <i class="fa-solid fa-flask-vial" style="color:#16a34a;"></i>
-          <div>
-            <div class="soil-card-title">🧪 Nutrients N–P–K (పోషకాలు)</div>
-            <div class="soil-card-sub te-sub">పంట ఎదుగుదలకు అవసరమైన ప్రధాన ఎరువులు</div>
-          </div>
-        </div>
-
-        <div class="soil-fields-stack">
-          <!-- Nitrogen -->
-          <div class="soil-field-item">
-            <div class="soil-field-top">
-              <label class="soil-field-lbl"><i class="fa-solid fa-leaf" style="color:#16a34a;"></i> Nitrogen (N)</label>
-              <span class="soil-badge" id="nStatusBadge" style="background:#fef3c7;color:#92400e;">⚠ Slightly Low</span>
-            </div>
-            <div class="slider-row">
-              <input type="range" class="soil-slider" id="soilNSlider" min="10" max="250" step="5" value="90" oninput="syncSliderVal('soilNSlider', 'soilN', ' kg/ha', onSoilChange)">
-              <div class="slider-val-box"><span id="soilNVal">90</span> <small>kg/ha</small></div>
-            </div>
-            <div class="field-sub-guide">Ideal: 100–140 kg/ha · Leaf development &amp; crop greenness</div>
-            <input type="hidden" id="soilN" value="90">
-          </div>
-
-          <!-- Phosphorus -->
-          <div class="soil-field-item">
-            <div class="soil-field-top">
-              <label class="soil-field-lbl"><i class="fa-solid fa-seedling" style="color:#059669;"></i> Phosphorus (P)</label>
-              <span class="soil-badge" id="pStatusBadge" style="background:#dcfce7;color:#166534;">✓ Optimal</span>
-            </div>
-            <div class="slider-row">
-              <input type="range" class="soil-slider" id="soilPSlider" min="5" max="150" step="5" value="45" oninput="syncSliderVal('soilPSlider', 'soilP', ' kg/ha', onSoilChange)">
-              <div class="slider-val-box"><span id="soilPVal">45</span> <small>kg/ha</small></div>
-            </div>
-            <div class="field-sub-guide">Ideal: 40–60 kg/ha · Deep root growth &amp; early flowering</div>
-            <input type="hidden" id="soilP" value="45">
-          </div>
-
-          <!-- Potassium -->
-          <div class="soil-field-item">
-            <div class="soil-field-top">
-              <label class="soil-field-lbl"><i class="fa-solid fa-shield-halved" style="color:#7c3aed;"></i> Potassium (K)</label>
-              <span class="soil-badge" id="kStatusBadge" style="background:#dcfce7;color:#166534;">✓ Optimal</span>
-            </div>
-            <div class="slider-row">
-              <input type="range" class="soil-slider" id="soilKSlider" min="5" max="150" step="5" value="40" oninput="syncSliderVal('soilKSlider', 'soilK', ' kg/ha', onSoilChange)">
-              <div class="slider-val-box"><span id="soilKVal">40</span> <small>kg/ha</small></div>
-            </div>
-            <div class="field-sub-guide">Ideal: 35–55 kg/ha · Disease defense &amp; drought resistance</div>
-            <input type="hidden" id="soilK" value="40">
-          </div>
-        </div>
-      </div>
-
-      <!-- 4. LIVE RECOMMENDATION PREVIEW SUMMARY -->
-      <div class="soil-live-preview-card" id="soilLivePreviewCard">
-        <div class="preview-card-head">
-          <div class="preview-card-title">
-            <i class="fa-solid fa-bolt" style="color:#f59e0b;"></i>
-            <span>Current Status &amp; Fertilizer Preview</span>
-          </div>
-          <span class="preview-score-pill" id="liveScorePill">Score: 85/100</span>
-        </div>
-        <div class="preview-bullets-list" id="livePreviewBullets"></div>
-      </div>
-
-      <!-- 5. PROMINENT CTA BUTTON -->
-      <button type="button" class="btn-predict-big btn-soil-main-cta" onclick="analyzeSoil(true)" id="btnAnalyzeSoilMain">
-        <i class="fa-solid fa-wand-magic-sparkles"></i>
-        <span>Get Full Fertilizer &amp; Crop Recommendation</span>
-        <span class="te-sub btn-predict-te">పూర్తి ఎరువుల ప్రణాళికను పొందండి</span>
-      </button>
-
-    </div><!-- end soil-main-container -->
-
-      <!-- Soil Result -->
-      <div id="soilResult" style="display:none; margin-top:1.5rem;">
-        <div class="soil-result-hero" id="soilResultHero">
-          <div class="soil-result-hero-content">
-            <div class="soil-result-status" id="soilResultStatus">
-              <i class="fa-solid fa-circle-check"></i> Healthy Soil
-            </div>
-            <div class="te-sub" id="soilResultStatusTe" style="font-size:0.95rem; opacity:0.95;">ఆరోగ్యకరమైన నేల</div>
-            <div class="soil-result-score" id="soilResultScore">Score: 87/100</div>
-          </div>
-          <div class="soil-hero-actions">
-            <button type="button" class="btn-soil-voice" id="soilVoiceBtn" onclick="speakSoilDiagnosis()" title="Listen to advisory">
-              <i class="fa-solid fa-volume-high"></i> <span>Listen (వినండి)</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Nutrient Parameter Health Meters -->
-        <div class="section-sub-head" style="margin-top:1.2rem;">
-          <i class="fa-solid fa-chart-simple" style="color:var(--primary-med);"></i>
-          <span>Nutrient &amp; Parameter Status (పోషకాల స్థితి)</span>
-        </div>
-        <div class="soil-meters-grid" id="soilMetersGrid"></div>
-
-        <!-- Prescribed Fertilizer Dosage for Field -->
-        <div class="section-sub-head" style="margin-top:1.2rem;">
-          <i class="fa-solid fa-prescription-bottle-medical" style="color:#059669;"></i>
-          <span>Prescribed Fertilizer Plan for Your Plot (ఎరువుల మోతాదు)</span>
-        </div>
-        <div class="soil-fert-dosage-card" id="soilFertDosageCard"></div>
-
-        <!-- Best Suited Crops -->
-        <div class="section-sub-head" style="margin-top:1.2rem;">
-          <i class="fa-solid fa-seedling" style="color:#16a34a;"></i>
-          <span>Best Crops for This Soil (ఈ నేలకు అనువైన పంటలు)</span>
-        </div>
-        <div class="soil-crops-grid" id="soilCropsGrid"></div>
-
-        <!-- Actionable Soil Treatment & Issues -->
-        <div class="section-sub-head" style="margin-top:1.2rem;">
-          <i class="fa-solid fa-list-check" style="color:#2563eb;"></i>
-          <span>Field Treatment Steps (నేల అభివృద్ధి చర్యలు)</span>
-        </div>
-        <div class="soil-result-list" id="soilResultList"></div>
-      </div>
-    </div>
-  </div>
 
 <!-- ═══════════════════════════════════════════════
      SCREEN 8 — CROP RECOMMENDATION
@@ -931,50 +643,50 @@
     <div class="section-card">
       <div class="section-head">
         <i class="fa-solid fa-sliders" style="color:#2d6a4f;"></i>
-        <span>Your Farm Conditions</span>
-        <span class="te-sub section-head-te">మీ పొలం పరిస్థితులు</span>
+        <span data-i18n="farm_conditions_title">Your Farm Conditions</span>
+        <span class="te-sub section-head-te" data-i18n-te="farm_conditions_title_te">మీ పొలం పరిస్థితులు</span>
       </div>
       <div class="two-col-inputs">
         <div class="input-group-farmer">
           <label class="input-label-farmer">
-            <i class="fa-solid fa-earth-asia" style="color:#2d6a4f;"></i> Soil Type
+            <i class="fa-solid fa-earth-asia" style="color:#2d6a4f;"></i> <span data-i18n="soil_type_lbl">Soil Type</span>
           </label>
           <select class="select-farmer" id="rcSoilType">
-            <option value="alluvial">Alluvial (River Soil)</option>
-            <option value="black">Black (Cotton) Soil</option>
-            <option value="red">Red Laterite Soil</option>
-            <option value="sandy">Sandy Soil</option>
-            <option value="loamy">Loamy Soil</option>
-            <option value="clay">Clay Soil</option>
+            <option value="alluvial" data-i18n="opt_soil_alluvial">Alluvial (River Soil)</option>
+            <option value="black" data-i18n="opt_soil_black">Black (Cotton) Soil</option>
+            <option value="red" data-i18n="opt_soil_red">Red Laterite Soil</option>
+            <option value="sandy" data-i18n="opt_soil_sandy">Sandy Soil</option>
+            <option value="loamy" data-i18n="opt_soil_loamy">Loamy Soil</option>
+            <option value="clay" data-i18n="opt_soil_clay">Clay Soil</option>
           </select>
         </div>
         <div class="input-group-farmer">
           <label class="input-label-farmer">
-            <i class="fa-solid fa-calendar-days" style="color:#2d6a4f;"></i> Season
+            <i class="fa-solid fa-calendar-days" style="color:#2d6a4f;"></i> <span data-i18n="season_lbl">Season</span>
           </label>
           <select class="select-farmer" id="rcSeason">
-            <option value="kharif">Kharif (Jun–Oct)</option>
-            <option value="rabi">Rabi (Nov–Mar)</option>
-            <option value="zaid">Zaid (Mar–Jun)</option>
-            <option value="perennial">Year-Round</option>
+            <option value="kharif" data-i18n="opt_season_kharif">Kharif (Jun–Oct)</option>
+            <option value="rabi" data-i18n="opt_season_rabi">Rabi (Nov–Mar)</option>
+            <option value="zaid" data-i18n="opt_season_zaid">Zaid (Mar–Jun)</option>
+            <option value="perennial" data-i18n="opt_season_perennial">Year-Round</option>
           </select>
         </div>
         <div class="input-group-farmer">
           <label class="input-label-farmer">
-            <i class="fa-solid fa-droplet" style="color:#0284c7;"></i> Water Availability
+            <i class="fa-solid fa-droplet" style="color:#0284c7;"></i> <span data-i18n="water_avail_lbl">Water Availability</span>
           </label>
           <select class="select-farmer" id="rcWater">
-            <option value="high">High (Irrigated)</option>
-            <option value="medium" selected>Medium (Partial)</option>
-            <option value="low">Low (Rainfed)</option>
+            <option value="high" data-i18n="opt_water_high">High (Irrigated)</option>
+            <option value="medium" selected data-i18n="opt_water_medium">Medium (Partial)</option>
+            <option value="low" data-i18n="opt_water_low">Low (Rainfed)</option>
           </select>
         </div>
         <div class="input-group-farmer">
           <label class="input-label-farmer">
-            <i class="fa-solid fa-location-dot" style="color:#0284c7;"></i> District
+            <i class="fa-solid fa-location-dot" style="color:#0284c7;"></i> <span data-i18n="primary_district_lbl">District</span>
           </label>
           <select class="select-farmer" id="rcDistrict">
-            <option value="">📍 Select District</option>
+            <option value="" data-i18n="choose_district_prompt">📍 Select District</option>
             {% if districts_by_state %}
               {% for state, d_list in districts_by_state.items() %}
                 <optgroup label="{{ state }}">
@@ -994,8 +706,8 @@
 
       <button class="btn-predict-big" onclick="getCropRecommendation()" style="margin-top:1rem;">
         <i class="fa-solid fa-wand-magic-sparkles" style="font-size:1.4rem;"></i>
-        <span>Get Recommendation</span>
-        <span class="te-sub btn-predict-te">సిఫారసు పొందండి</span>
+        <span data-i18n="get_recommendation_btn">Get Recommendation</span>
+        <span class="te-sub btn-predict-te" data-i18n-te="get_recommendation_btn_te">సిఫారసు పొందండి</span>
       </button>
 
       <!-- Recommendation Results -->
