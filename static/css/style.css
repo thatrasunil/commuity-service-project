@@ -2735,5 +2735,80 @@ body.high-contrast {
   font-size: 1rem;
 }
 
+/* Quick Sample Test Pills UI Styling */
+.preset-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.5rem 0.95rem;
+  border-radius: 9999px;
+  border: 1.5px solid var(--border-subtle);
+  background: #ffffff;
+  color: var(--text-primary);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  font-family: 'Noto Sans Telugu', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.35;
+}
+
+.preset-pill:hover, .preset-pill:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 41, 30, 0.12);
+}
+
+.preset-pill:active {
+  transform: scale(0.96);
+}
+
+.preset-pill i {
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+/* Custom color accent variants for sample pills */
+.preset-pill.qpill-green, .preset-pill[onclick*="rice_blast"] {
+  background: #f0fdf4;
+  border-color: #86efac;
+  color: #166534;
+}
+.preset-pill.qpill-green:hover, .preset-pill[onclick*="rice_blast"]:hover {
+  background: #dcfce7;
+  border-color: #4ade80;
+}
+
+.preset-pill.qpill-orange, .preset-pill[onclick*="cotton_bollworm"] {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  color: #c2410c;
+}
+.preset-pill.qpill-orange:hover, .preset-pill[onclick*="cotton_bollworm"]:hover {
+  background: #ffedd5;
+  border-color: #fb923c;
+}
+
+.preset-pill.qpill-yellow, .preset-pill[onclick*="wheat_rust"] {
+  background: #fefce8;
+  border-color: #fef08a;
+  color: #854d0e;
+}
+.preset-pill.qpill-yellow:hover, .preset-pill[onclick*="wheat_rust"]:hover {
+  background: #fef9c3;
+  border-color: #facc15;
+}
+
+.preset-pill.qpill-red, .preset-pill[onclick*="tomato_blight"] {
+  background: #fef2f2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+.preset-pill.qpill-red:hover, .preset-pill[onclick*="tomato_blight"]:hover {
+  background: #fee2e2;
+  border-color: #f87171;
+}
+
+
 
 
