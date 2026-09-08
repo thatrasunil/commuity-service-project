@@ -2453,7 +2453,10 @@ function sendAiMessage() {
     const botMsg = document.createElement('div');
     botMsg.style.cssText = 'align-self:flex-start; max-width:85%; background:#ffffff; border:1.5px solid var(--border-subtle); border-radius:14px; padding:0.75rem 0.9rem; font-size:0.88rem; box-shadow:var(--shadow-sm);';
     botMsg.innerHTML = `
-      <div style="font-weight:700; color:var(--primary); font-size:0.75rem; margin-bottom:3px;"><i class="fa-solid fa-robot"></i> CropAI Assistant</div>
+      <div style="font-weight:700; color:var(--primary); font-size:0.8rem; margin-bottom:4px; display:flex; align-items:center;">
+        <img src="/static/images/farmer_hero.png" class="chat-mascot-avatar" alt="CropAI Mascot">
+        <span>CropAI Assistant (రైతు మిత్రుడు)</span>
+      </div>
       <div>${botReplyEn}</div>
       ${currentLang === 'te' || currentLang === 'hi' ? `<div class="te-sub" style="font-size:0.8rem; color:var(--primary-med); margin-top:5px;">${botReplyTe}</div>` : ''}
     `;
@@ -2467,7 +2470,10 @@ function clearAiChat() {
   if (stream) {
     stream.innerHTML = `
       <div style="align-self:flex-start; max-width:85%; background:#ffffff; border:1.5px solid var(--border-subtle); border-radius:14px; padding:0.75rem 0.9rem; font-size:0.88rem; box-shadow:var(--shadow-sm);">
-        <div style="font-weight:700; color:var(--primary); font-size:0.75rem; margin-bottom:3px;"><i class="fa-solid fa-robot"></i> CropAI Assistant</div>
+        <div style="font-weight:700; color:var(--primary); font-size:0.8rem; margin-bottom:4px; display:flex; align-items:center;">
+          <img src="/static/images/farmer_hero.png" class="chat-mascot-avatar" alt="CropAI Mascot">
+          <span>CropAI Assistant (రైతు మిత్రుడు)</span>
+        </div>
         <div>Chat history refreshed. Ask any farming question!</div>
         <div class="te-sub" style="font-size:0.78rem; color:var(--primary-med); margin-top:4px;">చాట్ ప్రారంభించబడింది. మీ ప్రశ్నను అడగండి!</div>
       </div>

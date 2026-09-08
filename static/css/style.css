@@ -2607,3 +2607,95 @@ body.high-contrast {
   .result-hero-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
+/* ═══════════════════════════════════════════════
+   FARMER MASCOT & NATURE ANIMATIONS
+═══════════════════════════════════════════════ */
+
+/* Floating character animation */
+.animate-float {
+  animation: floatCharacter 3.5s ease-in-out infinite;
+}
+@keyframes floatCharacter {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-7px); }
+}
+
+/* Gentle sway for wheat/sprout icons */
+.animate-sway {
+  animation: swayWheat 3s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+@keyframes swayWheat {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(6deg); }
+}
+
+/* Pulse sprout button animation */
+.animate-pulse-sprout {
+  animation: pulseSprout 2.2s ease-in-out infinite;
+}
+@keyframes pulseSprout {
+  0%, 100% { box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25); }
+  50% { box-shadow: 0 8px 24px rgba(22, 163, 74, 0.45); transform: translateY(-1px); }
+}
+
+/* Farmer Mascot Avatar in Home Greeting */
+.farmer-mascot-row {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+.farmer-mascot-img {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #bbf7d0;
+  box-shadow: 0 4px 14px rgba(27, 67, 50, 0.15);
+  background: #f0fdf4;
+  flex-shrink: 0;
+}
+
+/* Visual Farmer Banner in Screens */
+.farmer-visual-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #f0fdf4 0%, #e0e7ff 100%);
+  border: 1.5px solid #bbf7d0;
+  border-radius: 14px;
+  padding: 0.85rem 1.1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(15, 41, 30, 0.05);
+}
+.farmer-banner-img {
+  width: 62px;
+  height: 62px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ffffff;
+}
+.farmer-banner-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--primary-dark);
+}
+.farmer-banner-sub {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Chat & Profile Farmer Mascot */
+.chat-mascot-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #10b981;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+
